@@ -1,0 +1,15 @@
+import { RouterModule, Routes } from '@angular/router';
+
+import { ProductDetailsComponent } from './product-details.component';
+import { ProductDatailsDataResolverService } from './service/product-datails-data-resolver.service';
+
+const routes: Routes = [
+  {
+    path: 'ProductDetails/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+    resolve: { resolvedData: ProductDatailsDataResolverService }
+  }
+];
+
+export const productDetailsRoutes = RouterModule.forChild(routes);

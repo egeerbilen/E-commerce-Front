@@ -1,0 +1,22 @@
+imp→	imports entire module import fs from 'fs';
+ime→	imports everything as alias from the module import * as localAlias from 'fs';
+mde→	default module.exports module.exports = {};
+con→	adds default constructor in the class constructor() {}
+
+met→	creates a method inside a class add() {}
+// Geleneksel fonksiyon tanımı
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function ile tanım
+const add = (a, b) => a + b;
+
+fre→	forEach loop in ES6 syntax array.forEach(currentItem => {})
+fof→	for ... of loop for(const item of object) {}
+fin→	for ... in loop for(const item in object) {}
+ccl→	console clear console.clear()
+cer→	console error console.error(object)
+clg→	console log console.log(object)
+
+F1 -> Open quick type for JSON 

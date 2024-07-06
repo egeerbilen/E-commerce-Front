@@ -1,0 +1,41 @@
+body.page-404 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to bottom right, #000000, #008000);
+  color: white;
+}
+
+.page-404-container {
+  text-align: center;
+}
+
+.page-404-heading {
+  font-size: 10em;
+  margin: 0;
+}
+
+.page-404-text {
+  font-size: 1.5em;
+  margin: 20px 0;
+}
+
+.page-404-link {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.page-404-link:hover {
+  color: #2980b9;
+}
+
+.page-404-illustration {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  margin: 20px auto;
+}

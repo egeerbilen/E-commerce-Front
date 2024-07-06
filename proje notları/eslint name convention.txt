@@ -1,0 +1,47 @@
+Kod isimlendirme formatları, genellikle belirli bir dil veya endüstri standardına göre belirlenen kuralları içerir.
+İşte bazı yaygın kod isimlendirme formatları ve örnekleri:
+
+Camel Case:
+Örnek: camelCase, calculateTotalAmount
+
+Pascal Case:
+Örnek: PascalCase, CalculateTotalAmount
+
+Snake Case:
+Örnek: snake_case, calculate_total_amount
+
+Kebab Case (Dash Case):
+Örnek: kebab-case, calculate-total-amount
+
+Hungarian Notation:
+Örnek: strName (string), intCount (integer)
+
+Screaming Snake Case:
+Örnek: SCREAMING_SNAKE_CASE, MAXIMUM_ALLOWED_CONNECTIONS
+
+Upper Camel Case:
+Örnek: UpperCamelCase, CalculateTotalAmount
+
+Lower Camel Case:
+Örnek: lowerCamelCase, calculateTotalAmount
+
+Abbreviation:
+Örnek: XMLParser, HTTPRequest
+
+Underscore Prefix/Suffix:
+Örnek: _variable, function_
+
+3-Letter Acronyms:
+Örnek: API, URL, GUI
+
+4-Letter Acronyms:
+Örnek: HTML, HTTP, JSON
+
+Domain-Specific Prefixes:
+Örnek: uiButton, dbConnection
+
+Meaningful Names:
+Örnek: calculateTotalAmount, getUserInfo
+
+Version Numbers:
+Örnek: v1.0.0, v2.3.1

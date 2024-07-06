@@ -1,0 +1,46 @@
+{
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "editor.guides.bracketPairs": "active",
+  "terminal.integrated.env.windows": {},
+  "emmet.preferences": {},
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "cSpell.userWords": ["lintf", "lintq", "Waybinding"],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "sort-imports.on-save": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.confirmSync": false,
+  "cSpell.language": "en,tr",
+  "workbench.tree.indent": 10,
+  "explorer.autoReveal": false,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#00ff00"
+  },
+  "editor.unicodeHighlight.allowedLocales": {
+    "tr": true
+  },
+  "console-ninja.featureSet": "Community",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "readable.enableAutoComplete": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript", "typescript", "typescriptreact", "html"]
+}
