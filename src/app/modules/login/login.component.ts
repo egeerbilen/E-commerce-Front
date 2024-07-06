@@ -22,14 +22,12 @@ export class LoginComponent {
    * @param _loginService LoginService.
    * @param _localStorageService LocalStorageService.
    * @param _router Router.
-   * @param _store Store.
    */
   constructor(
     private _fb: FormBuilder,
     private _loginService: LoginService,
     private _localStorageService: LocalStorageService,
-    private _router: Router,
-    private _store: Store
+    private _router: Router
   ) {
     this.loginForm = this._fb.group({
       email: ['ege.erbilen@example.com', [Validators.required, Validators.email]],
