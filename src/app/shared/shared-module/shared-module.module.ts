@@ -5,12 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ByteToImagePipe } from 'src/app/helpers/byte-to-image.pipe';
 
+import { httpInterceptorProvider, jwtModule } from '../jwt/jwt-token-module-settings';
 import { LoadingService } from '../services/loading/loading.service';
 import { LoggerService } from '../services/logger/logger.service';
 @NgModule({
   declarations: [ByteToImagePipe],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [LoggerService, LoadingService],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, jwtModule],
+  providers: [httpInterceptorProvider, LoggerService, LoadingService],
   exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, ByteToImagePipe]
 })
 export class SharedModule {}

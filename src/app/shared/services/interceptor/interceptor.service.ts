@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environment';
 
-import { LoginService } from '../local-storage/local-storage.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class InterceptorService {
    * @param _cookieService Cookie service.
    */
   constructor(
-    private _loginService: LoginService,
+    private _loginService: LocalStorageService,
     private _cookieService: CookieService
   ) {}
   // Daha sonra bu interceptor'ı AppModule'unuzda veya bir servis modülünde kullanmanız gerekiyor.
@@ -33,11 +33,7 @@ export class InterceptorService {
     // ! Burası HTTP isteği yakalandığında çalışacak yer Her istek giderken buraya girecek imp edilsede edilmesede
     // Request manipülasyonları burada yapılabilir
 
-    console.log('InterceptorService çalıştı');
-    console.log(request);
-
     const modifiedRequest = request.clone({
-      url: environment.apiUrl + request.url, // Concatenate the base URL with the request URL
       setHeaders: {
         authorization: this._loginService.getToken() || '', // Set Authorization header
         // Cookie başlığını eklemeye gerek yok, tarayıcı bunu zaten ekler json server desteklemediğinden cookileri gönderemeyiz

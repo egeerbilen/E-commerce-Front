@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LocalStorageService {
   // * Token ları zaten back-end de de kontrol edeceksin
   private _token = '';
 

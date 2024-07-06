@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { LoginService } from './local-storage.service';
+import { LocalStorageService } from './local-storage.service';
 
 describe('Service: LocalStorage', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LoginService]
+      providers: [LocalStorageService]
     });
   });
 
-  it('should ...', inject([LoginService], (service: LoginService) => {
+  it('should ...', inject([LocalStorageService], (service: LocalStorageService) => {
     expect(service).toBeTruthy();
   }));
 });
