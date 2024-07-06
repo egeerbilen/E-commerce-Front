@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterModule } from './modules/footer/footer.module';
 import { HomeModule } from './modules/home/home.module';
+import { LoginModule } from './modules/login/login.module';
 import { NavbarModule } from './modules/navbar/navbar.module';
 import { ProductDetailsModule } from './modules/product-details/product-details.module';
 import { SharedModule } from './shared/shared-module/shared-module.module';
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
   imports: [
     SharedModule,
     BrowserModule,
+    LoginModule,
     NavbarModule,
     HomeModule,
     ProductDetailsModule,

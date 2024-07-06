@@ -1,0 +1,61 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { catchError, Observable, tap, throwError } from 'rxjs';
+import { environment } from 'src/environment';
+
+import { LoginService } from '../local-storage/local-storage.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class InterceptorService {
+  /**
+   * Constructor.
+   * @param _loginService Login service.
+   * @param _cookieService Cookie service.
+   */
+  constructor(
+    private _loginService: LoginService,
+    private _cookieService: CookieService
+  ) {}
+  // Daha sonra bu interceptor'ı AppModule'unuzda veya bir servis modülünde kullanmanız gerekiyor.
+  // Bunun için, Angular'un HTTP_INTERCEPTORS token'ını kullanarak interceptor'ı provide etmeniz gerekiyor:
+  // TODO make Enum for apiUrl
+
+  /**
+   * Intercept.
+   * @param request Request.
+   * @param next Next.
+   * @returns Http evnt.
+   */
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // ! Burası HTTP isteği yakalandığında çalışacak yer Her istek giderken buraya girecek imp edilsede edilmesede
+    // Request manipülasyonları burada yapılabilir
+
+    console.log('InterceptorService çalıştı');
+    console.log(request);
+
+    const modifiedRequest = request.clone({
+      url: environment.apiUrl + request.url, // Concatenate the base URL with the request URL
+      setHeaders: {
+        authorization: this._loginService.getToken() || '', // Set Authorization header
+        // Cookie başlığını eklemeye gerek yok, tarayıcı bunu zaten ekler json server desteklemediğinden cookileri gönderemeyiz
+        ex: this._cookieService.get('exampleCookie') // gibi ek olarak başka bir cookie de eklene bilir
+      }
+    });
+
+    // sadece next.handle(modifiedRequest) diyerek de devam edebilirdik
+    return next.handle(modifiedRequest).pipe(
+      tap((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          console.log('İstek başarılı oldu:', event);
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Bir hata oluştu:', error);
+        return throwError(error);
+      })
+    );
+  }
+}

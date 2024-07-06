@@ -6,6 +6,7 @@ const routes: Routes = [
   // Tüm routerlar alt modüllerde ki routing.ts lerden geliyor
   { path: 'home', loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule) },
   { path: 'ProductDetails/:id', loadChildren: () => import('./modules/product-details/product-details.module').then((m) => m.ProductDetailsModule) },
+  { path: 'Login', loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },
   { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
 ];
 
