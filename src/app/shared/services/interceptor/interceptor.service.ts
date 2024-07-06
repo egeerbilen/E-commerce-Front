@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } 
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { environment } from 'src/environment';
 
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -45,11 +44,11 @@ export class InterceptorService {
     return next.handle(modifiedRequest).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log('İstek başarılı oldu:', event);
+          // console.log(event);
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('Bir hata oluştu:', error);
+        console.error(error);
         return throwError(error);
       })
     );

@@ -7,11 +7,10 @@ import { ByteToImagePipe } from 'src/app/helpers/byte-to-image.pipe';
 
 import { httpInterceptorProvider, jwtModule } from '../jwt/jwt-token-module-settings';
 import { LoadingService } from '../services/loading/loading.service';
-import { LoggerService } from '../services/logger/logger.service';
 @NgModule({
   declarations: [ByteToImagePipe],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, jwtModule],
-  providers: [httpInterceptorProvider, LoggerService, LoadingService],
+  providers: [httpInterceptorProvider, LoadingService],
   exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, ByteToImagePipe]
 })
 export class SharedModule {}

@@ -4,7 +4,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environment';
 
 import { CustomResponseDto } from '../../dto/custom-response-dto';
-import { LoggerService } from '../logger/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +14,8 @@ export class ApiHelperService {
   /**
    * Constructor.
    * @param _http HttpClient.
-   * @param _loggerService Generic logger service.
    */
-  constructor(
-    private _http: HttpClient,
-    private _loggerService: LoggerService
-  ) {}
+  constructor(private _http: HttpClient) {}
 
   /**
    * Generic GET request.
@@ -66,7 +61,7 @@ export class ApiHelperService {
    * @returns T type.
    */
   private _handleError(error: HttpErrorResponse): Observable<never> {
-    this._loggerService.error(`API error: ${error.message}`);
+    console.error(`API error: ${error.message}`);
     return throwError('An error occurred; please try again later.');
   }
 }
