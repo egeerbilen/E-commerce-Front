@@ -1,8 +1,35 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { getUserData } from './shared/ng-rx/selectors/user.selectors';
+import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent {
+  user = {};
+
+  /**
+   * Constructor.
+   * @param _localStorageService LocalStorageService.
+   * @param _store Store.
+   */
+  constructor(
+    private _localStorageService: LocalStorageService,
+    private _store: Store
+  ) {
+    const token = this._localStorageService.getToken();
+    console.log(token);
+
+    // if (token) {
+    // } else {
+    //   this._store.select(getUserData).subscribe((res) => {
+    //     this.user = res;
+    //     console.log(res);
+    //   });
+    // }
+  }
+}

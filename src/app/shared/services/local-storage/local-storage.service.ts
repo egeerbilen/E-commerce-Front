@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Store } from '@ngrx/store';
+
+import { setUserData } from '../../ng-rx/actions/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -6,12 +10,20 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
   // * Token ları zaten back-end de de kontrol edeceksin
   private _token = '';
+  private _decodedToken: object;
 
   /**
    * Constructor.
+   * @param _jwtHelperService JwtHelperService.
+   * @param _store Store.
    */
-  constructor() {
-    this._token = localStorage.getItem('bearer_token') || ''; // || null undefined veya boş geldiği zaman sağ tarafı değer atayacak
+  constructor(
+    private _jwtHelperService: JwtHelperService,
+    private _store: Store
+  ) {
+    this._token = localStorage.getItem('bearer_token') ?? ''; // || null undefined veya boş geldiği zaman sağ tarafı değer atayacak
+    this._decodedToken = this.decodeToken();
+    this._store.dispatch(setUserData({ userData: this._decodedToken }));
   }
 
   /**
@@ -29,6 +41,8 @@ export class LocalStorageService {
   public setToken(token: string): void {
     localStorage.setItem('bearer_token', token);
     this._token = token;
+    this._decodedToken = this.decodeToken();
+    this._store.dispatch(setUserData({ userData: this._decodedToken }));
     console.log('Login olundu');
   }
 
@@ -43,9 +57,17 @@ export class LocalStorageService {
 
   /**
    * GetToken.
-   * @returns Token or null.
+   * @returns Token.
    */
-  public getToken(): string | null {
+  public getToken(): string {
     return this._token;
+  }
+
+  /**
+   * DecodeToken.
+   * @returns Object.
+   */
+  public decodeToken(): object {
+    return this._jwtHelperService.decodeToken(this._token) ?? {};
   }
 }

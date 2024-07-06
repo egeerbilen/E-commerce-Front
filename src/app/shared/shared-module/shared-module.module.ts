@@ -6,10 +6,11 @@ import { RouterModule } from '@angular/router';
 import { ByteToImagePipe } from 'src/app/helpers/byte-to-image.pipe';
 
 import { httpInterceptorProvider, jwtModule } from '../jwt/jwt-token-module-settings';
+import { storeModules } from '../ng-rx/reducers';
 import { LoadingService } from '../services/loading/loading.service';
 @NgModule({
+  imports: [storeModules, jwtModule, CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   declarations: [ByteToImagePipe],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, jwtModule],
   providers: [httpInterceptorProvider, LoadingService],
   exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, HttpClientModule, ByteToImagePipe]
 })

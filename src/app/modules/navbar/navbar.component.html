@@ -18,6 +18,10 @@
         </li>
       </ul>
       <a class="navbar-brand" [routerLink]="['/Login']">Login</a>
+      <!-- <a *ngIf="this.token else loggedOut" class="navbar-brand" [routerLink]="['/Login']">Login</a>
+      <ng-template #loggedOut>
+        <a class="navbar-brand" [routerLink]="['/Login']">Login</a>
+      </ng-template> -->
     </div>
   </div>
 </nav>
