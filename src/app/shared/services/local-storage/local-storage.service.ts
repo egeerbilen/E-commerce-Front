@@ -52,6 +52,7 @@ export class LocalStorageService {
   public removeToken(): void {
     localStorage.removeItem('bearer_token');
     this._token = '';
+    this._decodedToken = {};
     console.log("Token localStorage'dan silindi");
   }
 
@@ -61,6 +62,14 @@ export class LocalStorageService {
    */
   public getToken(): string {
     return this._token;
+  }
+
+  /**
+   * GetToken.
+   * @returns Token.
+   */
+  public getDecodedToken(): object {
+    return this._decodedToken;
   }
 
   /**
