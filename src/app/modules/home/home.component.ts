@@ -13,6 +13,7 @@ import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 export class HomeComponent {
   resolvedData!: CustomResponseDto<ProductDto[]>;
   tokenStatus = false;
+  filteredData: ProductDto[] = [];
 
   /**
    * Constructor.
@@ -34,6 +35,23 @@ export class HomeComponent {
         this.tokenStatus = false;
       }
     });
+
+    if (this.resolvedData.data) {
+      this.filteredData = this.resolvedData.data; // Başlangıçta tüm verileri göster
+    }
+  }
+
+  /**
+   * OnCategorySelected.
+   * @param category Category.
+   */
+  public onCategorySelected(category: number): void {
+    console.log(category);
+    if (!category) {
+      this.filteredData = this.resolvedData.data ?? [];
+    } else {
+      this.filteredData = this.resolvedData.data!.filter((item) => item.categoryId === category);
+    }
   }
 
   /**

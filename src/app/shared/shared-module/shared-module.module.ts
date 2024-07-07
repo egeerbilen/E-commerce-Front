@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category/highlight-category.directive';
 import { ByteToImagePipe } from 'src/app/helpers/img-helper/byte-to-image.pipe';
 import { ModalHelperComponent } from 'src/app/helpers/modal-helper/modal-helper.component';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
@@ -24,7 +25,7 @@ import { LoadingService } from '../services/loading/loading.service';
     MatSnackBarModule,
     BrowserAnimationsModule
   ],
-  declarations: [ByteToImagePipe, ModalHelperComponent],
+  declarations: [ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective],
   providers: [httpInterceptorProvider, LoadingService, ToastService],
   exports: [
     CommonModule,
@@ -35,7 +36,8 @@ import { LoadingService } from '../services/loading/loading.service';
     ByteToImagePipe,
     ModalHelperComponent,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HighlightCategoryDirective
   ]
 })
 export class SharedModule {}
