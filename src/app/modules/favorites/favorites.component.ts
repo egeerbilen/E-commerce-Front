@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
-import { UserFavoritesProductsDto } from 'src/app/shared/dto/user-favorites-prodcut-dto';
+import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 
 @Component({
@@ -11,7 +10,7 @@ import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
   styleUrls: ['./favorites.component.css']
 })
 export class FavoritesComponent {
-  resolvedFavoritesData!: CustomResponseDto<UserFavoritesProductsDto[]>;
+  resolvedFavoritesData!: ProductDto[];
   tokenStatus = false;
 
   /**
@@ -24,7 +23,7 @@ export class FavoritesComponent {
     private _store: Store
   ) {
     this._route.data.subscribe((data) => {
-      this.resolvedFavoritesData = data['resolvedData'];
+      this.resolvedFavoritesData = data['resolvedData'].data;
       console.log(this.resolvedFavoritesData);
     });
 
@@ -35,5 +34,14 @@ export class FavoritesComponent {
         this.tokenStatus = false;
       }
     });
+  }
+
+  /**
+   * RemoveFromFavorites.
+   * @param item Item.
+   */
+  public removeFromFavorites(item: ProductDto): void {
+    this.resolvedFavoritesData = this.resolvedFavoritesData.filter((fav) => fav !== item);
+    console.log('Service e bağla');
   }
 }
