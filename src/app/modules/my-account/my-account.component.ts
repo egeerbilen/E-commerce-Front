@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
 import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
@@ -25,7 +26,7 @@ export class MyAccountComponent {
    * @param _modalHelperService ModalHelperService.
    * @param _myAccountService MyAccountService.
    * @param _localStorageService LocalStorageService.
-   * @param _snackBar
+   * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -33,7 +34,7 @@ export class MyAccountComponent {
     private _modalHelperService: ModalHelperService,
     private _myAccountService: MyAccountService,
     private _localStorageService: LocalStorageService,
-    private _snackBar: MatSnackBar
+    private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
@@ -57,6 +58,7 @@ export class MyAccountComponent {
    */
   public updateUser(): void {
     const formValueWithId = { ...this.accountForm.value, id: this._localStorageService.decodeToken()?.userId };
+    this._toastService.show('User Updated');
     this._myAccountService.updateUser(formValueWithId).subscribe();
   }
 
@@ -64,7 +66,7 @@ export class MyAccountComponent {
    * OnReset.
    */
   public onReset(): void {
-    this.showToast('Form sıfırlandı.');
+    this._toastService.show('Form Reseted');
     this.accountForm.reset();
   }
 
@@ -76,16 +78,5 @@ export class MyAccountComponent {
     if (deleteUserStatus) {
       console.log('Delete User');
     }
-  }
-
-  /**
-   * Show Toast Message.
-   * @param message Message.
-   * @param action Action.
-   */
-  public showToast(message: string, action = 'Tamam'): void {
-    this._snackBar.open(message, action, {
-      duration: 3000 // 3 saniye süresince gösterilir
-    });
   }
 }
