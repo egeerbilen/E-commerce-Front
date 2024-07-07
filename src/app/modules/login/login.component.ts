@@ -46,4 +46,11 @@ export class LoginComponent {
       });
     }
   }
+
+  /**
+   * OnRegister.
+   */
+  public onRegister(): void {
+    this._router.navigate(['/Register']);
+  }
 }
