@@ -13,11 +13,11 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage/local
 export class MyAccountDataResolverService {
   /**
    * Constructor.
-   * @param _http Http Request Service.
+   * @param http Http Request Service.
    * @param _localStorageService LocalStorageService.
    */
   constructor(
-    private _http: ApiHelperService,
+    protected http: ApiHelperService,
     private _localStorageService: LocalStorageService
   ) {}
 
@@ -36,6 +36,6 @@ export class MyAccountDataResolverService {
    * @returns Products values.
    */
   public getUserById(userId: string): Observable<CustomResponseDto<UserDto[]>> {
-    return this._http.get(apiEndpoint.user + 'GetById/' + userId);
+    return this.http.get(apiEndpoint.user + 'GetById/' + userId);
   }
 }

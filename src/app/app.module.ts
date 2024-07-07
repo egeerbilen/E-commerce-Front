@@ -5,6 +5,8 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { BasketsModule } from './modules/baskets/baskets.module';
+import { FavoritesModule } from './modules/favorites/favorites.module';
 import { FooterModule } from './modules/footer/footer.module';
 import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
@@ -23,6 +25,8 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     LoginModule,
     NavbarModule,
     HomeModule,
+    FavoritesModule,
+    BasketsModule,
     UpdateProductModule,
     RegisterModule,
     MyAccountModule,

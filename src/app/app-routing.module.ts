@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule) },
   { path: 'ProductDetails/:id', loadChildren: () => import('./modules/product-details/product-details.module').then((m) => m.ProductDetailsModule) },
   { path: 'UpdateProduct/:id', loadChildren: () => import('./modules/update-product/update-product.module').then((m) => m.UpdateProductModule) },
+  { path: 'Favorites', loadChildren: () => import('./modules/favorites/favorites.module').then((m) => m.FavoritesModule) },
+  { path: 'Basket', loadChildren: () => import('./modules/baskets/baskets.module').then((m) => m.BasketsModule) },
   { path: 'Register', loadChildren: () => import('./modules/register/register.module').then((m) => m.RegisterModule) },
   { path: 'MyAccount', loadChildren: () => import('./modules/my-account/my-account.module').then((m) => m.MyAccountModule) },
   { path: 'Login', loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },

@@ -3,12 +3,12 @@ import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserUpdateDto } from 'src/app/shared/dto/user-update-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 
-import { HomeDataResolverService } from '../../home/service/home-data-resolver.service';
+import { MyAccountDataResolverService } from './my-account-data-resolver.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MyAccountService extends HomeDataResolverService {
+export class MyAccountService extends MyAccountDataResolverService {
   /**
    * Update user by id.
    * @param userObject UserObject.
