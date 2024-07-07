@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ModalService } from 'src/app/helpers/modal-helper/service/modal-service.service';
+import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
@@ -19,16 +19,15 @@ export class NavbarComponent {
    * @param _store Store.
    * @param _router Router.
    * @param _localStorageService LocalStorageService.
-   * @param _modalService ModalService.
+   * @param _modalHelperService ModalHelperService.
    */
   constructor(
     private _store: Store,
     private _router: Router,
     private _localStorageService: LocalStorageService,
-    private _modalService: ModalService
+    private _modalHelperService: ModalHelperService
   ) {
     this._store.select(getUserData).subscribe((res) => {
-      console.log(res);
       if (res) {
         this.tokenStatus = true;
       }
@@ -39,7 +38,7 @@ export class NavbarComponent {
    * Logout.
    */
   public logout(): void {
-    this._modalService.openModal('Login Status', 'Successfully logged out.');
+    this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
 
     this._router.navigate(['/']);
     this._localStorageService.removeToken();

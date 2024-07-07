@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { ModalService } from './service/modal-service.service';
+import { ModalHelperService } from './service/modal-helper-service.service';
 
 @Component({
   selector: 'app-modal-helper',
@@ -8,6 +8,10 @@ import { ModalService } from './service/modal-service.service';
   styleUrls: ['./modal-helper.component.css']
 })
 export class ModalHelperComponent implements OnInit {
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() onClose = new EventEmitter<void>();
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() onOk = new EventEmitter<void>();
   isOpen = false;
   title = '';
   content = '';
@@ -16,7 +20,7 @@ export class ModalHelperComponent implements OnInit {
    * Constructor.
    * @param _modalService ModalService.
    */
-  constructor(private _modalService: ModalService) {}
+  constructor(private _modalService: ModalHelperService) {}
 
   /**
    * NgOnInit.
@@ -33,6 +37,13 @@ export class ModalHelperComponent implements OnInit {
    * CloseModal.
    */
   public closeModal(): void {
-    this._modalService.closeModal();
+    this.onClose.emit();
+  }
+
+  /**
+   * CloseModal.
+   */
+  public okModal(): void {
+    this.onOk.emit();
   }
 }

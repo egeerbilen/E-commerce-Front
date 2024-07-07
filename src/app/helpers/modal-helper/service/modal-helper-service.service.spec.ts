@@ -2,7 +2,7 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { ModalServiceService } from './modal-service.service';
+import { ModalServiceService } from './modal-helper-service.service';
 
 describe('Service: ModalService', () => {
   beforeEach(() => {

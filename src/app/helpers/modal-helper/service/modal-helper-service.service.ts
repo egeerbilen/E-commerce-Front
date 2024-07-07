@@ -6,7 +6,7 @@ import { ModalHelperComponent } from '../modal-helper.component';
 @Injectable({
   providedIn: 'root'
 })
-export class ModalService {
+export class ModalHelperService {
   private _modalState = new BehaviorSubject<any>({ isOpen: false, title: '', content: '' });
   modalState$ = this._modalState.asObservable();
 
@@ -39,19 +39,42 @@ export class ModalService {
    * OpenModal.
    * @param title Title.
    * @param content Content.
+   * @returns Boolean.
    */
-  public openModal(title: string, content: string): void {
+  public openModal(title: string, content: string): Promise<boolean> {
     const modalComponent = this._createModalComponent();
     this._modalState.next({ isOpen: true, title, content });
     modalComponent.isOpen = true;
     modalComponent.title = title;
     modalComponent.content = content;
+
+    return new Promise((resolve) => {
+      modalComponent.onClose.subscribe(() => {
+        this._modalState.next({ isOpen: false, title: '', content: '' });
+        resolve(false);
+      });
+      modalComponent.onOk.subscribe(() => {
+        this._modalState.next({ isOpen: false, title: '', content: '' });
+        resolve(true);
+      });
+    });
   }
 
   /**
    * CloseModal.
+   * @returns Bollean.
    */
-  public closeModal(): void {
+  public closeModal(): boolean {
     this._modalState.next({ isOpen: false, title: '', content: '' });
+    return false;
+  }
+
+  /**
+   * OkModal.
+   * @returns Boolean.
+   */
+  public okModal(): boolean {
+    this._modalState.next({ isOpen: false, title: '', content: '' });
+    return true;
   }
 }
