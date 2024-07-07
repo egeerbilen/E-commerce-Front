@@ -1,4 +1,4 @@
 export type CustomResponseDto<T> = {
-  data: T;
-  errors: string[];
+  data: T | null;
+  errors: string[] | null;
 };

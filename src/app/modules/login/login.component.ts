@@ -42,8 +42,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this._loginService.userLogin(this.loginForm.value).subscribe((res) => {
         const token = res.data;
-        this._localStorageService.setToken(token);
-        this._router.navigate(['/']);
+        if (token) {
+          this._localStorageService.setToken(token);
+          this._router.navigate(['/']);
+        }
       });
     }
   }

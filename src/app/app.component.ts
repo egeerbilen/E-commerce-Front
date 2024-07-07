@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { setUserData } from './shared/ng-rx/actions/user.actions';
-import { getUserData } from './shared/ng-rx/selectors/user.selectors';
 import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
 
 @Component({

@@ -8,12 +8,12 @@
                 <h5 class="card-title">{{value.name}}</h5>
                 <p class="card-text">Price: {{value.price}}</p>
                 <a [routerLink]="['ProductDetails/' + value.id]" class="btn btn-primary">Go To Details</a>
-                <button (click)="deleteProduct(value.id)" class="btn btn-danger mt-2">
+                <button *ngIf="tokenStatus" (click)="deleteProduct(value.id)" class="btn btn-danger mt-2">
                     <i class="fa fa-trash"></i> Delete
                 </button>
-                <a [routerLink]="['UpdateProduct/' + value.id]" class="btn btn-warning mt-2">
+                <button *ngIf="tokenStatus" [routerLink]="['UpdateProduct/' + value.id]" class="btn btn-warning mt-2">
                     <i class="fa fa-edit"></i> Update
-                </a>
+                </button>
             </div>
         </div>
     </div>

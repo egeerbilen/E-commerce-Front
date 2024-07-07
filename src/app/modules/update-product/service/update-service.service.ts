@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductUpdateDto } from 'src/app/shared/dto/product-update-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
@@ -14,8 +15,8 @@ export class UpdateServiceService extends UpdateProductDataResolverService {
    * @param productObject Product object.
    * @returns Return.
    */
-  public updateProduct<T>(productObject: ProductUpdateDto): any {
-    return this.http.put<CustomResponseDto<T>>(apiEndpoint.product + 'Update/', productObject);
+  public updateProduct(productObject: ProductUpdateDto): Observable<CustomResponseDto<null>> {
+    return this.http.put(apiEndpoint.product + 'Update/', productObject);
   }
 
   /**

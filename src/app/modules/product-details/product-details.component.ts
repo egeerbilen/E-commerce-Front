@@ -19,7 +19,9 @@ export class ProductDetailsComponent {
   constructor(private _route: ActivatedRoute) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
-      this.product = this.resolvedData.data;
+      if (this.resolvedData.data) {
+        this.product = this.resolvedData.data;
+      }
     });
   }
 }

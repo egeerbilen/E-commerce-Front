@@ -46,9 +46,9 @@ export class MyAccountComponent implements OnInit {
    */
   public ngOnInit(): void {
     this.accountForm = this._fb.group({
-      firstName: [this.resolvedData.data.firstName, Validators.required],
-      lastName: [this.resolvedData.data.lastName, Validators.required],
-      email: [this.resolvedData.data.email, [Validators.required, Validators.email]],
+      firstName: [this.resolvedData.data!.firstName, Validators.required],
+      lastName: [this.resolvedData.data!.lastName, Validators.required],
+      email: [this.resolvedData.data!.email, [Validators.required, Validators.email]],
       password: ['123', [Validators.required, Validators.minLength(3)]]
     });
   }

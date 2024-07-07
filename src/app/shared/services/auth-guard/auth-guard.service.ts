@@ -34,7 +34,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-    if (this._localStorageService.getToken()) {
+    if (this._localStorageService.getToken() && state.url === '/Login') {
       // Özel izni yoksa yetkisiz sayfasına yönlendir
       return this._router.navigate(['404']);
     } else {

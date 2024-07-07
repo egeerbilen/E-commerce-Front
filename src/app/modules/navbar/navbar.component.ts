@@ -37,12 +37,14 @@ export class NavbarComponent {
   /**
    * Logout.
    */
-  public logout(): void {
-    this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
+  public async logout(): Promise<void> {
+    const logoutStatus = await this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
 
-    this._router.navigate(['/']);
-    this._localStorageService.removeToken();
-    this._store.dispatch(setUserData({ userData: null }));
-    this.tokenStatus = false;
+    if (logoutStatus) {
+      this._router.navigate(['/']);
+      this._localStorageService.removeToken();
+      this._store.dispatch(setUserData({ userData: null }));
+      this.tokenStatus = false;
+    }
   }
 }
