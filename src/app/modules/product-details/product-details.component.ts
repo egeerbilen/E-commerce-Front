@@ -35,5 +35,7 @@ export class ProductDetailsComponent {
   /**
    * AddToFavorites.
    */
-  public addToFavorites(): void {}
+  public addToFavorites(): void {
+    console.log('addToFavorites');
+  }
 }

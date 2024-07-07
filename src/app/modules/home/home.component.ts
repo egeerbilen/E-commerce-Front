@@ -13,6 +13,7 @@ import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 export class HomeComponent {
   resolvedData!: CustomResponseDto<ProductDto[]>;
   tokenStatus = false;
+  searchText = '';
   filteredData: ProductDto[] = [];
 
   /**
@@ -46,7 +47,6 @@ export class HomeComponent {
    * @param category Category.
    */
   public onCategorySelected(category: number): void {
-    console.log(category);
     if (!category) {
       this.filteredData = this.resolvedData.data ?? [];
     } else {

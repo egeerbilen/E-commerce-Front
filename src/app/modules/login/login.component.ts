@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Store } from '@ngrx/store';
-import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
 
 import { LoginService } from './service/login.service';
@@ -31,7 +28,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this._fb.group({
       email: ['ege.erbilen@example.com', [Validators.required, Validators.email]],
-      password: ['password', Validators.required]
+      password: ['password', [Validators.required, Validators.minLength(3)]]
     });
   }
 
