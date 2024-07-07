@@ -36,7 +36,6 @@ export class InterceptorService {
       setHeaders: {
         authorization: this._loginService.getToken() || '', // Set Authorization header
         // Cookie başlığını eklemeye gerek yok, tarayıcı bunu zaten ekler json server desteklemediğinden cookileri gönderemeyiz
-        ex: this._cookieService.get('exampleCookie') // gibi ek olarak başka bir cookie de eklene bilir
       }
     });
 

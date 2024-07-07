@@ -24,7 +24,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.0.0",
+    "@angular/animations": "^16.2.12",
     "@angular/cdk": "^16.2.14",
     "@angular/common": "^16.0.0",
     "@angular/compiler": "^16.0.0",
@@ -52,6 +52,7 @@
     "ngx-cookie-service": "^16.0.0",
     "ngx-highlight-js": "^17.0.0",
     "ngx-highlightjs": "^10.0.0",
+    "ngx-toastr": "^19.0.0",
     "prettier-eslint": "^16.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
