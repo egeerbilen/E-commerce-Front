@@ -1,14 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { MyAccountComponent } from './my-account.component';
-import { MyAccountService } from './service/my-account.service';
+import { MyAccountDataResolverService } from './service/my-account-data-resolver.service';
 
 const routes: Routes = [
   {
     path: 'MyAccount',
     component: MyAccountComponent,
     title: 'My Account',
-    resolve: { resolvedData: MyAccountService }
+    resolve: { resolvedData: MyAccountDataResolverService }
   }
 ];
 

@@ -20,4 +20,13 @@ export class HomeComponent {
       this.resolvedData = data['resolvedData']; // Access resolved data here
     });
   }
+
+  /**
+   * DeleteProduct.
+   * @param productId ProductId.
+   */
+  public deleteProduct(productId: number): void {
+    this.resolvedData.data = this.resolvedData.data.filter((product) => product.id !== productId);
+    console.log('Servis ekle');
+  }
 }

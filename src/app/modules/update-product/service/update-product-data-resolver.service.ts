@@ -9,14 +9,14 @@ import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.
 @Injectable({
   providedIn: 'root'
 })
-export class ProductDatailsDataResolverService {
+export class UpdateProductDataResolverService {
   /**
    * Constructor.
-   * @param _http Http Request Service.
+   * @param http Http Request Service.
    * @param _router Route to url.
    */
   constructor(
-    private _http: ApiHelperService,
+    public http: ApiHelperService,
     private _router: Router
   ) {}
 
@@ -40,6 +40,6 @@ export class ProductDatailsDataResolverService {
    * @returns Products values.
    */
   public getProductByIdWithProductDetails(id: string): Observable<CustomResponseDto<ProductDetailsDto>> {
-    return this._http.get(apiEndpoint.product + 'GetProductByIdWithProductDetails/' + id);
+    return this.http.get(apiEndpoint.product + 'GetProductByIdWithProductDetails/' + id);
   }
 }

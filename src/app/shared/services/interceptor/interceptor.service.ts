@@ -34,7 +34,7 @@ export class InterceptorService {
 
     const modifiedRequest = request.clone({
       setHeaders: {
-        authorization: this._loginService.getToken() || '', // Set Authorization header
+        authorization: this._loginService.getToken() || '' // Set Authorization header
         // Cookie başlığını eklemeye gerek yok, tarayıcı bunu zaten ekler json server desteklemediğinden cookileri gönderemeyiz
       }
     });

@@ -11,6 +11,7 @@ import { LoginModule } from './modules/login/login.module';
 import { MyAccountModule } from './modules/my-account/my-account.module';
 import { NavbarModule } from './modules/navbar/navbar.module';
 import { ProductDetailsModule } from './modules/product-details/product-details.module';
+import { UpdateProductModule } from './modules/update-product/update-product.module';
 import { SharedModule } from './shared/shared-module/shared-module.module';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     LoginModule,
     NavbarModule,
     HomeModule,
+    UpdateProductModule,
     MyAccountModule,
     ProductDetailsModule,
     FooterModule,

@@ -13,7 +13,7 @@ export class HomeDataResolverService {
    * Constructor.
    * @param _http Http Request Service.
    */
-  constructor(private _http: ApiHelperService) {}
+  constructor(protected _http: ApiHelperService) {}
 
   /**
    * Data to be received when the module is opened.
