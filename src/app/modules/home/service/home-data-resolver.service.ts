@@ -11,9 +11,9 @@ import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.
 export class HomeDataResolverService {
   /**
    * Constructor.
-   * @param _http Http Request Service.
+   * @param http Http Request Service.
    */
-  constructor(protected _http: ApiHelperService) {}
+  constructor(protected http: ApiHelperService) {}
 
   /**
    * Data to be received when the module is opened.
@@ -28,6 +28,6 @@ export class HomeDataResolverService {
    * @returns Products values.
    */
   public getProducts(): Observable<CustomResponseDto<ProductDto[]>> {
-    return this._http.get(apiEndpoint.product + 'GetProducts');
+    return this.http.get(apiEndpoint.product + 'GetProducts');
   }
 }

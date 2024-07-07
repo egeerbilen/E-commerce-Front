@@ -15,7 +15,7 @@ export class MyAccountService extends HomeDataResolverService {
    * @returns Return.
    */
   public updateUser<T>(userObject: UserUpdateDto): any {
-    return this._http.put<CustomResponseDto<T>>(apiEndpoint.user + 'Update/', userObject);
+    return this.http.put<CustomResponseDto<T>>(apiEndpoint.user + 'Update/', userObject);
   }
 
   /**
@@ -23,6 +23,6 @@ export class MyAccountService extends HomeDataResolverService {
    * @param userId User id.
    */
   public deleteUserById(userId: string): void {
-    this._http.delete(apiEndpoint.user + 'Remove/' + userId);
+    this.http.delete(apiEndpoint.user + 'Remove/' + userId);
   }
 }
