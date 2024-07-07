@@ -1,16 +1,5 @@
-import {
-  Component,
-  ComponentRef,
-  EventEmitter,
-  Input,
-  Output,
-  Type,
-  ViewChild,
-  ViewContainerRef,
-  AfterViewInit,
-  ComponentFactoryResolver,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { ModalService } from './service/modal-service.service';
 
 @Component({
@@ -20,20 +9,30 @@ import { ModalService } from './service/modal-service.service';
 })
 export class ModalHelperComponent implements OnInit {
   isOpen = false;
-  title: string = '';
-  content: string = '';
+  title = '';
+  content = '';
 
-  constructor(private modalService: ModalService) {}
+  /**
+   * Constructor.
+   * @param _modalService ModalService.
+   */
+  constructor(private _modalService: ModalService) {}
 
-  ngOnInit(): void {
-    this.modalService.modalState$.subscribe((state: any) => {
+  /**
+   * NgOnInit.
+   */
+  public ngOnInit(): void {
+    this._modalService.modalState$.subscribe((state: any) => {
       this.isOpen = state.isOpen;
       this.title = state.title;
       this.content = state.content;
     });
   }
 
-  closeModal() {
-    this.modalService.closeModal();
+  /**
+   * CloseModal.
+   */
+  public closeModal(): void {
+    this._modalService.closeModal();
   }
 }

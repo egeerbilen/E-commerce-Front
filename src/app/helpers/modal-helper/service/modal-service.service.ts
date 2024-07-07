@@ -1,38 +1,57 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 import { ModalHelperComponent } from '../modal-helper.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  private modalState = new BehaviorSubject<any>({ isOpen: false, title: '', content: '' });
-  modalState$ = this.modalState.asObservable();
+  private _modalState = new BehaviorSubject<any>({ isOpen: false, title: '', content: '' });
+  modalState$ = this._modalState.asObservable();
 
+  /**
+   * Constructor.
+   * @param _componentFactoryResolver ComponentFactoryResolver.
+   * @param _appRef AppRef.
+   * @param _injector Injector.
+   */
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef,
-    private injector: Injector
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private _appRef: ApplicationRef,
+    private _injector: Injector
   ) {}
 
-  private createModalComponent(): ModalHelperComponent {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalHelperComponent);
-    const componentRef = componentFactory.create(this.injector);
-    this.appRef.attachView(componentRef.hostView);
+  /**
+   * CreateModalComponent.
+   * @returns ModalHelperComponent.
+   */
+  private _createModalComponent(): ModalHelperComponent {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalHelperComponent);
+    const componentRef = componentFactory.create(this._injector);
+    this._appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as any).rootNodes[0] as HTMLElement;
     document.body.appendChild(domElem);
     return componentRef.instance;
   }
 
-  openModal(title: string, content: string) {
-    const modalComponent = this.createModalComponent();
-    this.modalState.next({ isOpen: true, title, content });
+  /**
+   * OpenModal.
+   * @param title Title.
+   * @param content Content.
+   */
+  public openModal(title: string, content: string): void {
+    const modalComponent = this._createModalComponent();
+    this._modalState.next({ isOpen: true, title, content });
     modalComponent.isOpen = true;
     modalComponent.title = title;
     modalComponent.content = content;
   }
 
-  closeModal() {
-    this.modalState.next({ isOpen: false, title: '', content: '' });
+  /**
+   * CloseModal.
+   */
+  public closeModal(): void {
+    this._modalState.next({ isOpen: false, title: '', content: '' });
   }
 }

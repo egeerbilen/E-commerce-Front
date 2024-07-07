@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 
+import { DecodedTokenDto } from '../../dto/decoded-token-dto';
 import { setUserData } from '../../ng-rx/actions/user.actions';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { setUserData } from '../../ng-rx/actions/user.actions';
 export class LocalStorageService {
   // * Token ları zaten back-end de de kontrol edeceksin
   private _token = '';
-  private _decodedToken: object;
+  private _decodedToken: DecodedTokenDto | null;
 
   /**
    * Constructor.
@@ -23,7 +24,7 @@ export class LocalStorageService {
   ) {
     this._token = localStorage.getItem('bearer_token') ?? ''; // || null undefined veya boş geldiği zaman sağ tarafı değer atayacak
     this._decodedToken = this.decodeToken();
-    this._store.dispatch(setUserData({ userData: this._decodedToken }));
+    this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
   }
 
   /**
@@ -42,8 +43,8 @@ export class LocalStorageService {
     localStorage.setItem('bearer_token', token);
     this._token = token;
     this._decodedToken = this.decodeToken();
-    this._store.dispatch(setUserData({ userData: this._decodedToken }));
-    console.log('Login olundu');
+    console.log(this._decodedToken);
+    this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
   }
 
   /**
@@ -52,7 +53,7 @@ export class LocalStorageService {
   public removeToken(): void {
     localStorage.removeItem('bearer_token');
     this._token = '';
-    this._decodedToken = {};
+    this._decodedToken = null;
   }
 
   /**
@@ -67,7 +68,7 @@ export class LocalStorageService {
    * GetToken.
    * @returns Token.
    */
-  public getDecodedToken(): object {
+  public getDecodedToken(): DecodedTokenDto | null {
     return this._decodedToken;
   }
 
@@ -75,7 +76,7 @@ export class LocalStorageService {
    * DecodeToken.
    * @returns Object.
    */
-  public decodeToken(): object {
-    return this._jwtHelperService.decodeToken(this._token) ?? {};
+  public decodeToken(): DecodedTokenDto | null {
+    return this._jwtHelperService.decodeToken(this._token) ?? null;
   }
 }

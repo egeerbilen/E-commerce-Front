@@ -23,14 +23,9 @@ export class AppComponent {
     private _store: Store
   ) {
     const token = this._localStorageService.getDecodedToken();
-    console.log(token);
 
     if (!token) {
       this._store.dispatch(setUserData({ userData: token }));
-      // this._store.select(getUserData).subscribe((res) => {
-      //   this.user = res;
-      //   console.log(res);
-      // });
     }
   }
 }

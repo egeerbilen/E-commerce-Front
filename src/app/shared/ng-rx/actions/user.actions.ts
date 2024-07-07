@@ -1,3 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-export const setUserData = createAction('[Counter Component] setUserData', props<{ userData: object }>());
+import { DecodedTokenDto } from '../../dto/decoded-token-dto';
+
+export const setUserData = createAction('[Counter Component] setUserData', props<{ userData: DecodedTokenDto | null }>());
