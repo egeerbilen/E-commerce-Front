@@ -24,4 +24,16 @@ export class ProductDetailsComponent {
       }
     });
   }
+
+  /**
+   * AddToBasket.
+   */
+  public addToBasket(): void {
+    console.log('addToBasket');
+  }
+
+  /**
+   * AddToFavorites.
+   */
+  public addToFavorites(): void {}
 }

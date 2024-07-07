@@ -44,4 +44,13 @@ export class HomeComponent {
     this.resolvedData.data = this.resolvedData.data!.filter((product) => product.id !== productId);
     console.log('Servis ekle');
   }
+
+  /**
+   * AddToBasket.
+   * @param productId ProductId.
+   */
+  public addToBasket(productId: number): void {
+    // Sepete ekleme işlemini burada gerçekleştirin
+    console.log('Product added to cart:', productId);
+  }
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>My Account</h2>
+  <h1>My Account</h1>
   <form [formGroup]="accountForm">
     <div class="form-group">
       <label for="firstName">First Name</label>
@@ -21,7 +21,7 @@
       <input id="password" type="password" class="form-control" formControlName="password">
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3" [disabled]="!accountForm.valid"
+    <button type="submit" class="btn btn-success mt-3" [disabled]="!accountForm.valid"
       (click)="updateUser()">Update</button>
     <button type="button" class="btn btn-danger mt-3  ms-3 " (click)="deleteUser()">Delete User</button>
     <button type="button" class="btn btn-secondary ms-3 mt-3" (click)="onReset()">Clear</button>
