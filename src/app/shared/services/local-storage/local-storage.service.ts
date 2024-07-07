@@ -10,6 +10,7 @@ import { setUserData } from '../../ng-rx/actions/user.actions';
 })
 export class LocalStorageService {
   // * Token ları zaten back-end de de kontrol edeceksin
+  public userId = 0;
   private _token = '';
   private _decodedToken: DecodedTokenDto | null;
 
@@ -24,6 +25,7 @@ export class LocalStorageService {
   ) {
     this._token = localStorage.getItem('bearer_token') ?? ''; // || null undefined veya boş geldiği zaman sağ tarafı değer atayacak
     this._decodedToken = this.decodeToken();
+    this.userId = this._decodedToken!.userId;
     this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
   }
 
@@ -43,7 +45,7 @@ export class LocalStorageService {
     localStorage.setItem('bearer_token', token);
     this._token = token;
     this._decodedToken = this.decodeToken();
-    console.log(this._decodedToken);
+    this.userId = this._decodedToken!.userId;
     this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
   }
 
@@ -54,6 +56,7 @@ export class LocalStorageService {
     localStorage.removeItem('bearer_token');
     this._token = '';
     this._decodedToken = null;
+    this.userId = 0;
   }
 
   /**
@@ -78,5 +81,13 @@ export class LocalStorageService {
    */
   public decodeToken(): DecodedTokenDto | null {
     return this._jwtHelperService.decodeToken(this._token) ?? null;
+  }
+
+  /**
+   * GetToken.
+   * @returns Token.
+   */
+  public getUserId(): number {
+    return this.userId;
   }
 }

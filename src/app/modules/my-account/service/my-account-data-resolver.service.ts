@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
-import { DecodedTokenDto } from 'src/app/shared/dto/decoded-token-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
@@ -26,16 +25,14 @@ export class MyAccountDataResolverService {
    * @returns Get products.
    */
   public resolve(): Observable<CustomResponseDto<UserDto[]>> {
-    const decodedToken = this._localStorageService.getDecodedToken() as DecodedTokenDto;
-    return this.getUserById(decodedToken.userId.toString());
+    return this.getUserById();
   }
 
   /**
    * Get user by id.
-   * @param userId User id.
    * @returns Products values.
    */
-  public getUserById(userId: string): Observable<CustomResponseDto<UserDto[]>> {
-    return this.http.get(apiEndpoint.user + 'GetById/' + userId);
+  public getUserById(): Observable<CustomResponseDto<UserDto[]>> {
+    return this.http.get(apiEndpoint.user + 'GetById/' + this._localStorageService.getUserId().toString());
   }
 }

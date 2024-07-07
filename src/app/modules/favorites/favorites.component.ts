@@ -25,6 +25,7 @@ export class FavoritesComponent {
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedFavoritesData = data['resolvedData'];
+      console.log(this.resolvedFavoritesData);
     });
 
     this._store.select(getUserData).subscribe((res) => {
