@@ -5,7 +5,8 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                 [(ngModel)]="searchText">
         </div>
-        <app-category-filter (categorySelected)="onCategorySelected($event)"></app-category-filter>
+        <app-category-filter [categories]="resolvedCategoriesData.data || []"
+            (categorySelected)="onCategorySelected($event)"></app-category-filter>
     </div>
     <div class="col-12 col-md-9">
         <div class="row">

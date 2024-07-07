@@ -3,7 +3,7 @@
   <ul class="list-group">
     <li *ngFor="let category of categories" class="list-group-item list-group-item-action"
       (click)="filterByCategory(category.id)" appHighlightCategory>
-      {{ category.value }}
+      {{ category.name }}
     </li>
   </ul>
 </div>

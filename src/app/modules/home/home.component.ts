@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
@@ -11,7 +12,8 @@ import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  resolvedData!: CustomResponseDto<ProductDto[]>;
+  resolvedCategoriesData!: CustomResponseDto<CategoryDto[]>;
+  resolvedProductsData!: CustomResponseDto<ProductDto[]>;
   tokenStatus = false;
   searchText = '';
   filteredData: ProductDto[] = [];
@@ -26,7 +28,8 @@ export class HomeComponent {
     private _store: Store
   ) {
     this._route.data.subscribe((data) => {
-      this.resolvedData = data['resolvedData']; // Access resolved data here
+      this.resolvedProductsData = data['resolvedData'].getProducts; // Access resolved data here
+      this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
     });
 
     this._store.select(getUserData).subscribe((res) => {
@@ -37,8 +40,8 @@ export class HomeComponent {
       }
     });
 
-    if (this.resolvedData.data) {
-      this.filteredData = this.resolvedData.data; // Başlangıçta tüm verileri göster
+    if (this.resolvedProductsData.data) {
+      this.filteredData = this.resolvedProductsData.data; // Başlangıçta tüm verileri göster
     }
   }
 
@@ -48,9 +51,9 @@ export class HomeComponent {
    */
   public onCategorySelected(category: number): void {
     if (!category) {
-      this.filteredData = this.resolvedData.data ?? [];
+      this.filteredData = this.resolvedProductsData.data ?? [];
     } else {
-      this.filteredData = this.resolvedData.data!.filter((item) => item.categoryId === category);
+      this.filteredData = this.resolvedProductsData.data!.filter((item) => item.categoryId === category);
     }
   }
 
@@ -59,7 +62,7 @@ export class HomeComponent {
    * @param productId ProductId.
    */
   public deleteProduct(productId: number): void {
-    this.resolvedData.data = this.resolvedData.data!.filter((product) => product.id !== productId);
+    this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     console.log('Servis ekle');
   }
 

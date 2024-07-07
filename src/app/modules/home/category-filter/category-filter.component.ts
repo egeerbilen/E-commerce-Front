@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CategoryDto } from 'src/app/shared/dto/category-dto';
 
 @Component({
   selector: 'app-category-filter',
@@ -7,19 +8,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class CategoryFilterComponent {
   @Output() categorySelected = new EventEmitter<number>();
-  categories: { id: number; value: string }[] = [
-    { id: 0, value: 'Category 0' },
-    { id: 1, value: 'Category 1' },
-    { id: 2, value: 'Category 2' },
-    { id: 3, value: 'Category 3' },
-    { id: 4, value: 'Category 4' }
-  ];
+  @Input() categories: CategoryDto[] = [];
 
   /**
    * FilterByCategory.
    * @param category Category.
    */
-  public filterByCategory(category: any): void {
+  public filterByCategory(category: number): void {
     this.categorySelected.emit(category);
   }
 }
