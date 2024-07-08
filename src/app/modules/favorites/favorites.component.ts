@@ -31,14 +31,12 @@ export class FavoritesComponent {
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedFavoritesData = data['resolvedData'].data;
-
-      if (!this.resolvedFavoritesData) {
-        const a = this._userLocalStoregeFavoritesService.getItems();
-        console.log(a);
-      }
     });
 
-    console.log(this.resolvedFavoritesData);
+    if (!this.resolvedFavoritesData) {
+      // this.resolvedFavoritesData = this._userLocalStoregeFavoritesService.getItems();
+    }
+    console.log();
 
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak

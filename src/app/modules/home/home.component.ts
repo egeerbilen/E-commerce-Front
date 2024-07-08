@@ -44,8 +44,12 @@ export class HomeComponent {
     this._route.data.subscribe((data) => {
       this.resolvedProductsData = data['resolvedData'].getProducts; // Access resolved data here
       this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
+
       if (this.resolvedProductsData.data) {
-        this.filteredData = this.resolvedProductsData.data; // Başlangıçta tüm verileri göster
+        const allProductsCategory: CategoryDto = { id: 0, name: 'Tüm Ürünler' };
+        this.resolvedCategoriesData.data!.unshift(allProductsCategory);
+
+        this.filteredData = this.resolvedProductsData.data;
         this._initializeFavoriteStatus();
       }
     });
