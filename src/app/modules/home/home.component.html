@@ -21,11 +21,12 @@
                         <button *ngIf="tokenStatus" (click)="addToBasket(value.id)" class="btn btn-success mt-2">
                             <i class="fa fa-shopping-cart"></i> Basket
                         </button>
-                        <button *ngIf="tokenStatus" [routerLink]="['UpdateProduct/' + value.id]"
+                        <button *ngIf="tokenStatus && isAdmin" [routerLink]="['UpdateProduct/' + value.id]"
                             class="btn btn-warning mt-2">
                             <i class="fa fa-edit"></i> Update
                         </button>
-                        <button *ngIf="tokenStatus" (click)="deleteProduct(value.id)" class="btn btn-danger mt-2">
+                        <button *ngIf="tokenStatus && isAdmin" (click)="deleteProduct(value.id)"
+                            class="btn btn-danger mt-2">
                             <i class="fa fa-trash"></i> Delete
                         </button>
                     </div>
