@@ -6,7 +6,6 @@ import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { UserLocalStoregeFavoritesService } from 'src/app/shared/services/favorites/user-favorites-local-storege.service';
 
 import { FavoriteService } from '../favorites/service/favorite.service';
 
@@ -30,17 +29,20 @@ export class HomeComponent {
    * @param _store Store.
    * @param _toastService ToastService.
    * @param _favoriteService FavoriteService.
-   * @param _userLocalStoregeFavoritesService UserLocalStoregeFavoritesService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _toastService: ToastService,
-    private _favoriteService: FavoriteService,
-    private _userLocalStoregeFavoritesService: UserLocalStoregeFavoritesService
+    private _favoriteService: FavoriteService
   ) {
-    this.favoriteProducts = this._userLocalStoregeFavoritesService.getItems();
-
+    this._favoriteService.getUserProducts().subscribe((res) => {
+      if (res?.data) {
+        for (const element of res.data) {
+          this.favoriteStatus[element.id] = true;
+        }
+      }
+    });
     this._route.data.subscribe((data) => {
       this.resolvedProductsData = data['resolvedData'].getProducts; // Access resolved data here
       this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
@@ -111,18 +113,15 @@ export class HomeComponent {
    */
   public addToFavorites(productId: number): void {
     if (this.favoriteProducts.includes(productId)) {
-      console.log('local storage kullan');
       this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
       this._toastService.show('Product removed to favorites');
       this.favoriteStatus[productId] = false;
-      this._favoriteService.deleteUserFavoriteProduct(productId);
-      this._userLocalStoregeFavoritesService.removeItem(productId);
+      this._favoriteService.deleteUserFavoriteProduct(productId).subscribe();
     } else {
       this.favoriteProducts.push(productId);
       this.favoriteStatus[productId] = true;
       this._toastService.show('Product added to favorites');
-      this._favoriteService.createUserFavoriteProduct(productId);
-      this._userLocalStoregeFavoritesService.addItem(productId);
+      this._favoriteService.createUserFavoriteProduct(productId).subscribe();
     }
   }
 }

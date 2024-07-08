@@ -34,7 +34,6 @@ export class FavoritesDataResolverService {
    */
   public getUserProducts(): Observable<CustomResponseDto<ProductDto[]> | null> {
     if (!this.userLocalStorageService.getUserId()) {
-      console.log('!!!!! Cacheden local storage a yaz ordan çek kullanıcı giriş yapmadıysa');
       return of(null);
     }
     return this.http.get(apiEndpoint.userFavorites + 'GetUserFavoritesById/' + this.userLocalStorageService.getUserId().toString());

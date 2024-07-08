@@ -26,12 +26,13 @@ export class FavoriteService extends FavoritesDataResolverService {
    * @returns Resturn.
    */
   public createUserFavoriteProduct(productId: number): Observable<CustomResponseDto<null>> {
-    const url = `${apiEndpoint.userFavorites}UserFavorites/`;
+    const url = apiEndpoint.userFavorites + 'CreateUserFavoriteProduct/';
     const userId = this.userLocalStorageService.getUserId().toString();
     const body = {
       userId: userId,
       productId: productId
     };
+    console.log(body);
     return this.http.post(url, body);
   }
 }
