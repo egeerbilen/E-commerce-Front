@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Store } from '@ngrx/store';
+import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
+import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 import { LoginService } from './service/login.service';
 
@@ -17,14 +20,18 @@ export class LoginComponent {
    * Constructor.
    * @param _fb Fb.
    * @param _loginService LoginService.
-   * @param _localStorageService LocalStorageService.
+   * @param _userLocalStorageService LocalStorageService.
    * @param _router Router.
+   * @param _jwtHelperService JwtHelperService.
+   * @param _store Store.
    */
   constructor(
     private _fb: FormBuilder,
     private _loginService: LoginService,
-    private _localStorageService: LocalStorageService,
-    private _router: Router
+    private _userLocalStorageService: UserLocalStorageService,
+    private _router: Router,
+    private _jwtHelperService: JwtHelperService,
+    private _store: Store
   ) {
     this.loginForm = this._fb.group({
       email: ['ege.erbilen@example.com', [Validators.required, Validators.email]],
@@ -40,7 +47,8 @@ export class LoginComponent {
       this._loginService.userLogin(this.loginForm.value).subscribe((res) => {
         const token = res.data;
         if (token) {
-          this._localStorageService.setToken(token);
+          this._userLocalStorageService.setToken(token);
+          this._store.dispatch(setUserData({ userData: this._jwtHelperService.decodeToken(token) }));
           this._router.navigate(['/']);
         }
       });

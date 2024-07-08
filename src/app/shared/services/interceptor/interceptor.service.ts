@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
-import { LocalStorageService } from '../local-storage/local-storage.service';
+import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class InterceptorService {
    * @param _cookieService Cookie service.
    */
   constructor(
-    private _loginService: LocalStorageService,
+    private _loginService: UserLocalStorageService,
     private _cookieService: CookieService
   ) {}
   // Daha sonra bu interceptor'ı AppModule'unuzda veya bir servis modülünde kullanmanız gerekiyor.

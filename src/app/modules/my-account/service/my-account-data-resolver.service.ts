@@ -4,7 +4,7 @@ import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
-import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
+import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,11 @@ export class MyAccountDataResolverService {
   /**
    * Constructor.
    * @param http Http Request Service.
-   * @param _localStorageService LocalStorageService.
+   * @param _userLocalStorageService LocalStorageService.
    */
   constructor(
     protected http: ApiHelperService,
-    private _localStorageService: LocalStorageService
+    private _userLocalStorageService: UserLocalStorageService
   ) {}
 
   /**
@@ -33,6 +33,6 @@ export class MyAccountDataResolverService {
    * @returns Products values.
    */
   public getUserById(): Observable<CustomResponseDto<UserDto[]>> {
-    return this.http.get(apiEndpoint.user + 'GetById/' + this._localStorageService.getUserId().toString());
+    return this.http.get(apiEndpoint.user + 'GetById/' + this._userLocalStorageService.getUserId().toString());
   }
 }

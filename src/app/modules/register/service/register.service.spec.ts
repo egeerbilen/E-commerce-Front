@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+
 import { RegisterService } from './register.service';
 
 describe('Service: Register', () => {

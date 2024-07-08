@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { setUserData } from './shared/ng-rx/actions/user.actions';
-import { LocalStorageService } from './shared/services/local-storage/local-storage.service';
+import { UserLocalStorageService } from './shared/services/local-storage/user-local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent {
    * @param _store Store.
    */
   constructor(
-    private _localStorageService: LocalStorageService,
+    private _localStorageService: UserLocalStorageService,
     private _store: Store
   ) {
     const token = this._localStorageService.getDecodedToken();

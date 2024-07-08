@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
-import { LocalStorageService } from 'src/app/shared/services/local-storage/local-storage.service';
 
 import { MyAccountService } from './service/my-account.service';
 
@@ -25,7 +24,7 @@ export class MyAccountComponent implements OnInit {
    * @param _fb Fb.
    * @param _modalHelperService ModalHelperService.
    * @param _myAccountService MyAccountService.
-   * @param _localStorageService LocalStorageService.
+   * @param _jwtHelperService JwtHelperService.
    * @param _toastService ToastService.
    */
   constructor(
@@ -33,7 +32,7 @@ export class MyAccountComponent implements OnInit {
     private _fb: FormBuilder,
     private _modalHelperService: ModalHelperService,
     private _myAccountService: MyAccountService,
-    private _localStorageService: LocalStorageService,
+    private _jwtHelperService: JwtHelperService,
     private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
@@ -57,7 +56,7 @@ export class MyAccountComponent implements OnInit {
    * UpdateUser.
    */
   public updateUser(): void {
-    const formValueWithId = { ...this.accountForm.value, id: this._localStorageService.decodeToken()?.userId };
+    const formValueWithId = { ...this.accountForm.value, id: this._jwtHelperService.decodeToken()?.userId };
     this._toastService.show('User Updated');
     this._myAccountService.updateUser(formValueWithId).subscribe();
   }

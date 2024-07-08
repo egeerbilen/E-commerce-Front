@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./baskets.component.css']
 })
 export class BasketsComponent implements OnInit {
+  /**
+   *
+   */
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  /**
+   *
+   */
+  ngOnInit() {}
 }

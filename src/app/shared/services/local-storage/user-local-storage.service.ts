@@ -8,7 +8,7 @@ import { setUserData } from '../../ng-rx/actions/user.actions';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService {
+export class UserLocalStorageService {
   // * Token ları zaten back-end de de kontrol edeceksin
   public userId = 0;
   private _token = '';
@@ -24,9 +24,14 @@ export class LocalStorageService {
     private _store: Store
   ) {
     this._token = localStorage.getItem('bearer_token') ?? ''; // || null undefined veya boş geldiği zaman sağ tarafı değer atayacak
-    this._decodedToken = this.decodeToken();
-    this.userId = this._decodedToken!.userId;
-    this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
+
+    this._decodedToken = this._jwtHelperService.decodeToken(this._token);
+    if (this._decodedToken) {
+      this.userId = this._decodedToken.userId;
+      this._store.dispatch(setUserData({ userData: this._decodedToken }));
+    } else {
+      this._store.dispatch(setUserData({ userData: null }));
+    }
   }
 
   /**
@@ -43,10 +48,13 @@ export class LocalStorageService {
    */
   public setToken(token: string): void {
     localStorage.setItem('bearer_token', token);
-    this._token = token;
-    this._decodedToken = this.decodeToken();
-    this.userId = this._decodedToken!.userId;
-    this._store.dispatch(setUserData({ userData: this._decodedToken ?? null }));
+    this._decodedToken = this._jwtHelperService.decodeToken(token);
+    if (this._decodedToken) {
+      this.userId = this._decodedToken.userId;
+      this._store.dispatch(setUserData({ userData: this._decodedToken }));
+    } else {
+      this._store.dispatch(setUserData({ userData: null }));
+    }
   }
 
   /**
@@ -73,14 +81,6 @@ export class LocalStorageService {
    */
   public getDecodedToken(): DecodedTokenDto | null {
     return this._decodedToken;
-  }
-
-  /**
-   * DecodeToken.
-   * @returns Object.
-   */
-  public decodeToken(): DecodedTokenDto | null {
-    return this._jwtHelperService.decodeToken(this._token) ?? null;
   }
 
   /**
