@@ -38,11 +38,13 @@ export class HomeComponent {
   ) {
     this._favoriteService.getUserProducts().subscribe((res) => {
       if (res?.data) {
-        for (const element of res.data) {
-          this.favoriteStatus[element.id] = true;
-        }
+        this.favoriteProducts = res.data.map((product) => product.id);
+        this.favoriteProducts.forEach((id) => {
+          this.favoriteStatus[id] = true;
+        });
       }
     });
+
     this._route.data.subscribe((data) => {
       this.resolvedProductsData = data['resolvedData'].getProducts; // Access resolved data here
       this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
@@ -114,14 +116,20 @@ export class HomeComponent {
   public addToFavorites(productId: number): void {
     if (this.favoriteProducts.includes(productId)) {
       this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
-      this._toastService.show('Product removed to favorites');
+      this._toastService.show('Product removed from favorites');
       this.favoriteStatus[productId] = false;
-      this._favoriteService.deleteUserFavoriteProduct(productId).subscribe();
+      this._favoriteService.deleteUserFavoriteProduct(productId).subscribe(() => {
+        this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
+        this.favoriteStatus[productId] = false;
+      });
     } else {
       this.favoriteProducts.push(productId);
       this.favoriteStatus[productId] = true;
       this._toastService.show('Product added to favorites');
-      this._favoriteService.createUserFavoriteProduct(productId).subscribe();
+      this._favoriteService.createUserFavoriteProduct(productId).subscribe(() => {
+        this.favoriteProducts.push(productId);
+        this.favoriteStatus[productId] = true;
+      });
     }
   }
 }
