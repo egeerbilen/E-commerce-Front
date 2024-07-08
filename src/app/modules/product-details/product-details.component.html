@@ -7,10 +7,10 @@
       <h2>{{ product.name }}</h2>
       <p>{{ product.productDetails.description }}</p>
       <h4>${{ product.price }}</h4>
-      <button (click)="addToBasket()" class="btn btn-success mt-2">
+      <button *ngIf="tokenStatus" (click)="addToBasket()" class="btn btn-success mt-2">
         <i class="fa fa-shopping-cart"></i> Basket
       </button>
-      <button (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+      <button *ngIf="tokenStatus" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
         <i class="fas fa-heart text-danger"></i> Favorite
       </button>
     </div>

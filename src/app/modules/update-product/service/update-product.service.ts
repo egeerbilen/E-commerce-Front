@@ -9,7 +9,7 @@ import { UpdateProductDataResolverService } from './update-product-data-resolver
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateServiceService extends UpdateProductDataResolverService {
+export class UpdateProductService extends UpdateProductDataResolverService {
   /**
    * Update product by id.
    * @param productObject Product object.

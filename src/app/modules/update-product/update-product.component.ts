@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 
-import { UpdateServiceService } from './service/update-service.service';
+import { UpdateProductService } from './service/update-product.service';
 
 @Component({
   selector: 'app-update-product',
@@ -26,7 +26,7 @@ export class UpdateProductComponent {
   constructor(
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
-    private _updateServiceService: UpdateServiceService
+    private _updateServiceService: UpdateProductService
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];

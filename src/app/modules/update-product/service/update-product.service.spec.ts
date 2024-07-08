@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { UpdateServiceService } from './update-service.service';
+import { UpdateProductService } from './update-product.service';
 
 describe('Service: UpdateService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UpdateServiceService]
+      providers: [UpdateProductService]
     });
   });
 
-  it('should ...', inject([UpdateServiceService], (service: UpdateServiceService) => {
+  it('should ...', inject([UpdateProductService], (service: UpdateProductService) => {
     expect(service).toBeTruthy();
   }));
 });
