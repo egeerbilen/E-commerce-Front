@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
@@ -33,7 +33,7 @@ export class ProductDatailsDataResolverService {
   public resolve(route: ActivatedRouteSnapshot): Observable<ProductDetailsDto | boolean> {
     const productId = route.paramMap.get('id') ?? '';
     if (!productId) {
-      this._router.navigate(['/not-found']);
+      this._router.navigate(['/404']);
     }
 
     let userId = 0;
@@ -41,10 +41,20 @@ export class ProductDatailsDataResolverService {
       userId = res?.userId ?? 0;
     });
 
+    // forkJoin, RxJS kütüphanesinde bulunan bir operatördür ve birden fazla observable'ın tamamlanmasını bekleyip,
+    // tamamlandıklarında hepsinin son çıktısını tek bir observable olarak birleştiren bir işleve sahiptir.
     const resObject = forkJoin({
       getProductById: this.getProductById(productId),
       isFavoriteProduct: this.isFavoriteProduct(userId, productId)
-    });
+    }).pipe(
+      catchError((error) => {
+        this._router.navigate(['/404']);
+        return of(false);
+      })
+    );
+    // pipe, RxJS (Reactive Extensions for JavaScript) kütüphanesinde bulunan bir fonksiyondur ve
+    // bir observable üzerinde bir dizi operatörü sıralı olarak uygulamanıza olanak tanır. Bu sayede,
+    // observable akışını çeşitli operatörlerle (örneğin map, filter, catchError gibi) dönüştürebilir ve işleyebilirsiniz.
     return resObject;
   }
 
@@ -64,6 +74,10 @@ export class ProductDatailsDataResolverService {
    * @returns Products favorite status.
    */
   public isFavoriteProduct(userId: number, productId: string): Observable<CustomResponseDto<boolean>> {
-    return this._http.get(apiEndpoint.favorites + 'IsFavoriteProduct/' + userId.toString() + '/' + productId);
+    if (userId === 0) {
+      return of({ data: false } as CustomResponseDto<boolean>);
+    } else {
+      return this._http.get(apiEndpoint.favorites + 'IsFavoriteProduct/' + userId.toString() + '/' + productId);
+    }
   }
 }

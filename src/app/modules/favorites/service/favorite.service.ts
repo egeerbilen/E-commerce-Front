@@ -32,7 +32,6 @@ export class FavoriteService extends FavoritesDataResolverService {
       userId: userId,
       productId: productId
     };
-    console.log(body);
     return this.http.post(url, body);
   }
 }

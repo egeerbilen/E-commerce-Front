@@ -35,6 +35,7 @@ export class ProductDetailsComponent {
     this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
+      console.log(this.resolvedData);
       if (this.resolvedData.getProductById.data) {
         this.product = this.resolvedData.getProductById.data;
       }
