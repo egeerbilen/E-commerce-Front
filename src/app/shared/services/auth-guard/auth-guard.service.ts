@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { getUserData } from '../../ng-rx/selectors/user.selectors';
-import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +38,12 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
+      console.log('Token yetkilerini yaz ');
+      console.log('ece ile gir http://localhost:4200/AddProduct adresine git user bu adrese girmemeli daha generic çözüm bul');
+      console.log(res);
     });
 
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-
     if (!this.tokenStatus) {
       if (state.url === '/Login') {
         // Eğer URL '/Login' ise true döndür

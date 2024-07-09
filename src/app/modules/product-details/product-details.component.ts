@@ -6,6 +6,8 @@ import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
+import { FavoriteService } from '../favorites/service/favorite.service';
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -22,11 +24,13 @@ export class ProductDetailsComponent {
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _loadingPageService LoadingPageService.
+   * @param _favoriteService FavoriteService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _loadingPageService: LoadingPageService
+    private _loadingPageService: LoadingPageService,
+    private _favoriteService: FavoriteService
   ) {
     this._loadingPageService.show();
     this._route.data.subscribe((data) => {
@@ -61,11 +65,12 @@ export class ProductDetailsComponent {
    */
   public addToFavorites(): void {
     this._loadingPageService.show();
-    console.log(this.isFavorite);
     this.isFavorite = !this.isFavorite;
-    console.log(this.isFavorite);
-    console.log(this.product);
-    console.log('addToFavorites back endde bu user ın bu ürünü favoridemi ture false dönemeli');
+    if (this.isFavorite) {
+      this._favoriteService.createUserFavoriteProduct(this.product.id).subscribe();
+    } else {
+      this._favoriteService.deleteUserFavoriteProduct(this.product.id).subscribe();
+    }
     this._loadingPageService.hide();
   }
 }
