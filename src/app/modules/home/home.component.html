@@ -31,7 +31,7 @@
                         </button>
                     </div>
                     <button *ngIf="tokenStatus" (click)="addToFavorites(value.id)"
-                        [ngClass]="{ 'btn-danger': favoriteStatus[value.id], 'btn-warning': !favoriteStatus[value.id] }"
+                        [ngClass]="{ 'btn-danger': favoriteStatus[value.id], 'btn-primary': !favoriteStatus[value.id] }"
                         class="btn position-absolute top-0 end-0 m-2">
                         <i class="fa fa-heart"></i>
                     </button>

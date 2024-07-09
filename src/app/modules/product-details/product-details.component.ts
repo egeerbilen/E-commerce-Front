@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
+import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
@@ -12,9 +12,10 @@ import { LoadingPageService } from 'src/app/shared/services/loading-page/loading
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent {
-  resolvedData!: CustomResponseDto<ProductDto>;
+  resolvedData!: ProductDetailsDto;
   product!: ProductDto;
   tokenStatus = false;
+  isFavorite = false;
 
   /**
    * Constructor.
@@ -30,8 +31,12 @@ export class ProductDetailsComponent {
     this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
-      if (this.resolvedData.data) {
-        this.product = this.resolvedData.data;
+      if (this.resolvedData.getProductById.data) {
+        this.product = this.resolvedData.getProductById.data;
+      }
+
+      if (this.resolvedData.isFavoriteProduct.data) {
+        this.isFavorite = this.resolvedData.isFavoriteProduct.data;
       }
     });
 
@@ -56,6 +61,9 @@ export class ProductDetailsComponent {
    */
   public addToFavorites(): void {
     this._loadingPageService.show();
+    console.log(this.isFavorite);
+    this.isFavorite = !this.isFavorite;
+    console.log(this.isFavorite);
     console.log(this.product);
     console.log('addToFavorites back endde bu user ın bu ürünü favoridemi ture false dönemeli');
     this._loadingPageService.hide();

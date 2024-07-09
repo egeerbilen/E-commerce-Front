@@ -36,7 +36,7 @@ export class NavbarComponent {
         this.tokenStatus = true;
       }
     });
-    this._loadingPageService.show();
+    this._loadingPageService.hide();
   }
 
   /**
