@@ -47,7 +47,18 @@ export class InterceptorService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error(error);
+        const errorString = error.error;
+
+        const errorsIndex = errorString.indexOf('"Errors":');
+        const endIndex = errorString.indexOf(']]"', errorsIndex);
+        const errorsPart = errorString.substring(errorsIndex, endIndex + 2);
+
+        console.error(
+          '!!! WARNING SERVER ERROR !!! \n --------------------------------------------------------------- \n' +
+            errorsPart +
+            '\n --------------------------------------------------------------- \n'
+        );
+
         return throwError(error);
       })
     );

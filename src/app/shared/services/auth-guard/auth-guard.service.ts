@@ -15,12 +15,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   /**
    * Constructor.
    * @param _router Router.
-   * @param _localStorageService Local Storage Service.
    * @param _store Store.
    */
   constructor(
     private _router: Router,
-    private _localStorageService: UserLocalStorageService,
     private _store: Store
   ) {}
 

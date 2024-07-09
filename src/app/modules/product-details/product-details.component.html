@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-6">
       <h2>{{ product.name }}</h2>
-      <p>{{ product.productDetails.description }}</p>
+      <p>{{ product.description }}</p>
       <h4>${{ product.price }}</h4>
       <button *ngIf="tokenStatus" (click)="addToBasket()" class="btn btn-success mt-2">
         <i class="fa fa-shopping-cart"></i> Basket

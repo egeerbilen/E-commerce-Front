@@ -3,20 +3,39 @@ import { Observable } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductUpdateDto } from 'src/app/shared/dto/product-update-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
-
-import { UpdateProductDataResolverService } from './update-product-data-resolver.service';
+import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
+import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateProductService extends UpdateProductDataResolverService {
+export class UpdateProductService {
+  /**
+   * Constructor.
+   * @param _http Http Request Service.
+   * @param _userLocalStorageService UserLocalStorageService.
+   */
+  constructor(
+    private _http: ApiHelperService,
+    private _userLocalStorageService: UserLocalStorageService
+  ) {}
+
   /**
    * Update product by id.
    * @param productObject Product object.
    * @returns Return.
    */
   public updateProduct(productObject: ProductUpdateDto): Observable<CustomResponseDto<null>> {
-    return this.http.put(apiEndpoint.product + 'Update/', productObject);
+    console.log();
+    const formDataWithUserId = {
+      ...productObject,
+      userId: this._userLocalStorageService.getUserId(),
+      productId: 1,
+      id: 1
+    };
+    console.log(formDataWithUserId);
+    // productId ile id tok
+    return this._http.put(apiEndpoint.product + 'Update/', formDataWithUserId);
   }
 
   /**
@@ -24,6 +43,6 @@ export class UpdateProductService extends UpdateProductDataResolverService {
    * @param productId Product id.
    */
   public deleteProductById(productId: string): void {
-    this.http.delete(apiEndpoint.product + 'Delete/' + productId);
+    this._http.delete(apiEndpoint.product + 'Delete/' + productId);
   }
 }

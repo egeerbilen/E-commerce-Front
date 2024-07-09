@@ -31,6 +31,7 @@ export class UpdateProductComponent {
       this.resolvedData = data['resolvedData'];
       if (this.resolvedData.data) {
         this.product = this.resolvedData.data;
+        console.log(this.product);
       }
     });
   }
@@ -45,8 +46,8 @@ export class UpdateProductComponent {
       price: [this.product.price, Validators.required],
       categoryId: [1, Validators.required],
       productDetails: this._fb.group({
-        description: [this.product.productDetails.description, Validators.required],
-        stock: [this.product.productDetails.stock, Validators.required]
+        description: [this.product.description, Validators.required],
+        stock: [this.product.stock, Validators.required]
       })
     });
   }

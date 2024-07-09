@@ -6,17 +6,21 @@ import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
 
+import { ProductDatailsDataResolverService } from '../../product-details/service/product-datails-data-resolver.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateProductDataResolverService {
   /**
    * Constructor.
-   * @param http Http Request Service.
+   * @param _http Http Request Service.
+   * @param _productDatailsDataResolverService ProductDatailsDataResolverService.
    * @param _router Route to url.
    */
   constructor(
-    public http: ApiHelperService,
+    private _http: ApiHelperService,
+    private _productDatailsDataResolverService: ProductDatailsDataResolverService,
     private _router: Router
   ) {}
 
@@ -29,17 +33,9 @@ export class UpdateProductDataResolverService {
     const id = route.paramMap.get('id') ?? '';
 
     if (!id) {
-      this._router.navigate(['/not-found']);
+      // http://localhost:4200/UpdateProduct/1233 ile dene route bak
+      this._router.navigate(['404']);
     }
-    return this.getProductByIdWithProductDetails(id);
-  }
-
-  /**
-   * Get Products.
-   * @param id Number.
-   * @returns Products values.
-   */
-  public getProductByIdWithProductDetails(id: string): Observable<CustomResponseDto<ProductDetailsDto>> {
-    return this.http.get(apiEndpoint.product + 'GetProductByIdWithProductDetails/' + id);
+    return this._productDatailsDataResolverService.getProductById(id);
   }
 }

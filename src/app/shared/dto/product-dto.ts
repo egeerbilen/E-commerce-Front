@@ -7,5 +7,5 @@ export type ProductDto = BaseDto & {
   stock: number;
   price: number;
   categoryId: number;
-  productDetails: ProductDetailsDto;
+  description: string;
 };

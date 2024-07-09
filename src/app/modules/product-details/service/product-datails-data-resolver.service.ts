@@ -31,7 +31,7 @@ export class ProductDatailsDataResolverService {
     if (!id) {
       this._router.navigate(['/not-found']);
     }
-    return this.getProductByIdWithProductDetails(id);
+    return this.getProductById(id);
   }
 
   /**
@@ -39,7 +39,7 @@ export class ProductDatailsDataResolverService {
    * @param id Number.
    * @returns Products values.
    */
-  public getProductByIdWithProductDetails(id: string): Observable<CustomResponseDto<ProductDetailsDto>> {
-    return this._http.get(apiEndpoint.product + 'GetProductByIdWithProductDetails/' + id);
+  public getProductById(id: string): Observable<CustomResponseDto<ProductDetailsDto>> {
+    return this._http.get(apiEndpoint.product + 'GetById/' + id);
   }
 }
