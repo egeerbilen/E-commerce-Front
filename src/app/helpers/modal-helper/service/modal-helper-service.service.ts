@@ -23,19 +23,6 @@ export class ModalHelperService {
   ) {}
 
   /**
-   * CreateModalComponent.
-   * @returns ModalHelperComponent.
-   */
-  private _createModalComponent(): ModalHelperComponent {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalHelperComponent);
-    const componentRef = componentFactory.create(this._injector);
-    this._appRef.attachView(componentRef.hostView);
-    const domElem = (componentRef.hostView as any).rootNodes[0] as HTMLElement;
-    document.body.appendChild(domElem);
-    return componentRef.instance;
-  }
-
-  /**
    * OpenModal.
    * @param title Title.
    * @param content Content.
@@ -59,7 +46,6 @@ export class ModalHelperService {
       });
     });
   }
-
   /**
    * CloseModal.
    * @returns Bollean.
@@ -68,7 +54,6 @@ export class ModalHelperService {
     this._modalState.next({ isOpen: false, title: '', content: '' });
     return false;
   }
-
   /**
    * OkModal.
    * @returns Boolean.
@@ -76,5 +61,17 @@ export class ModalHelperService {
   public okModal(): boolean {
     this._modalState.next({ isOpen: false, title: '', content: '' });
     return true;
+  }
+  /**
+   * CreateModalComponent.
+   * @returns ModalHelperComponent.
+   */
+  private _createModalComponent(): ModalHelperComponent {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(ModalHelperComponent);
+    const componentRef = componentFactory.create(this._injector);
+    this._appRef.attachView(componentRef.hostView);
+    const domElem = (componentRef.hostView as any).rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
+    return componentRef.instance;
   }
 }

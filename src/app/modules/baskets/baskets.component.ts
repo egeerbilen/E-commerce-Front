@@ -5,14 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './baskets.component.html',
   styleUrls: ['./baskets.component.css']
 })
-export class BasketsComponent implements OnInit {
-  /**
-   *
-   */
-  constructor() {}
-
-  /**
-   *
-   */
-  ngOnInit() {}
-}
+export class BasketsComponent {}

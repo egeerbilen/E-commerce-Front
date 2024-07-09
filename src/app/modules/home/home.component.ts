@@ -6,6 +6,7 @@ import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
+import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { FavoriteService } from '../favorites/service/favorite.service';
 import { HomeService } from './service/home.service';
@@ -32,14 +33,17 @@ export class HomeComponent {
    * @param _toastService ToastService.
    * @param _favoriteService FavoriteService.
    * @param _homeService HomeService.
+   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
-    private _homeService: HomeService
+    private _homeService: HomeService,
+    private _loadingPageService: LoadingPageService
   ) {
+    this._loadingPageService.show();
     this._favoriteService.getUserProducts().subscribe((res) => {
       if (res?.data) {
         this.favoriteProducts = res.data.map((product) => product.id);
@@ -64,22 +68,9 @@ export class HomeComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
-      console.log(res);
       this.isAdmin = !!res?.roles?.includes('Admin');
     });
-  }
-
-  /**
-   * InitializeFavoriteStatus.
-   */
-  private _initializeFavoriteStatus(): void {
-    this.favoriteStatus = this.filteredData.reduce(
-      (acc, product) => {
-        acc[product.id] = this.favoriteProducts.includes(product.id);
-        return acc;
-      },
-      {} as { [key: number]: boolean }
-    );
+    this._loadingPageService.hide();
   }
 
   /**
@@ -87,12 +78,14 @@ export class HomeComponent {
    * @param category Category.
    */
   public onCategorySelected(category: number): void {
+    this._loadingPageService.show();
     if (!category) {
       this.filteredData = this.resolvedProductsData.data ?? [];
     } else {
       this.filteredData = this.resolvedProductsData.data!.filter((item) => item.categoryId === category);
     }
     this._initializeFavoriteStatus();
+    this._loadingPageService.hide();
   }
 
   /**
@@ -100,10 +93,12 @@ export class HomeComponent {
    * @param productId ProductId.
    */
   public deleteProduct(productId: number): void {
+    this._loadingPageService.show();
     this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
     this.favoriteStatus[productId];
     this._homeService.deleteProduct(productId).subscribe();
+    this._loadingPageService.hide();
   }
 
   /**
@@ -120,6 +115,7 @@ export class HomeComponent {
    * @param productId ProductId.
    */
   public addToFavorites(productId: number): void {
+    this._loadingPageService.show();
     if (this.favoriteProducts.includes(productId)) {
       this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
       this._toastService.show('Product removed from favorites');
@@ -137,5 +133,18 @@ export class HomeComponent {
         this.favoriteStatus[productId] = true;
       });
     }
+    this._loadingPageService.hide();
+  }
+  /**
+   * InitializeFavoriteStatus.
+   */
+  private _initializeFavoriteStatus(): void {
+    this.favoriteStatus = this.filteredData.reduce(
+      (acc, product) => {
+        acc[product.id] = this.favoriteProducts.includes(product.id);
+        return acc;
+      },
+      {} as { [key: number]: boolean }
+    );
   }
 }

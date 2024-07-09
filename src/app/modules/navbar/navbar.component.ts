@@ -31,18 +31,19 @@ export class NavbarComponent {
     private _loadingPageService: LoadingPageService
   ) {
     this._loadingPageService.show();
-    setTimeout(() => this._loadingPageService.hide(), 3000);
     this._store.select(getUserData).subscribe((res) => {
       if (res) {
         this.tokenStatus = true;
       }
     });
+    this._loadingPageService.show();
   }
 
   /**
    * Logout.
    */
   public async logout(): Promise<void> {
+    this._loadingPageService.show();
     const logoutStatus = await this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
 
     if (logoutStatus) {
@@ -51,5 +52,6 @@ export class NavbarComponent {
       this._store.dispatch(setUserData({ userData: null }));
       this.tokenStatus = false;
     }
+    this._loadingPageService.hide();
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
+import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 import { LoginService } from './service/login.service';
@@ -24,6 +25,7 @@ export class LoginComponent {
    * @param _router Router.
    * @param _jwtHelperService JwtHelperService.
    * @param _store Store.
+   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _fb: FormBuilder,
@@ -31,7 +33,8 @@ export class LoginComponent {
     private _userLocalStorageService: UserLocalStorageService,
     private _router: Router,
     private _jwtHelperService: JwtHelperService,
-    private _store: Store
+    private _store: Store,
+    private _loadingPageService: LoadingPageService
   ) {
     this.loginForm = this._fb.group({
       email: ['ege.erbilen@example.com', [Validators.required, Validators.email]],
@@ -43,6 +46,7 @@ export class LoginComponent {
    * OnSubmit.
    */
   public onSubmit(): void {
+    this._loadingPageService.show();
     if (this.loginForm.valid) {
       this._loginService.userLogin(this.loginForm.value).subscribe((res) => {
         const token = res.data;
@@ -53,8 +57,8 @@ export class LoginComponent {
         }
       });
     }
+    this._loadingPageService.hide();
   }
-
   /**
    * OnRegister.
    */
