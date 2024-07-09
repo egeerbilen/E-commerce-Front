@@ -14,14 +14,14 @@ export class AppComponent {
 
   /**
    * Constructor.
-   * @param _localStorageService LocalStorageService.
+   * @param _userLocalStorageService LocalStorageService.
    * @param _store Store.
    */
   constructor(
-    private _localStorageService: UserLocalStorageService,
+    private _userLocalStorageService: UserLocalStorageService,
     private _store: Store
   ) {
-    const token = this._localStorageService.getDecodedToken();
+    const token = this._userLocalStorageService.getDecodedToken();
 
     if (!token) {
       this._store.dispatch(setUserData({ userData: token }));
