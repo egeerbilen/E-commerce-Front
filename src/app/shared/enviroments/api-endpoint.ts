@@ -5,5 +5,5 @@ export const apiEndpoint = {
   userLogin: 'UserLogin/',
   user: 'User/',
   userBaskets: 'UserBaskets/',
-  userFavorites: 'UserFavorites/'
+  favorites: 'Favorites/'
 };

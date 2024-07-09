@@ -16,7 +16,7 @@ export class FavoriteService extends FavoritesDataResolverService {
    */
   public deleteUserFavoriteProduct(productId: number): Observable<CustomResponseDto<null>> {
     const userId = this.userLocalStorageService.getUserId().toString();
-    const url = `${apiEndpoint.userFavorites}DeleteUserFavoriteProduct/${userId}/${productId}`;
+    const url = `${apiEndpoint.favorites}DeleteUserFavoriteProduct/${userId}/${productId}`;
 
     return this.http.delete(url);
   }
@@ -26,7 +26,7 @@ export class FavoriteService extends FavoritesDataResolverService {
    * @returns Resturn.
    */
   public createUserFavoriteProduct(productId: number): Observable<CustomResponseDto<null>> {
-    const url = apiEndpoint.userFavorites + 'CreateUserFavoriteProduct/';
+    const url = apiEndpoint.favorites + 'CreateUserFavoriteProduct/';
     const userId = this.userLocalStorageService.getUserId().toString();
     const body = {
       userId: userId,

@@ -36,6 +36,6 @@ export class FavoritesDataResolverService {
     if (!this.userLocalStorageService.getUserId()) {
       return of(null);
     }
-    return this.http.get(apiEndpoint.userFavorites + 'GetUserFavoritesById/' + this.userLocalStorageService.getUserId().toString());
+    return this.http.get(apiEndpoint.favorites + 'GetUserFavoritesById/' + this.userLocalStorageService.getUserId().toString());
   }
 }
