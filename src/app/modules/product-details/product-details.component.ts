@@ -40,6 +40,7 @@ export class ProductDetailsComponent {
    * AddToBasket.
    */
   public addToBasket(): void {
+    console.log(this.product);
     console.log('addToBasket');
   }
 
@@ -47,6 +48,7 @@ export class ProductDetailsComponent {
    * AddToFavorites.
    */
   public addToFavorites(): void {
+    console.log(this.product);
     console.log('addToFavorites back endde bu user ın bu ürünü favoridemi ture false dönemeli');
   }
 }

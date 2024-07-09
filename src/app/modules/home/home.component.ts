@@ -8,7 +8,7 @@ import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 
 import { FavoriteService } from '../favorites/service/favorite.service';
-import { ProductServiceService } from '../product-details/service/product-service.service';
+import { HomeService } from './service/home.service';
 
 @Component({
   selector: 'app-home',
@@ -31,14 +31,14 @@ export class HomeComponent {
    * @param _store Store.
    * @param _toastService ToastService.
    * @param _favoriteService FavoriteService.
-   * @param _productServiceService ProductServiceService.
+   * @param _homeService HomeService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
-    private _productServiceService: ProductServiceService
+    private _homeService: HomeService
   ) {
     this._favoriteService.getUserProducts().subscribe((res) => {
       if (res?.data) {
@@ -103,7 +103,7 @@ export class HomeComponent {
     this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
     this.favoriteStatus[productId];
-    this._productServiceService.deleteProduct(productId).subscribe();
+    this._homeService.deleteProduct(productId).subscribe();
   }
 
   /**
