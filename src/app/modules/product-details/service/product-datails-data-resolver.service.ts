@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
-import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
+import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
 
@@ -25,7 +25,7 @@ export class ProductDatailsDataResolverService {
    * @param route Route.
    * @returns Get products.
    */
-  public resolve(route: ActivatedRouteSnapshot): Observable<CustomResponseDto<ProductDetailsDto>> {
+  public resolve(route: ActivatedRouteSnapshot): Observable<CustomResponseDto<ProductDto>> {
     const id = route.paramMap.get('id') ?? '';
 
     if (!id) {
@@ -39,7 +39,7 @@ export class ProductDatailsDataResolverService {
    * @param id Number.
    * @returns Products values.
    */
-  public getProductById(id: string): Observable<CustomResponseDto<ProductDetailsDto>> {
+  public getProductById(id: string): Observable<CustomResponseDto<ProductDto>> {
     return this._http.get(apiEndpoint.product + 'GetById/' + id);
   }
 }

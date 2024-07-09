@@ -1,11 +1,14 @@
 import { BaseDto } from './base-dto';
-import { ProductDetailsDto } from './product-details-dto';
 
 export type ProductDto = BaseDto & {
-  imageData: string;
   name: string;
-  stock: number;
   price: number;
+  stock: number | null;
+  imageData: string;
+  description: string | null;
+  userId: number;
   categoryId: number;
-  description: string;
+  id: number;
+  createdDate: Date;
+  updatedDate: Date;
 };

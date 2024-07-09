@@ -26,16 +26,7 @@ export class UpdateProductService {
    * @returns Return.
    */
   public updateProduct(productObject: ProductUpdateDto): Observable<CustomResponseDto<null>> {
-    console.log();
-    const formDataWithUserId = {
-      ...productObject,
-      userId: this._userLocalStorageService.getUserId(),
-      productId: 1,
-      id: 1
-    };
-    console.log(formDataWithUserId);
-    // productId ile id tok
-    return this._http.put(apiEndpoint.product + 'Update/', formDataWithUserId);
+    return this._http.put(apiEndpoint.product + 'Update/', productObject);
   }
 
   /**

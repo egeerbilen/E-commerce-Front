@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 
@@ -21,11 +22,13 @@ export class UpdateProductComponent {
    * @param _fb FormBuilder.
    * @param _route ActivatedRoute.
    * @param _updateServiceService UpdateServiceService.
+   * @param _toastService Toast.
    */
   constructor(
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
-    private _updateServiceService: UpdateProductService
+    private _updateServiceService: UpdateProductService,
+    private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
@@ -41,14 +44,11 @@ export class UpdateProductComponent {
    */
   public ngOnInit(): void {
     this.productForm = this._fb.group({
-      id: [this.product.id, Validators.required],
       name: [this.product.name, Validators.required],
       price: [this.product.price, Validators.required],
       categoryId: [1, Validators.required],
-      productDetails: this._fb.group({
-        description: [this.product.description, Validators.required],
-        stock: [this.product.stock, Validators.required]
-      })
+      description: [this.product.description, Validators.required],
+      stock: [this.product.stock, Validators.required]
     });
   }
 
@@ -58,8 +58,15 @@ export class UpdateProductComponent {
   public onSubmit(): void {
     if (this.productForm.valid) {
       console.log(this.productForm.value);
-      this._updateServiceService.updateProduct(this.productForm.value).subscribe((res) => {
+
+      const formDataWithUserId = {
+        ...this.productForm.value,
+        id: this.product.id,
+        userId: this.product.userId
+      };
+      this._updateServiceService.updateProduct(formDataWithUserId).subscribe((res) => {
         console.log(res);
+        this._toastService.show('Data is updated');
       });
     }
   }
