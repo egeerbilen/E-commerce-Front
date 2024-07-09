@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { LoadingService } from '../loading.service';
+import { LoadingPageService } from './loading-page.service';
 
 describe('Service: Loading', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LoadingService]
+      providers: [LoadingPageService]
     });
   });
 
-  it('should ...', inject([LoadingService], (service: LoadingService) => {
+  it('should ...', inject([LoadingPageService], (service: LoadingPageService) => {
     expect(service).toBeTruthy();
   }));
 });

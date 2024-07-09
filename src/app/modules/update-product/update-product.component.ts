@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
+import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { UpdateProductService } from './service/update-product.service';
 
@@ -23,12 +24,14 @@ export class UpdateProductComponent {
    * @param _route ActivatedRoute.
    * @param _updateServiceService UpdateServiceService.
    * @param _toastService Toast.
+   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
     private _updateServiceService: UpdateProductService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _loadingPageService: LoadingPageService
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
@@ -69,5 +72,12 @@ export class UpdateProductComponent {
         this._toastService.show('Data is updated');
       });
     }
+  }
+
+  /**
+   * Clk.
+   */
+  public clk(): void {
+    this._loadingPageService.show();
   }
 }

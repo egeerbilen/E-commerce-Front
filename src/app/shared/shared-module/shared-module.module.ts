@@ -12,7 +12,8 @@ import { ToastService } from 'src/app/helpers/toast/toast.service';
 
 import { httpInterceptorProvider, jwtModule } from '../jwt/jwt-token-module-settings';
 import { storeModules } from '../ng-rx/reducers';
-import { LoadingService } from '../services/loading/loading.service';
+import { LoadingPageComponent } from '../services/loading-page/loading-page.component';
+import { LoadingPageService } from '../services/loading-page/loading-page.service';
 @NgModule({
   imports: [
     storeModules,
@@ -25,8 +26,8 @@ import { LoadingService } from '../services/loading/loading.service';
     MatSnackBarModule,
     BrowserAnimationsModule
   ],
-  declarations: [ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective],
-  providers: [httpInterceptorProvider, LoadingService, ToastService],
+  declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective],
+  providers: [httpInterceptorProvider, LoadingPageService, ToastService],
   exports: [
     CommonModule,
     RouterModule,
@@ -34,6 +35,7 @@ import { LoadingService } from '../services/loading/loading.service';
     ReactiveFormsModule,
     HttpClientModule,
     ByteToImagePipe,
+    LoadingPageComponent,
     ModalHelperComponent,
     MatSnackBarModule,
     BrowserAnimationsModule,
