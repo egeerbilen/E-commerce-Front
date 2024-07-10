@@ -9,7 +9,7 @@ import { UserLocalStorageService } from 'src/app/shared/services/local-storage/u
 @Injectable({
   providedIn: 'root'
 })
-export class FavoritesDataResolverService {
+export class BasketDataResolverService {
   /**
    * Constructor.
    * @param http Http Request Service.
@@ -25,17 +25,17 @@ export class FavoritesDataResolverService {
    * @returns Get products.
    */
   public resolve(): Observable<CustomResponseDto<ProductDto[]> | null> {
-    return this.getUserFavoritesProducts();
+    return this.getUserBasketProducts();
   }
 
   /**
    * Get Products.
    * @returns Products values.
    */
-  public getUserFavoritesProducts(): Observable<CustomResponseDto<ProductDto[]> | null> {
+  public getUserBasketProducts(): Observable<CustomResponseDto<ProductDto[]> | null> {
     if (!this.userLocalStorageService.getUserId()) {
       return of(null);
     }
-    return this.http.get(apiEndpoint.favorite + 'GetUserFavoritesById/' + this.userLocalStorageService.getUserId().toString());
+    return this.http.get(apiEndpoint.basket + 'GetUserBasketsById/' + this.userLocalStorageService.getUserId().toString());
   }
 }

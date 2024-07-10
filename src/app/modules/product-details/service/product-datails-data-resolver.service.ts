@@ -74,7 +74,7 @@ export class ProductDatailsDataResolverService {
     if (userId === 0) {
       return of({ data: false } as CustomResponseDto<boolean>);
     } else {
-      return this._http.get(apiEndpoint.favorites + 'IsFavoriteProduct/' + userId.toString() + '/' + productId);
+      return this._http.get(apiEndpoint.favorite + 'IsFavoriteProduct/' + userId.toString() + '/' + productId);
     }
   }
 }

@@ -44,7 +44,7 @@ export class HomeComponent {
     private _loadingPageService: LoadingPageService
   ) {
     this._loadingPageService.show();
-    this._favoriteService.getUserProducts().subscribe((res) => {
+    this._favoriteService.getUserFavoritesProducts().subscribe((res) => {
       if (res?.data) {
         this.favoriteProducts = res.data.map((product) => product.id);
         this.favoriteProducts.forEach((id) => {
