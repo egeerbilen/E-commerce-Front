@@ -34,6 +34,6 @@ export class UpdateProductService {
    * @param productId Product id.
    */
   public deleteProductById(productId: string): void {
-    this._http.delete(apiEndpoint.product + 'Delete/' + productId);
+    this._http.delete(apiEndpoint.product + 'DeleteProductWithDependencies/' + productId);
   }
 }

@@ -36,8 +36,8 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
 
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-    const isAdmin = tokenStatus?.roles?.includes('Admin');
-    if (!tokenStatus && !isAdmin) {
+    const isSeller = tokenStatus?.roles?.includes('Seller');
+    if (!tokenStatus && !isSeller) {
       if (state.url === '/Login') {
         // Eğer URL '/Login' ise true döndür
         return true;

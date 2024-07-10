@@ -15,6 +15,6 @@ export class HomeService extends HomeDataResolverService {
    * @returns Products values.
    */
   public deleteProduct(id: number): Observable<CustomResponseDto<null>> {
-    return this.http.delete(apiEndpoint.product + 'Delete/' + id.toString());
+    return this.http.delete(apiEndpoint.product + 'DeleteProductWithDependencies/' + id.toString());
   }
 }

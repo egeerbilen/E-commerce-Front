@@ -1,6 +1,9 @@
 <div class="row">
+    <p><b>Not:</b> eğer çok data olursa scroll loadin gekelenir ve tük katagoriler çeilmez belli başlı bir kaç ürün
+        çekilir kullanıcı katagori seçtiğinde quer param olarak değeri alır ve back end tarafında ona göre sorgu yapıp
+        döner</p>
     <div class="row">
-        <button *ngIf="tokenStatus && isAdmin" [routerLink]="['/AddProduct']" class="btn btn-success mt-3">
+        <button *ngIf="tokenStatus && isSeller" [routerLink]="['/AddProduct']" class="btn btn-success mt-3">
             <i class="fa fa-plus"></i> Add Product
         </button>
     </div>
@@ -25,11 +28,11 @@
                             <p class="card-text"><b>Price:</b> {{ value.price }} $</p>
                             <a [routerLink]="['ProductDetails/' + value.id]" class="btn btn-primary mt-auto">Details</a>
 
-                            <button *ngIf="tokenStatus && isAdmin" [routerLink]="['UpdateProduct/' + value.id]"
+                            <button *ngIf="tokenStatus && isSeller" [routerLink]="['UpdateProduct/' + value.id]"
                                 class="btn btn-warning mt-2">
                                 <i class="fa fa-edit"></i> Update
                             </button>
-                            <button *ngIf="tokenStatus && isAdmin" (click)="deleteProduct(value.id)"
+                            <button *ngIf="tokenStatus && isSeller" (click)="deleteProduct(value.id)"
                                 class="btn btn-danger mt-2">
                                 <i class="fa fa-trash"></i> Delete
                             </button>

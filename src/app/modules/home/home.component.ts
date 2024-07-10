@@ -24,7 +24,7 @@ export class HomeComponent {
   filteredData: ProductDto[] = [];
   favoriteProducts: number[] = [];
   favoriteStatus: { [key: number]: boolean } = {};
-  isAdmin = false;
+  isSeller = false;
 
   /**
    * Constructor.
@@ -68,7 +68,7 @@ export class HomeComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
-      this.isAdmin = !!res?.roles?.includes('Admin');
+      this.isSeller = !!res?.roles?.includes('Seller');
     });
     this._loadingPageService.hide();
   }
