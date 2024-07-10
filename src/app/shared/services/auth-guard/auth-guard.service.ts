@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { getUserData } from '../../ng-rx/selectors/user.selectors';
+import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
-  tokenStatus = false;
-
   /**
    * Constructor.
    * @param _router Router.
-   * @param _store Store.
+   * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _router: Router,
-    private _store: Store
+    private _userLocalStorageService: UserLocalStorageService
   ) {}
 
   /**
@@ -36,15 +33,13 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
-      console.log('Token yetkilerini yaz ');
-      console.log('ece ile gir http://localhost:4200/AddProduct adresine git user bu adrese girmemeli daha generic çözüm bul');
-      console.log(res);
-    });
+    const tokenStatus = this._userLocalStorageService.getDecodedToken();
+
+    console.log('ece ile gir http://localhost:4200/AddProduct adresine git user bu adrese girmemeli daha generic çözüm bul');
+    console.log('Token yetkilerini yaz ');
 
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-    if (!this.tokenStatus) {
+    if (!tokenStatus) {
       if (state.url === '/Login') {
         // Eğer URL '/Login' ise true döndür
         return true;

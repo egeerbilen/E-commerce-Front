@@ -6,8 +6,8 @@ import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
-import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
+import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,13 @@ export class ProductDatailsDataResolverService {
    * @param _http Http Request Service.
    * @param _router Route to url.
    * @param _store UserLocalStorageService.
+   * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _http: ApiHelperService,
     private _router: Router,
-    private _store: Store
+    private _store: Store,
+    private _userLocalStorageService: UserLocalStorageService
   ) {}
 
   /**
@@ -36,16 +38,11 @@ export class ProductDatailsDataResolverService {
       this._router.navigate(['/404']);
     }
 
-    let userId = 0;
-    this._store.select(getUserData).subscribe((res) => {
-      userId = res?.userId ?? 0;
-    });
-
     // forkJoin, RxJS kütüphanesinde bulunan bir operatördür ve birden fazla observable'ın tamamlanmasını bekleyip,
     // tamamlandıklarında hepsinin son çıktısını tek bir observable olarak birleştiren bir işleve sahiptir.
     const resObject = forkJoin({
       getProductById: this.getProductById(productId),
-      isFavoriteProduct: this.isFavoriteProduct(userId, productId)
+      isFavoriteProduct: this.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId)
     }).pipe(
       catchError((error) => {
         this._router.navigate(['/404']);

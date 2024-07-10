@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { DecodedTokenDto } from 'src/app/shared/dto/decoded-token-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
-import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
@@ -26,7 +24,7 @@ export class AddProductComponent {
    * @param _toastService ToastService.
    * @param _loadingPageService LoadingPageService.
    * @param _addProductService AddProductService.
-   * @param _userLocalStorageService
+   * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _fb: FormBuilder,
