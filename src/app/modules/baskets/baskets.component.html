@@ -1,26 +1,26 @@
 <div class="row">
   <div class="row">
-    <h1>Sepetim</h1>
+    <h1>My Basket</h1>
     <div *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus else basketAlert"
       class="col-12">
       <div class="alert alert-warning fw-bold" role="alert">
-        Sepete ürün eklemek için giriş yapmalısınız.
-        <a routerLink="/Login" class="alert-link text-primary">Giriş Yap</a>
+        You need to log in to add items to your basket.
+        <a routerLink="/Login" class="alert-link text-primary">Log In</a>
       </div>
     </div>
     <ng-template #basketAlert>
       <div *ngIf="resolvedBasketData.length === 0" class="alert alert-warning fw-bold" role="alert">
-        Şu anda sepetinizde ürün yok.
-        <a routerLink="/" class="alert-link text-primary">Ana Sayfa</a>'ya gidin ve ürün ekleyin.
+        There are currently no items in your basket.
+        Go to the <a routerLink="/" class="alert-link text-primary">Home Page</a> and add items.
       </div>
       <div *ngFor="let value of resolvedBasketData" class="mt-3 col-12 col-md-6 col-lg-4 col-xl-3">
         <div class="card h-100 shadow-sm border-0">
           <img [src]="value.imageData | byteToImage" class="card-img-top" [alt]="value.name">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{value.name}}</h5>
-            <p class="card-text">Fiyat: {{value.price}}</p>
+            <p class="card-text"><b>Price: {{value.price}} $ </b></p>
             <button class="btn btn-danger mt-auto" (click)="removeFromBasket(value)">
-              <i class="bi bi-trash"></i> Sepetten Kaldır
+              <i class="bi bi-trash"></i> Remove From Basket
             </button>
           </div>
         </div>

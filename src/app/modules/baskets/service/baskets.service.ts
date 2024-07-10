@@ -16,7 +16,7 @@ export class BasketsService extends BasketDataResolverService {
    */
   public deleteUserBasketProduct(productId: number): Observable<CustomResponseDto<null>> {
     const userId = this.userLocalStorageService.getUserId().toString();
-    const url = `${apiEndpoint.basket}DeleteUserBasketProduct/${userId}/${productId}`;
+    const url = apiEndpoint.basket + 'DeleteUserBasketProduct/' + userId + '/' + productId;
 
     return this.http.delete(url);
   }

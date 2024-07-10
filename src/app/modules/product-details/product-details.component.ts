@@ -7,6 +7,7 @@ import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
+import { BasketsService } from '../baskets/service/baskets.service';
 import { FavoriteService } from '../favorites/service/favorite.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class ProductDetailsComponent {
    * @param _store Store.
    * @param _loadingPageService LoadingPageService.
    * @param _favoriteService FavoriteService.
+   * @param _basketsService BasketsService.
    * @param _toastService ToastService.
    */
   constructor(
@@ -33,6 +35,7 @@ export class ProductDetailsComponent {
     private _store: Store,
     private _loadingPageService: LoadingPageService,
     private _favoriteService: FavoriteService,
+    private _basketsService: BasketsService,
     private _toastService: ToastService
   ) {
     this._loadingPageService.show();
@@ -60,6 +63,7 @@ export class ProductDetailsComponent {
   public addToBasket(): void {
     this._loadingPageService.show();
     this._toastService.show('Product addod to basket');
+    this._basketsService.createUserBasketProduct(this.product.id).subscribe();
     this._loadingPageService.hide();
   }
 
