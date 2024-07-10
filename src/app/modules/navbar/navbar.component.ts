@@ -47,10 +47,10 @@ export class NavbarComponent {
     const logoutStatus = await this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
 
     if (logoutStatus) {
-      this._router.navigate(['/']);
       this._localStorageService.removeToken();
       this._store.dispatch(setUserData({ userData: null }));
       this.tokenStatus = false;
+      this._router.navigate(['/']);
     }
     this._loadingPageService.hide();
   }
