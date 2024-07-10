@@ -35,11 +35,9 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
 
-    console.log('ece ile gir http://localhost:4200/AddProduct adresine git user bu adrese girmemeli daha generic çözüm bul');
-    console.log('Token yetkilerini yaz ');
-
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-    if (!tokenStatus) {
+    const isAdmin = tokenStatus?.roles?.includes('Admin');
+    if (!tokenStatus && !isAdmin) {
       if (state.url === '/Login') {
         // Eğer URL '/Login' ise true döndür
         return true;
