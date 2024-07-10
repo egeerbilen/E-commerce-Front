@@ -33,7 +33,7 @@ export class BasketsComponent {
     this._route.data.subscribe((data) => {
       this.resolvedBasketData = data?.['resolvedData']?.data || [];
     });
-    console.log(this.resolvedBasketData);
+
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
     });

@@ -21,12 +21,10 @@
                     <div class="card h-100 shadow-sm border-0 position-relative">
                         <img [src]="value.imageData | byteToImage" class="card-img-top" [alt]="value.name">
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ value.name }}</h5>
-                            <p class="card-text">Price: {{ value.price }}</p>
+                            <h4 class="card-title"><b>{{ value.name }}</b></h4>
+                            <p class="card-text"><b>Price:</b> {{ value.price }} $</p>
                             <a [routerLink]="['ProductDetails/' + value.id]" class="btn btn-primary mt-auto">Details</a>
-                            <button *ngIf="tokenStatus" (click)="addToBasket(value.id)" class="btn btn-success mt-2">
-                                <i class="fa fa-shopping-cart"></i> Basket
-                            </button>
+
                             <button *ngIf="tokenStatus && isAdmin" [routerLink]="['UpdateProduct/' + value.id]"
                                 class="btn btn-warning mt-2">
                                 <i class="fa fa-edit"></i> Update

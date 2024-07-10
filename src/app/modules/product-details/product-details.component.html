@@ -5,10 +5,11 @@
     </div>
     <div class="col-md-6">
       <h2>{{ product.name }}</h2>
-      <p>{{ product.description }}</p>
-      <h4>${{ product.price }}</h4>
+      <p><b>Açıklama:</b> {{ product.description }}</p>
+      <p><b>Fiyat:</b> {{ product.price }} $</p>
+      <p><b>Stok Durumu:</b> {{ product.stock }}</p>
       <button *ngIf="tokenStatus" (click)="addToBasket()" class="btn btn-success mt-2">
-        <i class="fa fa-shopping-cart"></i> Basket
+        <i class="fa fa-shopping-cart text-warning"></i> Add To Basket
       </button>
       <button *ngIf="tokenStatus && !isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
         <i class="fas fa-heart "></i> Favorite

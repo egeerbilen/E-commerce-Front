@@ -102,15 +102,6 @@ export class HomeComponent {
   }
 
   /**
-   * AddToBasket.
-   * @param productId ProductId.
-   */
-  public addToBasket(productId: number): void {
-    // Sepete ekleme işlemini burada gerçekleştirin
-    console.log('Product added to cart:', productId);
-  }
-
-  /**
    * AddToFavorites.
    * @param productId ProductId.
    */

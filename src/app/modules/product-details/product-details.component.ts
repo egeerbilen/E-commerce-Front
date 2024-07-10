@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
@@ -25,12 +26,14 @@ export class ProductDetailsComponent {
    * @param _store Store.
    * @param _loadingPageService LoadingPageService.
    * @param _favoriteService FavoriteService.
+   * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _loadingPageService: LoadingPageService,
-    private _favoriteService: FavoriteService
+    private _favoriteService: FavoriteService,
+    private _toastService: ToastService
   ) {
     this._loadingPageService.show();
     this._route.data.subscribe((data) => {
@@ -56,8 +59,7 @@ export class ProductDetailsComponent {
    */
   public addToBasket(): void {
     this._loadingPageService.show();
-    console.log(this.product);
-    console.log('addToBasket');
+    this._toastService.show('Product addod to basket');
     this._loadingPageService.hide();
   }
 
