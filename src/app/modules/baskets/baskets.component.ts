@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { BasketsService } from './service/baskets.service';
 
@@ -21,14 +20,12 @@ export class BasketsComponent {
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _basketService FavoriteService.
-   * @param _loadingPageService LoadingPageService.
    * @param _router Router.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _basketService: BasketsService,
-    private _loadingPageService: LoadingPageService,
     private _router: Router
   ) {
     this._route.data.subscribe((data) => {

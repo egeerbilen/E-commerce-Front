@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { DecodedTokenDto } from 'src/app/shared/dto/decoded-token-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 import { AddProductService } from './service/add-product.service';
@@ -22,14 +21,12 @@ export class AddProductComponent {
    * Constructor.
    * @param _fb FormBuilder.
    * @param _toastService ToastService.
-   * @param _loadingPageService LoadingPageService.
    * @param _addProductService AddProductService.
    * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _fb: FormBuilder,
     private _toastService: ToastService,
-    private _loadingPageService: LoadingPageService,
     private _addProductService: AddProductService,
     private _userLocalStorageService: UserLocalStorageService
   ) {

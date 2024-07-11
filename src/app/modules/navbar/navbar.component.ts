@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 @Component({
@@ -21,14 +20,12 @@ export class NavbarComponent {
    * @param _router Router.
    * @param _localStorageService LocalStorageService.
    * @param _modalHelperService ModalHelperService.
-   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _store: Store,
     private _router: Router,
     private _localStorageService: UserLocalStorageService,
-    private _modalHelperService: ModalHelperService,
-    private _loadingPageService: LoadingPageService
+    private _modalHelperService: ModalHelperService
   ) {
     this._store.select(getUserData).subscribe((res) => {
       if (res) {

@@ -6,7 +6,6 @@ import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-h
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { MyAccountService } from './service/my-account.service';
 
@@ -27,7 +26,6 @@ export class MyAccountComponent implements OnInit {
    * @param _myAccountService MyAccountService.
    * @param _jwtHelperService JwtHelperService.
    * @param _toastService ToastService.
-   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -35,8 +33,7 @@ export class MyAccountComponent implements OnInit {
     private _modalHelperService: ModalHelperService,
     private _myAccountService: MyAccountService,
     private _jwtHelperService: JwtHelperService,
-    private _toastService: ToastService,
-    private _loadingPageService: LoadingPageService
+    private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];

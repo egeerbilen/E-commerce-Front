@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { FavoriteService } from './service/favorite.service';
 
@@ -21,14 +20,12 @@ export class FavoritesComponent {
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _favoriteService FavoriteService.
-   * @param _loadingPageService LoadingPageService.
    * @param _router Router.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _favoriteService: FavoriteService,
-    private _loadingPageService: LoadingPageService,
     private _router: Router
   ) {
     this._route.data.subscribe((data) => {

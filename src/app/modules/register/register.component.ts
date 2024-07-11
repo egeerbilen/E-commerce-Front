@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { RegisterService } from './service/register.service';
 
@@ -18,13 +17,11 @@ export class RegisterComponent {
    * @param _fb FormBuilder.
    * @param _registerService RegisterService.
    * @param _router Router.
-   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _fb: FormBuilder,
     private _registerService: RegisterService,
-    private _router: Router,
-    private _loadingPageService: LoadingPageService
+    private _router: Router
   ) {
     this.registerForm = this._fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],

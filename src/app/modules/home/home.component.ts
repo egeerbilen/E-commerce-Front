@@ -7,7 +7,6 @@ import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { LoadingPageService } from 'src/app/shared/services/loading-page/loading-page.service';
 
 import { FavoriteService } from '../favorites/service/favorite.service';
 import { HomeService } from './service/home.service';
@@ -35,7 +34,6 @@ export class HomeComponent {
    * @param _favoriteService FavoriteService.
    * @param _homeService HomeService.
    * @param _modalHelperService ModalHelperService.
-   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -43,8 +41,7 @@ export class HomeComponent {
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
     private _homeService: HomeService,
-    private _modalHelperService: ModalHelperService,
-    private _loadingPageService: LoadingPageService
+    private _modalHelperService: ModalHelperService
   ) {
     this._favoriteService.getUserFavoritesProducts().subscribe((res) => {
       if (res?.data) {
