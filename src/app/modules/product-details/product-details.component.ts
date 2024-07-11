@@ -63,7 +63,11 @@ export class ProductDetailsComponent {
   public addToBasket(): void {
     this._loadingPageService.show();
     this._basketsService.createBasketProduct(this.product.id).subscribe((res) => {
-      this._toastService.show('Product addod to basket');
+      if (res.errors) {
+        this._toastService.show('Product is already in the basket');
+      } else {
+        this._toastService.show('Product added to basket');
+      }
     });
 
     this._loadingPageService.hide();
