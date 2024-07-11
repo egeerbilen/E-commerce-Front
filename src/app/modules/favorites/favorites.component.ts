@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
@@ -22,12 +22,14 @@ export class FavoritesComponent {
    * @param _store Store.
    * @param _favoriteService FavoriteService.
    * @param _loadingPageService LoadingPageService.
+   * @param _router Router.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _favoriteService: FavoriteService,
-    private _loadingPageService: LoadingPageService
+    private _loadingPageService: LoadingPageService,
+    private _router: Router
   ) {
     this._loadingPageService.show();
     this._route.data.subscribe((data) => {
@@ -50,5 +52,13 @@ export class FavoritesComponent {
       this.resolvedFavoritesData = this.resolvedFavoritesData.filter((fav) => fav !== item);
     });
     this._loadingPageService.hide();
+  }
+
+  /**
+   * NavigateToProductDetails.
+   * @param productId ProductId.
+   */
+  public navigateToProductDetails(productId: number): void {
+    this._router.navigate(['ProductDetails', productId]);
   }
 }
