@@ -36,6 +36,6 @@ export class BasketDataResolverService {
     if (!this.userLocalStorageService.getUserId()) {
       return of(null);
     }
-    return this.http.get(apiEndpoint.basket + 'GetUserBasketsById/' + this.userLocalStorageService.getUserId().toString());
+    return this.http.get(apiEndpoint.basketProduct + 'GetUserBasketsById/' + this.userLocalStorageService.getUserId().toString());
   }
 }

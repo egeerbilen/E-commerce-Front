@@ -1,4 +1,4 @@
-export type UserBasketsDto = {
+export type BasketDto = {
   userId: number;
   productId: number;
 };

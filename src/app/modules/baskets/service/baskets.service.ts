@@ -16,20 +16,21 @@ export class BasketsService extends BasketDataResolverService {
    */
   public deleteUserBasketProduct(productId: number): Observable<CustomResponseDto<null>> {
     const userId = this.userLocalStorageService.getUserId().toString();
-    const url = apiEndpoint.basket + 'DeleteUserBasketProduct/' + userId + '/' + productId;
+    const url = apiEndpoint.basketProduct + 'DeleteBasketProduct/' + 'userId/' + userId + '/products/' + productId;
 
     return this.http.delete(url);
   }
+
   /**
-   * CreateUserBasketProduct.
+   * CreateBasketProduct.
    * @param productId ProductId.
    * @returns Resturn.
    */
-  public createUserBasketProduct(productId: number): Observable<CustomResponseDto<null>> {
-    const url = apiEndpoint.basket + 'CreateUserBasketProduct/';
+  public createBasketProduct(productId: number): Observable<CustomResponseDto<null>> {
+    const url = apiEndpoint.basketProduct + 'CreateBasketProduct';
     const userId = this.userLocalStorageService.getUserId().toString();
     const body = {
-      userId: userId,
+      basketId: Number(userId),
       productId: productId
     };
     return this.http.post(url, body);

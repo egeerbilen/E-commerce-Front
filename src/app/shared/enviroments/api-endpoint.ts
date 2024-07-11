@@ -4,6 +4,6 @@ export const apiEndpoint = {
   productDetails: 'ProductDetails/',
   userLogin: 'UserLogin/',
   user: 'User/',
-  basket: 'Basket/',
+  basketProduct: 'BasketProduct/',
   favorite: 'Favorite/'
 };
