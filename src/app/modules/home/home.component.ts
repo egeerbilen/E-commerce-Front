@@ -109,19 +109,19 @@ export class HomeComponent {
     this._loadingPageService.show();
     if (this.favoriteProducts.includes(productId)) {
       this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
-      this._toastService.show('Product removed from favorites');
       this.favoriteStatus[productId] = false;
       this._favoriteService.deleteUserFavoriteProduct(productId).subscribe(() => {
         this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
         this.favoriteStatus[productId] = false;
+        this._toastService.show('Product removed from favorites');
       });
     } else {
       this.favoriteProducts.push(productId);
       this.favoriteStatus[productId] = true;
-      this._toastService.show('Product added to favorites');
       this._favoriteService.createUserFavoriteProduct(productId).subscribe(() => {
         this.favoriteProducts.push(productId);
         this.favoriteStatus[productId] = true;
+        this._toastService.show('Product added to favorites');
       });
     }
     this._loadingPageService.hide();

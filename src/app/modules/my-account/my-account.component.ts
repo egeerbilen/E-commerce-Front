@@ -62,8 +62,10 @@ export class MyAccountComponent implements OnInit {
   public updateUser(): void {
     this._loadingPageService.show();
     const formValueWithId = { ...this.accountForm.value, id: this._jwtHelperService.decodeToken()?.userId };
-    this._toastService.show('User Updated');
-    this._myAccountService.updateUser(formValueWithId).subscribe();
+
+    this._myAccountService.updateUser(formValueWithId).subscribe(() => {
+      this._toastService.show('User Updated');
+    });
     this._loadingPageService.hide();
   }
 
@@ -72,9 +74,9 @@ export class MyAccountComponent implements OnInit {
    */
   public onReset(): void {
     this._loadingPageService.show();
-    this._toastService.show('Form Reseted');
     this.accountForm.reset();
     this._loadingPageService.hide();
+    this._toastService.show('Form Reseted');
   }
 
   /**
@@ -84,7 +86,7 @@ export class MyAccountComponent implements OnInit {
     this._loadingPageService.show();
     const deleteUserStatus = await this._modalHelperService.openModal('Delete User', 'Are you sure you want to delete the user?');
     if (deleteUserStatus) {
-      console.log('Delete User');
+      console.log('Delete User Servis yaz');
     }
     this._loadingPageService.hide();
   }
