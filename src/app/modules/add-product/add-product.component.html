@@ -51,6 +51,16 @@
       </div>
     </div>
 
+    <div class="mb-3">
+      <label for="categoryId" class="form-label">Category</label>
+      <input id="categoryId" type="number" formControlName="categoryId" class="form-control">
+      <div
+        *ngIf="productForm.get('categoryId')?.errors?.['required'] && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)"
+        class="text-danger">
+        Category is required.
+      </div>
+    </div>
+
     <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
   </form>
 </div>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
@@ -17,13 +16,11 @@ export class ProductDatailsDataResolverService {
    * Constructor.
    * @param _http Http Request Service.
    * @param _router Route to url.
-   * @param _store UserLocalStorageService.
    * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _http: ApiHelperService,
     private _router: Router,
-    private _store: Store,
     private _userLocalStorageService: UserLocalStorageService
   ) {}
 

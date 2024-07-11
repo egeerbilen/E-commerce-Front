@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
+import { CategoriyService } from 'src/app/shared/services/categoriy/categoriy.service';
 
 import { ProductDatailsDataResolverService } from '../../product-details/service/product-datails-data-resolver.service';
 
@@ -13,14 +14,14 @@ import { ProductDatailsDataResolverService } from '../../product-details/service
 export class UpdateProductDataResolverService {
   /**
    * Constructor.
-   * @param _http Http Request Service.
    * @param _productDatailsDataResolverService ProductDatailsDataResolverService.
    * @param _router Route to url.
+   * @param _categoriyService CategoriyService.
    */
   constructor(
-    private _http: ApiHelperService,
     private _productDatailsDataResolverService: ProductDatailsDataResolverService,
-    private _router: Router
+    private _router: Router,
+    private _categoriyService: CategoriyService
   ) {}
 
   /**
@@ -28,13 +29,26 @@ export class UpdateProductDataResolverService {
    * @param route Route.
    * @returns Get products.
    */
-  public resolve(route: ActivatedRouteSnapshot): Observable<CustomResponseDto<ProductDto>> {
+  public resolve(
+    route: ActivatedRouteSnapshot
+  ): Observable<{ product: CustomResponseDto<ProductDto>; categories: CustomResponseDto<CategoryDto[]> }> {
     const id = route.paramMap.get('id') ?? '';
 
     if (!id) {
-      // http://localhost:4200/UpdateProduct/1233 ile dene route bak
       this._router.navigate(['404']);
     }
-    return this._productDatailsDataResolverService.getProductById(id);
+
+    return forkJoin({
+      product: this._productDatailsDataResolverService.getProductById(id),
+      categories: this._categoriyService.getCategories()
+    });
+  }
+
+  /**
+   * Get Products.
+   * @returns Products values.
+   */
+  public getCategories(): Observable<CustomResponseDto<CategoryDto[]>> {
+    return this._categoriyService.getCategories();
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { DecodedTokenDto } from 'src/app/shared/dto/decoded-token-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
@@ -13,6 +14,7 @@ import { AddProductService } from './service/add-product.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
+  resolvedCategoryData: any;
   productForm: FormGroup;
   tokenStatus = '';
   decodedTokenStatus!: DecodedTokenDto | null;
@@ -20,21 +22,27 @@ export class AddProductComponent {
   /**
    * Constructor.
    * @param _fb FormBuilder.
+   * @param _route ActivatedRoute.
    * @param _toastService ToastService.
    * @param _addProductService AddProductService.
    * @param _userLocalStorageService UserLocalStorageService.
    */
   constructor(
     private _fb: FormBuilder,
+    private _route: ActivatedRoute,
     private _toastService: ToastService,
     private _addProductService: AddProductService,
     private _userLocalStorageService: UserLocalStorageService
   ) {
+    this._route.data.subscribe((data) => {
+      this.resolvedCategoryData = data['resolvedData'].data;
+    });
+
     this.tokenStatus = this._userLocalStorageService.getToken(); // res null, undefined, 0, "", false falsy olacak
     this.productForm = this._fb.group({
       name: ['', [Validators.required, Validators.maxLength(200)]],
       price: [0, [Validators.required, Validators.min(0)]],
-      stock: [0],
+      stock: [0, Validators.nullValidator],
       imageData: [null],
       description: ['', [Validators.maxLength(500)]],
       categoryId: [1, Validators.required]
@@ -53,10 +61,13 @@ export class AddProductComponent {
       }
 
       product = { ...product, userId: Number(this._userLocalStorageService.getUserId()) };
-      this._addProductService.addProduct(product).subscribe();
+      this._addProductService.addProduct(product).subscribe({
+        next: () => this._toastService.show('Product added successfully'),
+        error: () => this._toastService.show('Failed to add product')
+      });
+    } else {
+      this._toastService.show('Form is invalid');
     }
-
-    this._toastService.show('Data updated');
   }
 
   /**
