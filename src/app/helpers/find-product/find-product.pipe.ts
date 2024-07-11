@@ -12,9 +12,16 @@ export class FindProductPipe implements PipeTransform {
    * @returns ProductDto.
    */
   public transform(products: ProductDto[], searchText: string): ProductDto[] {
-    if (!products) return [];
-    if (!searchText) return products;
-    searchText = searchText.toLowerCase();
-    return products.filter((product) => product.name.toLowerCase().includes(searchText));
+    if (!products || products.length === 0) {
+      return [];
+    }
+
+    if (!searchText || searchText.trim() === '') {
+      return products;
+    }
+
+    const lowercasedSearchText = searchText.toLowerCase();
+
+    return products.filter((product) => product.name.toLowerCase().includes(lowercasedSearchText));
   }
 }
