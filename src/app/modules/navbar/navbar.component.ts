@@ -44,7 +44,7 @@ export class NavbarComponent {
    */
   public async logout(): Promise<void> {
     this._loadingPageService.show();
-    const logoutStatus = await this._modalHelperService.openModal('Login Status', 'Successfully logged out.');
+    const logoutStatus = await this._modalHelperService.openModal('Logout', 'Are you sure you want to log out?');
 
     if (logoutStatus) {
       this._localStorageService.removeToken();

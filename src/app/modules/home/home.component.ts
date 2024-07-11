@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
@@ -33,6 +34,7 @@ export class HomeComponent {
    * @param _toastService ToastService.
    * @param _favoriteService FavoriteService.
    * @param _homeService HomeService.
+   * @param _modalHelperService ModalHelperService.
    * @param _loadingPageService LoadingPageService.
    */
   constructor(
@@ -41,6 +43,7 @@ export class HomeComponent {
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
     private _homeService: HomeService,
+    private _modalHelperService: ModalHelperService,
     private _loadingPageService: LoadingPageService
   ) {
     this._loadingPageService.show();
@@ -92,11 +95,21 @@ export class HomeComponent {
    * DeleteProduct.
    * @param productId ProductId.
    */
-  public deleteProduct(productId: number): void {
+  public async deleteProduct(productId: number): Promise<void> {
+    const productToDelete = this.resolvedProductsData.data!.find((product) => product.id !== productId);
+
+    const logoutStatus = await this._modalHelperService.openModal(
+      'Delete Product',
+      'Are you sure you want to delete ' + productToDelete?.name + ' ?'
+    );
+
+    if (!logoutStatus) {
+      return;
+    }
+
     this._loadingPageService.show();
     this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
-    this.favoriteStatus[productId];
     this._homeService.deleteProduct(productId).subscribe();
     this._loadingPageService.hide();
   }
