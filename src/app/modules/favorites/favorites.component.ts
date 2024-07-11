@@ -31,7 +31,6 @@ export class FavoritesComponent {
     private _loadingPageService: LoadingPageService,
     private _router: Router
   ) {
-    this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedFavoritesData = data?.['resolvedData']?.data || [];
     });
@@ -39,7 +38,6 @@ export class FavoritesComponent {
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
     });
-    this._loadingPageService.hide();
   }
 
   /**
@@ -47,11 +45,9 @@ export class FavoritesComponent {
    * @param item Item.
    */
   public removeFromFavorites(item: ProductDto): void {
-    this._loadingPageService.show();
     this._favoriteService.deleteUserFavoriteProduct(item.id).subscribe(() => {
       this.resolvedFavoritesData = this.resolvedFavoritesData.filter((fav) => fav !== item);
     });
-    this._loadingPageService.hide();
   }
 
   /**

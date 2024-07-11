@@ -38,7 +38,6 @@ export class ProductDetailsComponent {
     private _basketsService: BasketsService,
     private _toastService: ToastService
   ) {
-    this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
       console.log(this.resolvedData);
@@ -54,14 +53,12 @@ export class ProductDetailsComponent {
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * AddToBasket.
    */
   public addToBasket(): void {
-    this._loadingPageService.show();
     this._basketsService.createBasketProduct(this.product.id).subscribe((res) => {
       if (res.errors) {
         this._toastService.show('Product is already in the basket');
@@ -69,21 +66,17 @@ export class ProductDetailsComponent {
         this._toastService.show('Product added to basket');
       }
     });
-
-    this._loadingPageService.hide();
   }
 
   /**
    * AddToFavorites.
    */
   public addToFavorites(): void {
-    this._loadingPageService.show();
     this.isFavorite = !this.isFavorite;
     if (this.isFavorite) {
       this._favoriteService.createUserFavoriteProduct(this.product.id).subscribe();
     } else {
       this._favoriteService.deleteUserFavoriteProduct(this.product.id).subscribe();
     }
-    this._loadingPageService.hide();
   }
 }

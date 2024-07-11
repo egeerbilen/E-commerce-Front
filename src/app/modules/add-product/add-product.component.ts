@@ -67,7 +67,6 @@ export class AddProductComponent {
    * @param event Event.
    */
   public onFileChange(event: any): void {
-    this._loadingPageService.show();
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -78,6 +77,5 @@ export class AddProductComponent {
       };
       reader.readAsDataURL(file);
     }
-    this._loadingPageService.hide();
   }
 }

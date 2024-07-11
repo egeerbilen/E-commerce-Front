@@ -46,36 +46,31 @@ export class MyAccountComponent implements OnInit {
    * NgOnInit.
    */
   public ngOnInit(): void {
-    this._loadingPageService.show();
     this.accountForm = this._fb.group({
       firstName: [this.resolvedData.data!.firstName, Validators.required],
       lastName: [this.resolvedData.data!.lastName, Validators.required],
       email: [this.resolvedData.data!.email, [Validators.required, Validators.email]],
       password: ['123', [Validators.required, Validators.minLength(3)]]
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * UpdateUser.
    */
   public updateUser(): void {
-    this._loadingPageService.show();
     const formValueWithId = { ...this.accountForm.value, id: this._jwtHelperService.decodeToken()?.userId };
 
     this._myAccountService.updateUser(formValueWithId).subscribe(() => {
       this._toastService.show('User Updated');
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * OnReset.
    */
   public onReset(): void {
-    this._loadingPageService.show();
     this.accountForm.reset();
-    this._loadingPageService.hide();
+
     this._toastService.show('Form Reseted');
   }
 
@@ -83,11 +78,9 @@ export class MyAccountComponent implements OnInit {
    * OnSubmit.
    */
   public async deleteUser(): Promise<void> {
-    this._loadingPageService.show();
     const deleteUserStatus = await this._modalHelperService.openModal('Delete User', 'Are you sure you want to delete the user?');
     if (deleteUserStatus) {
       console.log('Delete User Servis yaz');
     }
-    this._loadingPageService.hide();
   }
 }

@@ -46,7 +46,6 @@ export class LoginComponent {
    * OnSubmit.
    */
   public onSubmit(): void {
-    this._loadingPageService.show();
     if (this.loginForm.valid) {
       this._loginService.userLogin(this.loginForm.value).subscribe((res) => {
         const token = res.data;
@@ -57,7 +56,6 @@ export class LoginComponent {
         }
       });
     }
-    this._loadingPageService.hide();
   }
   /**
    * OnRegister.

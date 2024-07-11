@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 
+import { LoadingPageService } from '../loading-page/loading-page.service';
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
@@ -12,11 +12,11 @@ export class InterceptorService {
   /**
    * Constructor.
    * @param _loginService Login service.
-   * @param _cookieService Cookie service.
+   * @param _loadingPageService LoadingPageService.
    */
   constructor(
     private _loginService: UserLocalStorageService,
-    private _cookieService: CookieService
+    private _loadingPageService: LoadingPageService
   ) {}
   // Daha sonra bu interceptor'ı AppModule'unuzda veya bir servis modülünde kullanmanız gerekiyor.
   // Bunun için, Angular'un HTTP_INTERCEPTORS token'ını kullanarak interceptor'ı provide etmeniz gerekiyor:
@@ -29,6 +29,7 @@ export class InterceptorService {
    * @returns Http evnt.
    */
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this._loadingPageService.show();
     // ! Burası HTTP isteği yakalandığında çalışacak yer Her istek giderken buraya girecek imp edilsede edilmesede
     // Request manipülasyonları burada yapılabilir
 
@@ -60,6 +61,10 @@ export class InterceptorService {
         );
 
         return throwError(error);
+      }),
+      finalize(() => {
+        // İstek tamamlandığında veya hata oluştuğunda yükleme durumunu kapat
+        this._loadingPageService.hide();
       })
     );
   }

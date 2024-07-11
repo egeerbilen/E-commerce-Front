@@ -31,7 +31,6 @@ export class BasketsComponent {
     private _loadingPageService: LoadingPageService,
     private _router: Router
   ) {
-    this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedBasketData = data?.['resolvedData']?.data || [];
     });
@@ -39,7 +38,6 @@ export class BasketsComponent {
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
     });
-    this._loadingPageService.hide();
   }
 
   /**
@@ -47,11 +45,9 @@ export class BasketsComponent {
    * @param item Item.
    */
   public removeFromBasket(item: ProductDto): void {
-    this._loadingPageService.show();
     this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
       this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
     });
-    this._loadingPageService.hide();
   }
 
   /**

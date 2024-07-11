@@ -46,7 +46,6 @@ export class HomeComponent {
     private _modalHelperService: ModalHelperService,
     private _loadingPageService: LoadingPageService
   ) {
-    this._loadingPageService.show();
     this._favoriteService.getUserFavoritesProducts().subscribe((res) => {
       if (res?.data) {
         this.favoriteProducts = res.data.map((product) => product.id);
@@ -73,7 +72,6 @@ export class HomeComponent {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
       this.isSeller = !!res?.roles?.includes('Seller');
     });
-    this._loadingPageService.hide();
   }
 
   /**
@@ -81,14 +79,12 @@ export class HomeComponent {
    * @param category Category.
    */
   public onCategorySelected(category: number): void {
-    this._loadingPageService.show();
     if (!category) {
       this.filteredData = this.resolvedProductsData.data ?? [];
     } else {
       this.filteredData = this.resolvedProductsData.data!.filter((item) => item.categoryId === category);
     }
     this._initializeFavoriteStatus();
-    this._loadingPageService.hide();
   }
 
   /**
@@ -107,11 +103,9 @@ export class HomeComponent {
       return;
     }
 
-    this._loadingPageService.show();
     this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
     this._homeService.deleteProduct(productId).subscribe();
-    this._loadingPageService.hide();
   }
 
   /**
@@ -119,7 +113,6 @@ export class HomeComponent {
    * @param productId ProductId.
    */
   public addToFavorites(productId: number): void {
-    this._loadingPageService.show();
     if (this.favoriteProducts.includes(productId)) {
       this.favoriteProducts = this.favoriteProducts.filter((id) => id !== productId);
       this.favoriteStatus[productId] = false;
@@ -137,7 +130,6 @@ export class HomeComponent {
         this._toastService.show('Product added to favorites');
       });
     }
-    this._loadingPageService.hide();
   }
   /**
    * InitializeFavoriteStatus.

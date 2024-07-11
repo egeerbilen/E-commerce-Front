@@ -39,7 +39,6 @@ export class RegisterComponent {
    * OnSubmit.
    */
   public onSubmit(): void {
-    this._loadingPageService.show();
     if (this.registerForm.valid) {
       this._registerService.userCreate(this.registerForm.value).subscribe((res) => {
         if (res) {
@@ -47,6 +46,5 @@ export class RegisterComponent {
         }
       });
     }
-    this._loadingPageService.hide();
   }
 }

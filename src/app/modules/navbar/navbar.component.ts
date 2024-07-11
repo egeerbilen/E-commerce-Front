@@ -30,20 +30,17 @@ export class NavbarComponent {
     private _modalHelperService: ModalHelperService,
     private _loadingPageService: LoadingPageService
   ) {
-    this._loadingPageService.show();
     this._store.select(getUserData).subscribe((res) => {
       if (res) {
         this.tokenStatus = true;
       }
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * Logout.
    */
   public async logout(): Promise<void> {
-    this._loadingPageService.show();
     const logoutStatus = await this._modalHelperService.openModal('Logout', 'Are you sure you want to log out?');
 
     if (logoutStatus) {
@@ -52,6 +49,5 @@ export class NavbarComponent {
       this.tokenStatus = false;
       this._router.navigate(['/']);
     }
-    this._loadingPageService.hide();
   }
 }

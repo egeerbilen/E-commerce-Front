@@ -34,21 +34,18 @@ export class UpdateProductComponent implements OnInit {
     private _toastService: ToastService,
     private _loadingPageService: LoadingPageService
   ) {
-    this._loadingPageService.show();
     this._route.data.subscribe((data) => {
       this.resolvedData = data['resolvedData'];
       if (this.resolvedData.data) {
         this.product = this.resolvedData.data;
       }
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * NgOnInit.
    */
   public ngOnInit(): void {
-    this._loadingPageService.show();
     this.productForm = this._fb.group({
       name: [this.product.name, [Validators.required, Validators.maxLength(200)]],
       price: [this.product.price, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
@@ -56,14 +53,12 @@ export class UpdateProductComponent implements OnInit {
       description: [this.product.description, Validators.maxLength(500)],
       stock: [this.product.stock, Validators.required]
     });
-    this._loadingPageService.hide();
   }
 
   /**
    * OnSubmit.
    */
   public onSubmit(): void {
-    this._loadingPageService.show();
     if (this.productForm.valid) {
       const formDataWithUserId: ProductUpdateDto = {
         ...this.productForm.value,
@@ -74,6 +69,5 @@ export class UpdateProductComponent implements OnInit {
         this._toastService.show('Data is updated');
       });
     }
-    this._loadingPageService.hide();
   }
 }
