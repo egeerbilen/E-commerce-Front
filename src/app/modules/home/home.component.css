@@ -1,0 +1,19 @@
+.placeholder-image {
+  min-height: 300px;
+  min-width: 100%;
+  background-color: #f0f0f0;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.custom-yellow-button {
+  background-color: #ffd600 !important;
+}
+
+.custom-yellow-button:hover {
+  background-color: #e6bd00 !important;
+}

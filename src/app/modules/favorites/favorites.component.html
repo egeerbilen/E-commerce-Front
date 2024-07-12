@@ -1,32 +1,37 @@
-<div class="row">
+<div class="container-fluid py-3">
   <div class="row">
-    <h1>Favorites</h1>
-    <div *ngIf="(!resolvedFavoritesData || resolvedFavoritesData.length === 0) && !tokenStatus else favoritesAlert"
-      class="col-12">
-      <div class="alert alert-warning fw-bold" role="alert">
-        You need to log in to add favorites.
-        <a routerLink="/Login" class="alert-link text-primary">Go To Login Page</a>
-      </div>
-    </div>
-    <ng-template #favoritesAlert>
-      <div *ngIf="resolvedFavoritesData.length === 0" class="alert alert-warning fw-bold" role="alert">
-        You don't have any favorites right now.
-        <a routerLink="/" class="alert-link text-primary">Go to the Home Page</a>
-        and add some favorites.
-      </div>
-      <div *ngFor="let value of resolvedFavoritesData" class="mt-3 col-12 col-md-6 col-lg-4 col-xl-3">
-        <div class="card h-100 shadow-sm border-0">
-          <img [routerLink]="['ProductDetails/' + value.id]" [src]="value.imageData | byteToImage" class="card-img-top"
-            [alt]="value.name" (click)="navigateToProductDetails(value.id)">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{value.name}}</h5>
-            <p class="card-text">Price: {{value.price}}</p>
-            <button class="btn btn-danger mt-auto" (click)="removeFromFavorites(value)">
-              <i class="bi bi-trash"></i> Remove Favorite
-            </button>
-          </div>
+    <div class="col-12">
+      <h1 class="mb-4">Favorites</h1>
+      <div *ngIf="(!resolvedFavoritesData || resolvedFavoritesData.length === 0) && !tokenStatus else favoritesAlert"
+        class="col-12">
+        <div class="alert alert-warning fw-bold" role="alert">
+          You need to log in to add favorites.
+          <a routerLink="/Login" class="alert-link text-primary">Go To Login Page</a>
         </div>
       </div>
-    </ng-template>
+      <ng-template #favoritesAlert>
+        <div *ngIf="resolvedFavoritesData.length === 0" class="alert alert-warning fw-bold" role="alert">
+          You don't have any favorites right now.
+          <a routerLink="/" class="alert-link text-primary">Go to the Home Page</a> and add some favorites.
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+          <div *ngFor="let value of resolvedFavoritesData" class="col">
+            <div class="card h-100 shadow-sm border-0">
+              <button class="btn remove-btn btn-outline-danger btn-sm position-absolute top-0 end-0 m-2 border-0" (click)="removeFromFavorites(value)">
+                <i class="bi bi-x-circle"></i>
+              </button>
+              <img [routerLink]="['ProductDetails/' + value.id]" [src]="value.imageData | byteToImage" class="card-img-top" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{value.name}}</h5>
+                <p class="card-text fw-bold">{{value.price}} $</p>
+                <button class="btn btn-outline-primary mt-auto" (click)="navigateToProductDetails(value.id)">
+                  View Details
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>
