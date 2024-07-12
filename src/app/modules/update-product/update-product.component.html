@@ -1,64 +1,66 @@
-<img [src]="productForm.get('imageData')?.value" class="card-img-top" [alt]="this.product.name">
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="container mt-5">
-  <div class="mb-3">
-    <label for="name" class="form-label">Product Name</label>
-    <input type="text" id="name" formControlName="name" class="form-control" />
-    <div
-      *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)"
-      class="text-danger">
-      <div *ngIf="productForm.get('name')?.errors?.['required']">Product name is required.</div>
-      <div *ngIf="productForm.get('name')?.errors?.['maxlength']">Product name cannot exceed 200 characters.</div>
+<mat-card class="container my-3 p-4">
+  <h1>Update Product</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="mb-3">
+      <mat-label>Product Name</mat-label>
+      <input matInput type="text" formControlName="name" />
+      <mat-error
+        *ngIf="productForm.get('name')?.invalid && (productForm.get('name')?.dirty || productForm.get('name')?.touched)">
+        <div *ngIf="productForm.get('name')?.errors?.['required']">Product name is required.</div>
+        <div *ngIf="productForm.get('name')?.errors?.['maxlength']">Product name cannot exceed 200 characters.</div>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="mb-3">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" formControlName="price" />
+      <mat-error
+        *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)">
+        <div *ngIf="productForm.get('price')?.errors?.['required']">Price is required.</div>
+        <div *ngIf="productForm.get('price')?.errors?.['pattern']">Price must be a decimal value with up to 2 decimal
+          places.</div>
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field class="mb-3">
+      <mat-label>Category ID</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="productForm.get('categoryId')?.invalid && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)">
+        Category ID is required.
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field class="mb-3">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" formControlName="description" />
+      <mat-error
+        *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)">
+        <div *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters.
+        </div>
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field class="mb-3">
+      <mat-label>Product Stock</mat-label>
+      <input matInput type="number" formControlName="stock" />
+      <mat-error
+        *ngIf="productForm.get('stock')?.invalid && (productForm.get('stock')?.dirty || productForm.get('stock')?.touched)">
+        Product stock is required.
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <div class="mb-3">
+      <mat-label>Product Image</mat-label>
+      <input type="file" (change)="onFileChange($event)" class="form-control" />
     </div>
-  </div>
 
-  <div class="mb-3">
-    <label for="price" class="form-label">Price</label>
-    <input type="number" id="price" formControlName="price" class="form-control" />
-    <div
-      *ngIf="productForm.get('price')?.invalid && (productForm.get('price')?.dirty || productForm.get('price')?.touched)"
-      class="text-danger">
-      <div *ngIf="productForm.get('price')?.errors?.['required']">Price is required.</div>
-      <div *ngIf="productForm.get('price')?.errors?.['pattern']">Price must be a decimal value with up to 2 decimal
-        places.</div>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="categoryId" class="form-label">Category ID</label>
-    <select id="categoryId" formControlName="categoryId" class="form-control">
-      <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
-    </select>
-    <div
-      *ngIf="productForm.get('categoryId')?.invalid && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)"
-      class="text-danger">
-      Category ID is required.
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
-    <input type="text" id="description" formControlName="description" class="form-control" />
-    <div
-      *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.dirty || productForm.get('description')?.touched)"
-      class="text-danger">
-      <div *ngIf="productForm.get('description')?.errors?.['maxlength']">Description cannot exceed 500 characters.</div>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="productStock" class="form-label">Product Stock</label>
-    <input type="number" id="productStock" formControlName="stock" class="form-control" />
-    <div
-      *ngIf="productForm.get('stock')?.invalid && (productForm.get('stock')?.dirty || productForm.get('stock')?.touched)"
-      class="text-danger">
-      Product stock is required.
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="productImage" class="form-label">Product Image</label>
-    <input type="file" id="productImage" (change)="onFileChange($event)" class="form-control" />
-  </div>
-
-  <button type="submit" class="btn btn-primary">Update Product</button>
-</form>
+    <button mat-raised-button type="submit" class="btn btn-primary">Update Product</button>
+  </form>
+</mat-card>
