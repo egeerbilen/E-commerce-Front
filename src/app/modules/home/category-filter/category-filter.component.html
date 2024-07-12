@@ -1,5 +1,5 @@
 <div class="container mt-2">
-  <h2>Kategoriler</h2>
+  <h2>Categories</h2>
   <mat-nav-list>
     <mat-list-item *ngFor="let category of categories" (click)="filterByCategory(category.id)" appHighlightCategory>
       {{ category.name }}
