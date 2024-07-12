@@ -2,11 +2,12 @@
   min-height: 300px;
   min-width: 100%;
   background-color: #f0f0f0;
-  position: relative;
 }
 
 .favorite-button {
-  margin-top: 10px; /* Butonun konumunu aşağıda tutmak için margin ekledik */
+  position: absolute;
+  top: 14%; /* Adjusted to move the icon down */
+  right: 16px; 
 }
 
 .favorite-button mat-icon {
@@ -18,18 +19,17 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  min-height: 400px;
-}
-
-.card-image-container {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.favorite-container {
-  padding: 10px; /* Favori butonunun çevresinde boşluk oluşturmak için padding ekledik */
+
+.action-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

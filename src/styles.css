@@ -11,17 +11,31 @@ body {
 }
 
 .custom-green-button {
-  background-color: #a6f8aa !important;
+  background-color: #28a745 !important;
+  color: white !important;
 }
 
 .custom-green-button:hover {
-  background-color: #53e400 !important;
+  background-color: #218838 !important;
+  color: white !important;
 }
 
 .custom-yellow-button {
-  background-color: #ffd600 !important;
+  background-color: #ffc107 !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .custom-yellow-button:hover {
-  background-color: #e6bd00 !important;
+  background-color: #e0a800 !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.delete-button {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.delete-button:hover {
+  background-color: #c82333 !important;
+  color: white !important;
 }

@@ -57,7 +57,7 @@ export class HomeComponent {
       this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
 
       if (this.resolvedProductsData.data) {
-        const allProductsCategory: CategoryDto = { id: 0, name: 'Tüm Ürünler' };
+        const allProductsCategory: CategoryDto = { id: 0, name: 'All Category' };
         this.resolvedCategoriesData.data!.unshift(allProductsCategory);
 
         this.filteredData = this.resolvedProductsData.data;

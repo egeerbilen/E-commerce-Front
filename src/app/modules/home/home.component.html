@@ -1,8 +1,9 @@
 <div class="container-fluid py-3">
-    <p class="text-muted"><b>Note:</b> If there is too much data, scroll loading may be required and not all categories
-        will be fetched.
-        Only a few main products will be retrieved. When the user selects a category, the value is taken as a query
-        parameter and the backend query is adjusted accordingly.</p>
+    <p class="text-muted">
+        <b>Note:</b> If there is too much data, scroll loading might be necessary, and not all categories may be
+        fetched. Only a few main products will be fetched. When the user selects a category, the value is taken as a
+        query parameter and the backend query is adjusted accordingly.
+    </p>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Product Management</h1>
@@ -34,7 +35,7 @@
             <div class="row">
                 <div *ngIf="(filteredData | findProduct : searchText).length === 0"
                     class="alert alert-warning text-center my-4" role="alert">
-                    Sorry, no products found matching your criteria.
+                    Sorry, no products matching your criteria were found.
                 </div>
 
                 <div *ngFor="let value of (filteredData | findProduct : searchText)"
@@ -54,19 +55,17 @@
                             [routerLink]="['ProductDetails/' + value.id]" alt="{{ value.name }}">
                         <div *ngIf="!value.imageData" class="placeholder-image"></div>
                         <mat-card-content>
-                            <div class="d-flex justify-content-between w-100">
-                                <div class="text-center w-100">
+                            <div class="d-flex justify-content-between w-100 align-items-start">
+                                <div class="text-center w-100 text-truncate">
                                     <mat-card-title>{{ value.name }}</mat-card-title>
                                     <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
                                 </div>
+                                <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
+                                    (click)="addToFavorites(value.id)">
+                                    <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
+                                </button>
                             </div>
                         </mat-card-content>
-                        <div class="text-center favorite-container">
-                            <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
-                                (click)="addToFavorites(value.id)">
-                                <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
-                            </button>
-                        </div>
                     </mat-card>
                 </div>
             </div>
