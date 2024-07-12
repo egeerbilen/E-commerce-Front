@@ -42,10 +42,10 @@ export class BasketsComponent implements OnInit {
   }
 
   /**
-   *
+   * NgOnInit.
    */
-  ngOnInit() {
-    this.calculateTotals();
+  public ngOnInit(): void {
+    this._calculateTotals();
   }
 
   /**
@@ -55,7 +55,7 @@ export class BasketsComponent implements OnInit {
   public removeFromBasket(item: ProductDto): void {
     this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
       this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
-      this.calculateTotals(); // Totals'ı yeniden hesapla
+      this._calculateTotals(); // Totals'ı yeniden hesapla
     });
   }
 
@@ -76,7 +76,7 @@ export class BasketsComponent implements OnInit {
   /**
    * CalculateTotals.
    */
-  private calculateTotals(): void {
+  private _calculateTotals(): void {
     this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price, 0);
     this.grandTotal = this.totalPrice + this.shippingCost - this.totalSavings;
   }

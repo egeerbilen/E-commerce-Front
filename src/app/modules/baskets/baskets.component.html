@@ -1,60 +1,48 @@
 <div class="container-fluid py-3">
   <div class="row">
-    <div class="col-12 col-lg-8 mb-4">
-      <h1 class="mb-4">My Basket ({{resolvedBasketData.length}} Items)</h1>
-      <div *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus else basketAlert" class="col-12">
-        <div class="alert alert-warning fw-bold" role="alert">
-          You need to log in to add items to your basket.
-          <a routerLink="/Login" class="alert-link text-primary">Log In</a>
-        </div>
-      </div>
-      <ng-template #basketAlert>
-        <div *ngIf="resolvedBasketData.length === 0" class="alert alert-warning fw-bold" role="alert">
-          There are currently no items in your basket.
-          Go to the <a routerLink="/" class="alert-link text-primary">Home Page</a> and add items.
-        </div>
-        <div *ngFor="let value of resolvedBasketData" class="mt-3 col-12">
-          <div class="card h-100 shadow-sm border-0 position-relative p-3">
-            <button class="btn btn-outline-danger btn-sm position-absolute top-0 end-0 m-2 border-0" (click)="removeFromBasket(value)">
-              <i class="bi bi-x-circle"></i>
-            </button>
-            <div class="row g-0">
-              <div class="col-md-4 d-flex align-items-center justify-content-center">
-                <img [src]="value.imageData | byteToImage" class="img-fluid rounded" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
-              </div>
-              <div class="col-md-8 d-flex flex-column justify-content-center">
-                <div class="card-body">
+    <div class="col-12">
+      <h1 class="mb-4">Favorites</h1>
+      <ng-container
+        *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus; else favoritesAlert">
+        <mat-card class="col-12">
+          <mat-card-content class="alert alert-warning fw-bold" role="alert">
+            You need to log in to add favorites.
+            <a routerLink="/Login" class="alert-link text-primary">Go To Login Page</a>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+      <ng-template #favoritesAlert>
+        <ng-container *ngIf="resolvedBasketData.length === 0">
+          <mat-card class="col-12">
+            <mat-card-content class="alert alert-warning fw-bold" role="alert">
+              You don't have any favorites right now.
+              <a routerLink="/" class="alert-link text-primary">Go to the Home Page</a> and add some favorites.
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+          <div *ngFor="let value of resolvedBasketData" class="col">
+            <mat-card class="favorite-card h-100 shadow-sm border-0">
+              <button mat-icon-button color="warn" class="position-absolute top-0 end-0 m-2"
+                (click)="removeFromBasket(value)">
+                <mat-icon>close</mat-icon>
+              </button>
+              <img [routerLink]="['ProductDetails/' + value.id]" [src]="value.imageData | byteToImage"
+                class="card-img-top" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
+              <mat-card-content class="d-flex flex-column justify-content-between">
+                <div>
                   <h5 class="card-title">{{value.name}}</h5>
-                  <p class="card-text"><b>Price: {{value.price}} $</b></p>
+                  <p class="card-text fw-bold">{{value.price}} $</p>
                 </div>
-              </div>
-            </div>
+                <button mat-raised-button class="detail-active mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+                  (click)="navigateToProductDetails(value.id)">
+                  View Details
+                </button>
+              </mat-card-content>
+            </mat-card>
           </div>
         </div>
       </ng-template>
-    </div>
-    <div class="col-12 col-lg-4">
-      <div class="card border-primary shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">Order Summary</h4>
-        </div>
-        <div class="card-body">
-          <p class="card-text d-flex justify-content-between">
-            <span class="fw-bold">Total Price:</span> <span>{{totalPrice}} $</span>
-          </p>
-          <p class="card-text d-flex justify-content-between">
-            <span class="fw-bold">Shipping Cost:</span> <span>{{shippingCost}} $</span>
-          </p>
-          <p class="card-text d-flex justify-content-between">
-            <span class="fw-bold">Total Savings:</span> <span>{{totalSavings}} $</span>
-          </p>
-          <hr>
-          <h5 class="card-title d-flex justify-content-between">
-            <span class="fw-bold">Grand Total:</span> <span>{{grandTotal}} $</span>
-          </h5>
-          <button class="btn btn-success mt-3 w-100" (click)="confirmBasket()">Confirm Basket</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>
