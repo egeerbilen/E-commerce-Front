@@ -39,7 +39,7 @@ export class CategoryService {
    * @param categoryDto CategoryDto.
    * @returns Updated category values.
    */
-  public updateCategory(categoryDto: CategoryDto): Observable<CustomResponseDto<CategoryDto>> {
+  public updateCategory(categoryDto: CategoryDto): Observable<CustomResponseDto<null>> {
     return this._http.put(apiEndpoint.category + 'Update', categoryDto);
   }
 
@@ -48,7 +48,7 @@ export class CategoryService {
    * @param id Category ID.
    * @returns Deletion result.
    */
-  public deleteCategory(id: number): Observable<CustomResponseDto<void>> {
+  public deleteCategory(id: number): Observable<CustomResponseDto<null>> {
     return this._http.delete(apiEndpoint.category + 'DeleteCategory/' + id);
   }
 }
