@@ -12,7 +12,10 @@ const routes: Routes = [
   { path: 'Basket', loadChildren: () => import('./modules/baskets/baskets.module').then((m) => m.BasketsModule) },
   { path: 'Register', loadChildren: () => import('./modules/register/register.module').then((m) => m.RegisterModule) },
   { path: 'MyAccount', loadChildren: () => import('./modules/my-account/my-account.module').then((m) => m.MyAccountModule) },
-  { path: 'AddCategory', loadChildren: () => import('./modules/add-category/add-category.module').then((m) => m.AddCategoryModule) },
+  {
+    path: 'CategoryManagement',
+    loadChildren: () => import('./modules/category-management/category-management.module').then((m) => m.CategoryManagementModule)
+  },
   { path: 'Login', loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },
   { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
 ];

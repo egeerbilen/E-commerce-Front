@@ -4,7 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { CategoriyService } from 'src/app/shared/services/categoriy/categoriy.service';
+import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.service';
 
 import { ProductDatailsDataResolverService } from '../../product-details/service/product-datails-data-resolver.service';
 
@@ -21,7 +21,7 @@ export class UpdateProductDataResolverService {
   constructor(
     private _productDatailsDataResolverService: ProductDatailsDataResolverService,
     private _router: Router,
-    private _categoriyService: CategoriyService
+    private _categoriyService: CategoryService
   ) {}
 
   /**

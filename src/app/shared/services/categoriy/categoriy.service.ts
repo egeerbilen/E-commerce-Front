@@ -10,7 +10,7 @@ import { ApiHelperService } from '../api-helper/api-helper.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriyService {
+export class CategoryService {
   /**
    * Constructor.
    * @param _http Http Request Service.
@@ -18,19 +18,37 @@ export class CategoriyService {
   constructor(private _http: ApiHelperService) {}
 
   /**
-   * Get Products.
-   * @returns Products values.
+   * Get Categories.
+   * @returns Categories values.
    */
   public getCategories(): Observable<CustomResponseDto<CategoryDto[]>> {
     return this._http.get(apiEndpoint.category + 'GetCategories');
   }
 
   /**
-   * Get Products.
-   * @param categortDto CategortDto.
-   * @returns Products values.
+   * Add Category.
+   * @param categoryDto CreateCategoryDto.
+   * @returns Added category values.
    */
-  public addCategories(categortDto: CreateCategoryDto): Observable<CustomResponseDto<CategoryDto[]>> {
-    return this._http.post(apiEndpoint.category + 'CreateCategory', categortDto);
+  public addCategory(categoryDto: CreateCategoryDto): Observable<CustomResponseDto<CategoryDto>> {
+    return this._http.post(apiEndpoint.category + 'CreateCategory', categoryDto);
+  }
+
+  /**
+   * Update Category.
+   * @param categoryDto CategoryDto.
+   * @returns Updated category values.
+   */
+  public updateCategory(categoryDto: CategoryDto): Observable<CustomResponseDto<CategoryDto>> {
+    return this._http.put(apiEndpoint.category + 'Update', categoryDto);
+  }
+
+  /**
+   * Delete Category.
+   * @param id Category ID.
+   * @returns Deletion result.
+   */
+  public deleteCategory(id: number): Observable<CustomResponseDto<void>> {
+    return this._http.delete(apiEndpoint.category + 'DeleteCategory/' + id);
   }
 }

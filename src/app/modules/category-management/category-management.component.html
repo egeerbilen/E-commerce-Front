@@ -1,0 +1,31 @@
+<mat-card class="container my-3 p-4">
+  <h2>Category List</h2>
+  <form [formGroup]="categoryForm" (ngSubmit)="isEditMode ? updateCategory() : addCategory()">
+    <mat-form-field class="mb-3 full-width">
+      <mat-label>Category Name</mat-label>
+      <input matInput id="name" type="text" formControlName="name">
+      <mat-error *ngIf="categoryForm.get('name')?.invalid && (categoryForm.get('name')?.dirty || categoryForm.get('name')?.touched)">
+        <div *ngIf="categoryForm.get('name')?.errors?.['required']" class="text-danger">Category name is required.</div>
+        <div *ngIf="categoryForm.get('name')?.errors?.['maxlength']" class="text-danger">Category name cannot be longer
+          than 100 characters.</div>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" class="custom-primary-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+      [disabled]="categoryForm.invalid">{{ isEditMode ? 'Update' : 'Add' }} Category</button>
+    <button mat-raised-button type="button" class="custom-primary-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+      (click)="cancelEdit()" *ngIf="isEditMode">Cancel</button>
+  </form>
+
+  <mat-list>
+    <mat-list-item *ngFor="let category of categories">
+      <span>{{ category.name }}</span>
+      <button mat-icon-button color="primary" (click)="editCategory(category)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteCategory(category.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

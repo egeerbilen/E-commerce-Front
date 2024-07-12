@@ -5,7 +5,7 @@ import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
 import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
-import { CategoriyService } from 'src/app/shared/services/categoriy/categoriy.service';
+import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class HomeDataResolverService {
    */
   constructor(
     protected http: ApiHelperService,
-    private _categoriyService: CategoriyService
+    private _categoriyService: CategoryService
   ) {}
 
   /**
