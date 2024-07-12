@@ -1,5 +1,7 @@
 .custom-toolbar {
   background-color: rgb(18, 113, 255) !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .container-fluid {
