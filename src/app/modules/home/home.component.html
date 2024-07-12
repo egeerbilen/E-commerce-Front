@@ -59,12 +59,14 @@
                                     <mat-card-title>{{ value.name }}</mat-card-title>
                                     <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
                                 </div>
-                                <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
-                                    (click)="addToFavorites(value.id)">
-                                    <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
-                                </button>
                             </div>
                         </mat-card-content>
+                        <div class="text-center favorite-container">
+                            <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
+                                (click)="addToFavorites(value.id)">
+                                <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
+                            </button>
+                        </div>
                     </mat-card>
                 </div>
             </div>
