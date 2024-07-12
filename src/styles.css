@@ -17,3 +17,11 @@ body {
 .custom-green-button:hover {
   background-color: #53e400 !important;
 }
+
+.custom-yellow-button {
+  background-color: #ffd600 !important;
+}
+
+.custom-yellow-button:hover {
+  background-color: #e6bd00 !important;
+}

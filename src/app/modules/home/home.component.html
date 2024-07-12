@@ -11,12 +11,10 @@
                 class="custom-green-button me-2">
                 <mat-icon>add</mat-icon> Add Product
             </button>
-
             <button *ngIf="tokenStatus && isSeller" [routerLink]="['/AddCategory']" mat-raised-button
                 class="custom-yellow-button me-2">
                 <mat-icon>add</mat-icon> Add Category
             </button>
-
         </div>
     </div>
 
@@ -25,7 +23,6 @@
             <div class="bg-light p-3 rounded">
                 <h2 class="h5">Search</h2>
                 <mat-form-field appearance="fill" class="w-100 mb-3">
-                    <mat-label>Search</mat-label>
                     <input matInput [(ngModel)]="searchText" placeholder="Search">
                 </mat-form-field>
                 <app-category-filter [categories]="resolvedCategoriesData.data || []"
@@ -42,31 +39,32 @@
 
                 <div *ngFor="let value of (filteredData | findProduct : searchText)"
                     class="col-12 col-md-6 col-lg-4 mb-4">
-                    <mat-card class="example-card h-100 d-flex flex-column">
-                        <mat-card-header>
+                    <mat-card class="example-card h-100">
+                        <mat-card-actions *ngIf="tokenStatus && isSeller" class="action-buttons">
+                            <button [routerLink]="['UpdateProduct/' + value.id]" mat-raised-button
+                                class="custom-green-button me-2">
+                                <mat-icon>edit</mat-icon> Edit
+                            </button>
+                            <button (click)="deleteProduct(value.id)" mat-raised-button color="warn"
+                                class="delete-button">
+                                <mat-icon>delete</mat-icon> Delete
+                            </button>
+                        </mat-card-actions>
+                        <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
+                            [routerLink]="['ProductDetails/' + value.id]" alt="{{ value.name }}">
+                        <div *ngIf="!value.imageData" class="placeholder-image"></div>
+                        <mat-card-content>
                             <div class="d-flex justify-content-between w-100">
-                                <div>
-                                    <mat-card-title class="text-left">{{ value.name }}</mat-card-title>
-                                    <mat-card-subtitle class="text-left">{{ value.price }} $</mat-card-subtitle>
+                                <div class="text-center w-100">
+                                    <mat-card-title>{{ value.name }}</mat-card-title>
+                                    <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
                                 </div>
                                 <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
                                     (click)="addToFavorites(value.id)">
                                     <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
                                 </button>
                             </div>
-                        </mat-card-header>
-                        <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
-                            [routerLink]="['ProductDetails/' + value.id]" alt="{{ value.name }}">
-                        <div *ngIf="!value.imageData" class="placeholder-image"></div>
-                        <mat-card-actions *ngIf="tokenStatus && isSeller" class="mt-auto d-flex flex-column">
-                            <button [routerLink]="['UpdateProduct/' + value.id]" mat-raised-button
-                                style="background-color: #4CAF50; color: white;">
-                                <mat-icon>edit</mat-icon> Update
-                            </button>
-                            <button (click)="deleteProduct(value.id)" mat-raised-button color="warn" class="mt-2">
-                                <mat-icon>delete</mat-icon> Delete
-                            </button>
-                        </mat-card-actions>
+                        </mat-card-content>
                     </mat-card>
                 </div>
             </div>

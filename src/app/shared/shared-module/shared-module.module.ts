@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +33,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatSnackBarModule,
     MatButtonModule,
     MatInputModule,
+    MatListModule,
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
@@ -47,6 +49,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     ReactiveFormsModule,
     HttpClientModule,
     ByteToImagePipe,
+    MatListModule,
     LoadingPageComponent,
     ModalHelperComponent,
     MatSnackBarModule,
