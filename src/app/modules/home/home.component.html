@@ -5,19 +5,20 @@
         query parameter and the backend query is adjusted accordingly.
     </p>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Product Management</h1>
-        <div>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <div class="d-flex flex-column flex-md-row w-100 mt-2 mt-md-0">
             <button *ngIf="tokenStatus && isSeller" [routerLink]="['/AddProduct']" mat-raised-button
-                class="custom-green-button me-2">
+                class="custom-green-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto">
                 <mat-icon>add</mat-icon> Add Product
             </button>
             <button *ngIf="tokenStatus && isSeller" [routerLink]="['/AddCategory']" mat-raised-button
-                class="custom-yellow-button me-2">
+                class="custom-yellow-button w-100 w-md-auto">
                 <mat-icon>add</mat-icon> Add Category
             </button>
         </div>
     </div>
+
+
 
     <div class="row">
         <div class="col-12 col-md-3 mb-4">

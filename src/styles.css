@@ -39,3 +39,12 @@ body {
   background-color: #c82333 !important;
   color: white !important;
 }
+
+.active {
+  background-color: rgb(125, 192, 255);
+  color: white;
+}
+
+.full-width {
+  width: 100%;
+}

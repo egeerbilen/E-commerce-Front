@@ -1,8 +1,22 @@
 <div class="container mt-2">
   <h2>Categories</h2>
-  <mat-nav-list>
-    <mat-list-item *ngFor="let category of categories" (click)="filterByCategory(category.id)" appHighlightCategory>
-      {{ category.name }}
-    </mat-list-item>
-  </mat-nav-list>
+  <!-- Masaüstü görünümü için -->
+  <div class="d-none d-md-block">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let category of categories" (click)="filterByCategory(category.id)" appHighlightCategory>
+        {{ category.name }}
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+  <!-- Mobil görünümü için -->
+  <div class="d-block d-md-none">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Select Category</mat-label>
+      <mat-select (selectionChange)="filterByCategory($event.value)">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
