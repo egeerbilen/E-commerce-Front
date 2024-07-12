@@ -1,8 +1,7 @@
 <div class="row">
-  <div class="row">
-    <h1>My Basket</h1>
-    <div *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus else basketAlert"
-      class="col-12">
+  <div class="col-12 col-lg-8 mb-4">
+    <h1 class="mb-4">My Basket ({{resolvedBasketData.length}} Items)</h1>
+    <div *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus else basketAlert" class="col-12">
       <div class="alert alert-warning fw-bold" role="alert">
         You need to log in to add items to your basket.
         <a routerLink="/Login" class="alert-link text-primary">Log In</a>
@@ -13,18 +12,47 @@
         There are currently no items in your basket.
         Go to the <a routerLink="/" class="alert-link text-primary">Home Page</a> and add items.
       </div>
-      <div *ngFor="let value of resolvedBasketData" class="mt-3 col-12 col-md-6 col-lg-4 col-xl-3">
-        <div class="card h-100 shadow-sm border-0">
-          <img [src]="value.imageData | byteToImage" class="card-img-top" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{value.name}}</h5>
-            <p class="card-text"><b>Price: {{value.price}} $ </b></p>
-            <button class="btn btn-danger mt-auto" (click)="removeFromBasket(value)">
-              <i class="bi bi-trash"></i> Remove From Basket
-            </button>
+      <div *ngFor="let value of resolvedBasketData" class="mt-3 col-12">
+        <div class="card h-100 shadow-sm border-0 position-relative p-3">
+          <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" (click)="removeFromBasket(value)">
+            <i class="bi bi-trash"></i> Remove
+          </button>
+          <div class="row g-0">
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+              <img [src]="value.imageData | byteToImage" class="img-fluid rounded" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center">
+              <div class="card-body">
+                <h5 class="card-title">{{value.name}}</h5>
+                <p class="card-text"><b>Price: {{value.price}} $</b></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </ng-template>
+  </div>
+  <div class="col-12 col-lg-4">
+    <div class="card border-primary shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Order Summary</h4>
+      </div>
+      <div class="card-body">
+        <p class="card-text d-flex justify-content-between">
+          <span class="fw-bold">Total Price:</span> <span>{{totalPrice}} $</span>
+        </p>
+        <p class="card-text d-flex justify-content-between">
+          <span class="fw-bold">Shipping Cost:</span> <span>{{shippingCost}} $</span>
+        </p>
+        <p class="card-text d-flex justify-content-between">
+          <span class="fw-bold">Total Savings:</span> <span>{{totalSavings}} $</span>
+        </p>
+        <hr>
+        <h5 class="card-title d-flex justify-content-between">
+          <span class="fw-bold">Grand Total:</span> <span>{{grandTotal}} $</span>
+        </h5>
+        <button class="btn btn-success mt-3 w-100" (click)="confirmBasket()">Confirm Basket</button>
+      </div>
+    </div>
   </div>
 </div>

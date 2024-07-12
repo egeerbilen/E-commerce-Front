@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
@@ -11,9 +11,13 @@ import { BasketsService } from './service/baskets.service';
   templateUrl: './baskets.component.html',
   styleUrls: ['./baskets.component.css']
 })
-export class BasketsComponent {
+export class BasketsComponent implements OnInit {
   resolvedBasketData!: ProductDto[];
   tokenStatus = false;
+  totalPrice = 0;
+  shippingCost = 39.99;
+  totalSavings = 4.01;
+  grandTotal = 0;
 
   /**
    * Constructor.
@@ -38,12 +42,20 @@ export class BasketsComponent {
   }
 
   /**
+   *
+   */
+  ngOnInit() {
+    this.calculateTotals();
+  }
+
+  /**
    * RemoveFromBasket.
    * @param item Item.
    */
   public removeFromBasket(item: ProductDto): void {
     this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
       this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
+      this.calculateTotals(); // Totals'ı yeniden hesapla
     });
   }
 
@@ -53,5 +65,19 @@ export class BasketsComponent {
    */
   public navigateToProductDetails(productId: number): void {
     this._router.navigate(['ProductDetails', productId]);
+  }
+
+  /**
+   * ConfirmBasket.
+   */
+  public confirmBasket(): void {
+    console.log('Basket confirmed.');
+  }
+  /**
+   * CalculateTotals.
+   */
+  private calculateTotals(): void {
+    this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price, 0);
+    this.grandTotal = this.totalPrice + this.shippingCost - this.totalSavings;
   }
 }
