@@ -48,3 +48,13 @@ body {
 .full-width {
   width: 100%;
 }
+
+.detail-active {
+  background-color: rgb(48, 155, 255) !important;
+  color: white !important;
+}
+
+.detail-active:hover {
+  background-color: rgb(48, 135, 235) !important;
+  color: white !important;
+}
