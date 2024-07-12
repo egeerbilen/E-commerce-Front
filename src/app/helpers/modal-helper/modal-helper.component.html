@@ -1,17 +1,8 @@
-<div class="modal fade" tabindex="-1" [ngClass]="{'show': isOpen, 'd-block': isOpen}" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-danger">
-        <h2 class="modal-title mt-3">{{ title }}</h2>
-        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>{{ content }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="okModal()">Ok</button>
-        <button type="button" class="btn btn-danger" (click)="closeModal()">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <p>{{ data.content }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" (click)="onOkClick()">Ok</button>
+  <button mat-button color="warn" (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

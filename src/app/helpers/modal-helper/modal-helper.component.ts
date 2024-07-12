@@ -1,49 +1,29 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-import { ModalHelperService } from './service/modal-helper-service.service';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-helper',
   templateUrl: './modal-helper.component.html',
   styleUrls: ['./modal-helper.component.css']
 })
-export class ModalHelperComponent implements OnInit {
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onClose = new EventEmitter<void>();
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onOk = new EventEmitter<void>();
-  isOpen = false;
-  title = '';
-  content = '';
+export class ModalHelperComponent {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  constructor(
+    public dialogRef: MatDialogRef<ModalHelperComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { title: string; content: string }
+  ) {}
 
   /**
-   * Constructor.
-   * @param _modalService ModalService.
+   * OnCloseClick.
    */
-  constructor(private _modalService: ModalHelperService) {}
-
-  /**
-   * NgOnInit.
-   */
-  public ngOnInit(): void {
-    this._modalService.modalState$.subscribe((state: any) => {
-      this.isOpen = state.isOpen;
-      this.title = state.title;
-      this.content = state.content;
-    });
+  public onCloseClick(): void {
+    this.dialogRef.close(false);
   }
 
   /**
-   * CloseModal.
+   * OnOkClick.
    */
-  public closeModal(): void {
-    this.onClose.emit();
-  }
-
-  /**
-   * CloseModal.
-   */
-  public okModal(): void {
-    this.onOk.emit();
+  public onOkClick(): void {
+    this.dialogRef.close(true);
   }
 }

@@ -9,7 +9,7 @@
       <mat-icon class="text-warning">shopping_cart</mat-icon> Basket
     </a>
     <a *ngIf="tokenStatus" mat-button routerLink="/MyAccount" class="navbar-brand">
-      <mat-icon class="text-success">account_circle</mat-icon> My Account
+      <mat-icon class="text-dark">account_circle</mat-icon> My Account
     </a>
     <a *ngIf="tokenStatus else loggedOut" mat-button (click)="logout()" class="navbar-brand">Logout</a>
     <ng-template #loggedOut>
