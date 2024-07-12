@@ -49,12 +49,12 @@ body {
   width: 100%;
 }
 
-.detail-active {
+.custom-primary-button {
   background-color: rgb(48, 155, 255) !important;
   color: white !important;
 }
 
-.detail-active:hover {
+.custom-primary-button:hover {
   background-color: rgb(48, 135, 235) !important;
   color: white !important;
 }

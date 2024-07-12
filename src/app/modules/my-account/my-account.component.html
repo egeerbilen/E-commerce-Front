@@ -1,30 +1,43 @@
-<div class="container">
-  <h1>My Account</h1>
+<mat-card class="container my-5 p-4">
+  <h1 class="mb-4">My Account</h1>
   <form [formGroup]="accountForm">
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input id="firstName" type="text" class="form-control" formControlName="firstName">
+    <div class="form-group mb-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>First Name</mat-label>
+        <input matInput id="firstName" type="text" formControlName="firstName" class="full-width">
+      </mat-form-field>
     </div>
 
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input id="lastName" type="text" class="form-control" formControlName="lastName">
+    <div class="form-group mb-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Last Name</mat-label>
+        <input matInput id="lastName" type="text" formControlName="lastName" class="full-width">
+      </mat-form-field>
     </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" type="email" class="form-control" formControlName="email">
+    <div class="form-group mb-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput id="email" type="email" formControlName="email" class="full-width">
+      </mat-form-field>
     </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input id="password" type="password" class="form-control" formControlName="password">
+    <div class="form-group mb-3">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Password</mat-label>
+        <input matInput id="password" type="password" formControlName="password" class="full-width">
+      </mat-form-field>
     </div>
 
-    <button type="submit" class="btn btn-success mt-3" [disabled]="!accountForm.valid"
-      (click)="updateUser()">Update</button>
-    <button type="button" class="btn btn-danger mt-3  ms-3 " (click)="deleteUser()">Delete User</button>
-    <button type="button" class="btn btn-secondary ms-3 mt-3" (click)="onReset()">Clear</button>
-
+    <button mat-raised-button class="custom-green-button me-3" type="submit" [disabled]="!accountForm.valid"
+      (click)="updateUser()">
+      Update
+    </button>
+    <button mat-raised-button class="delete-button me-3" type="button" (click)="deleteUser()">
+      Delete User
+    </button>
+    <button mat-raised-button class="custom-yellow-button" type="button" (click)="onReset()">
+      Clear
+    </button>
   </form>
-</div>
+</mat-card>
