@@ -1,7 +1,7 @@
 <mat-card class="container my-3 p-4">
   <h2>Add Product</h2>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="mb-3">
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Product Name</mat-label>
       <input matInput id="name" type="text" formControlName="name">
       <mat-error
@@ -11,8 +11,8 @@
           than 200 characters.</div>
       </mat-error>
     </mat-form-field>
-    <br>
-    <mat-form-field class="mb-3">
+
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Price</mat-label>
       <input matInput id="price" type="number" formControlName="price">
       <mat-error
@@ -21,15 +21,22 @@
         <div *ngIf="productForm.get('price')?.errors?.['min']" class="text-danger">Price cannot be less than 0.</div>
       </mat-error>
     </mat-form-field>
-    <br>
 
-    <mat-form-field class="mb-3">
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Stock</mat-label>
       <input matInput id="stock" type="number" formControlName="stock">
     </mat-form-field>
 
-    <br>
-    <mat-form-field class="mb-3">
+    <mat-form-field class="mb-3 full-width">
+      <mat-label>Category</mat-label>
+      <input matInput id="categoryId" type="number" formControlName="categoryId">
+      <mat-error
+        *ngIf="productForm.get('categoryId')?.invalid && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)">
+        <div *ngIf="productForm.get('categoryId')?.errors?.['required']" class="text-danger">Category is required.</div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Description</mat-label>
       <textarea matInput id="description" formControlName="description"></textarea>
       <mat-error
@@ -39,23 +46,12 @@
       </mat-error>
     </mat-form-field>
 
-    <br>
-    <mat-form-field class="mb-3">
-      <mat-label>Category</mat-label>
-      <input matInput id="categoryId" type="number" formControlName="categoryId">
-      <mat-error
-        *ngIf="productForm.get('categoryId')?.invalid && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)">
-        <div *ngIf="productForm.get('categoryId')?.errors?.['required']" class="text-danger">Category is required.</div>
-      </mat-error>
-    </mat-form-field>
-
-    <br>
-    <div class="mb-3">
+    <div class="mb-3 full-width">
       <mat-label>Product Image</mat-label>
       <input type="file" (change)="onFileChange($event)" class="form-control">
     </div>
 
-    <br>
-    <button mat-raised-button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save</button>
+    <button mat-raised-button type="submit" class="custom-primary-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+      [disabled]="productForm.invalid">Save</button>
   </form>
 </mat-card>

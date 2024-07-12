@@ -1,7 +1,7 @@
 <mat-card class="container my-3 p-4">
   <h1>Update Product</h1>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="mb-3">
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Product Name</mat-label>
       <input matInput type="text" formControlName="name" />
       <mat-error
@@ -10,8 +10,8 @@
         <div *ngIf="productForm.get('name')?.errors?.['maxlength']">Product name cannot exceed 200 characters.</div>
       </mat-error>
     </mat-form-field>
-    <br>
-    <mat-form-field class="mb-3">
+
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Price</mat-label>
       <input matInput type="number" formControlName="price" />
       <mat-error
@@ -21,10 +21,9 @@
           places.</div>
       </mat-error>
     </mat-form-field>
-    <br>
 
-    <mat-form-field class="mb-3">
-      <mat-label>Category ID</mat-label>
+    <mat-form-field class="mb-3 full-width">
+      <mat-label>Category</mat-label>
       <mat-select formControlName="categoryId">
         <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
       </mat-select>
@@ -33,9 +32,17 @@
         Category ID is required.
       </mat-error>
     </mat-form-field>
-    <br>
 
-    <mat-form-field class="mb-3">
+    <mat-form-field class="mb-3 full-width">
+      <mat-label>Product Stock</mat-label>
+      <input matInput type="number" formControlName="stock" />
+      <mat-error
+        *ngIf="productForm.get('stock')?.invalid && (productForm.get('stock')?.dirty || productForm.get('stock')?.touched)">
+        Product stock is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="mb-3 full-width">
       <mat-label>Description</mat-label>
       <input matInput type="text" formControlName="description" />
       <mat-error
@@ -44,23 +51,12 @@
         </div>
       </mat-error>
     </mat-form-field>
-    <br>
 
-    <mat-form-field class="mb-3">
-      <mat-label>Product Stock</mat-label>
-      <input matInput type="number" formControlName="stock" />
-      <mat-error
-        *ngIf="productForm.get('stock')?.invalid && (productForm.get('stock')?.dirty || productForm.get('stock')?.touched)">
-        Product stock is required.
-      </mat-error>
-    </mat-form-field>
-    <br>
-
-    <div class="mb-3">
+    <div class="mb-3 full-width">
       <mat-label>Product Image</mat-label>
       <input type="file" (change)="onFileChange($event)" class="form-control" />
     </div>
 
-    <button mat-raised-button type="submit" class="btn btn-primary">Update Product</button>
+    <button mat-raised-button type="submit" class="custom-primary-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto">Update Product</button>
   </form>
 </mat-card>
