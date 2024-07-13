@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
+import { HighlightModule } from 'ngx-highlightjs';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,19 +15,22 @@ import { LoginModule } from './modules/login/login.module';
 import { MyAccountModule } from './modules/my-account/my-account.module';
 import { NavbarModule } from './modules/navbar/navbar.module';
 import { ProductDetailsModule } from './modules/product-details/product-details.module';
+import { ProductManagementModule } from './modules/product-management/product-management.module';
 import { RegisterModule } from './modules/register/register.module';
 import { UpdateProductModule } from './modules/update-product/update-product.module';
+import { jwtModule } from './shared/jwt/jwt-token-module-settings';
 import { SharedModule } from './shared/shared-module/shared-module.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    jwtModule,
     SharedModule,
-    BrowserModule,
     LoginModule,
     CategoryManagementModule,
     NavbarModule,
     AdminPanelModule,
+    ProductManagementModule,
     HomeModule,
     FavoritesModule,
     BasketsModule,
@@ -43,20 +45,6 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     // ! NotFoundPageModule hep bu sonda olmalıdır
     // NotFoundPageModule bu modül içinde NotFoundPageComponent (404) sayfası var. yani RouterModule.forChild(routes) içinden geliyor sona al yoksa diğer child ları ezer ve 404 sayfasını görürsün
     AppRoutingModule
-  ],
-  providers: [
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        // Optional: Set the default language to use for code blocks
-        coreLibraryLoader: () => import('highlight.js/lib/core'),
-        languages: {
-          javascript: () => import('highlight.js/lib/languages/javascript'),
-          typescript: () => import('highlight.js/lib/languages/typescript')
-          // Add other languages as needed
-        }
-      }
-    }
   ],
   bootstrap: [AppComponent]
 })

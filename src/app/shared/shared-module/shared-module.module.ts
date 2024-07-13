@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
@@ -23,16 +24,16 @@ import { ByteToImagePipe } from 'src/app/helpers/img-helper/byte-to-image.pipe';
 import { ModalHelperComponent } from 'src/app/helpers/modal-helper/modal-helper.component';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 
-import { httpInterceptorProvider, jwtModule } from '../jwt/jwt-token-module-settings';
+import { httpInterceptorProvider } from '../jwt/jwt-token-module-settings';
 import { storeModules } from '../ng-rx/reducers';
 import { LoadingPageComponent } from '../services/loading-page/loading-page.component';
 import { LoadingPageService } from '../services/loading-page/loading-page.service';
 @NgModule({
   imports: [
     storeModules,
-    jwtModule,
     CommonModule,
     RouterModule,
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -63,6 +64,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatMenuModule,
     MatGridListModule,
     MatOptionModule,
+    BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule,

@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { AdminPanelDataResolveService } from './admin-panel-data-resolve.service';
+import { ProductManagementDataResolveService } from './product-management-data-resolve.service';
 
 describe('Service: AdminPanelDataResolve', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AdminPanelDataResolveService]
+      providers: [ProductManagementDataResolveService]
     });
   });
 
-  it('should ...', inject([AdminPanelDataResolveService], (service: AdminPanelDataResolveService) => {
+  it('should ...', inject([ProductManagementDataResolveService], (service: ProductManagementDataResolveService) => {
     expect(service).toBeTruthy();
   }));
 });

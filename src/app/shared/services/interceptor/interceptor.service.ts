@@ -68,11 +68,12 @@ export class InterceptorService {
             errorsPart +
             '\n --------------------------------------------------------------- \n'
         );
+
+        this._toastService.show('Failed !');
         return throwError(error);
       }),
       finalize(() => {
         this._loadingPageService.hide();
-        this._toastService.show('Failed !');
       })
     );
   }
