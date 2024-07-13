@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
-import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
-import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
+import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,30 +10,15 @@ import { UserLocalStorageService } from 'src/app/shared/services/local-storage/u
 export class FavoritesDataResolverService {
   /**
    * Constructor.
-   * @param http Http Request Service.
-   * @param userLocalStorageService LocalStorageService.
+   * @param _favoriteService FavoriteService.
    */
-  constructor(
-    protected http: ApiHelperService,
-    protected userLocalStorageService: UserLocalStorageService
-  ) {}
+  constructor(private _favoriteService: FavoriteService) {}
 
   /**
    * Data to be received when the module is opened.
    * @returns Get products.
    */
   public resolve(): Observable<CustomResponseDto<ProductDto[]> | null> {
-    return this.getUserFavoritesProducts();
-  }
-
-  /**
-   * Get Products.
-   * @returns Products values.
-   */
-  public getUserFavoritesProducts(): Observable<CustomResponseDto<ProductDto[]> | null> {
-    if (!this.userLocalStorageService.getUserId()) {
-      return of(null);
-    }
-    return this.http.get(apiEndpoint.favorite + 'GetUserFavoritesById/' + this.userLocalStorageService.getUserId().toString());
+    return this._favoriteService.getUserFavoritesProducts();
   }
 }

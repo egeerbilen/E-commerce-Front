@@ -6,8 +6,7 @@ import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
-
-import { AddProductService } from './service/add-product.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Component({
   selector: 'app-add-product',
@@ -24,7 +23,7 @@ export class AddProductComponent {
    * @param _fb FormBuilder.
    * @param _route ActivatedRoute.
    * @param _toastService ToastService.
-   * @param _addProductService AddProductService.
+   * @param _productService AddProductService.
    * @param _userLocalStorageService UserLocalStorageService.
    * @param _store Store.
    */
@@ -32,7 +31,7 @@ export class AddProductComponent {
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
     private _toastService: ToastService,
-    private _addProductService: AddProductService,
+    private _productService: ProductService,
     private _userLocalStorageService: UserLocalStorageService,
     private _store: Store
   ) {
@@ -65,7 +64,7 @@ export class AddProductComponent {
       }
 
       product = { ...product, userId: Number(this._userLocalStorageService.getUserId()) };
-      this._addProductService.addProduct(product).subscribe({
+      this._productService.addProduct(product).subscribe({
         next: () => this._toastService.show('Product added successfully'),
         error: () => this._toastService.show('Failed to add product')
       });

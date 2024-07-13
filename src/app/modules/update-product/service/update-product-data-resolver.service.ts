@@ -5,9 +5,8 @@ import { urlEnums } from 'src/app/enums/url-enums';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.service';
-
-import { ProductDatailsDataResolverService } from '../../product-details/service/product-datails-data-resolver.service';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +15,14 @@ export class UpdateProductDataResolverService {
   urlEnums;
   /**
    * Constructor.
-   * @param _productDatailsDataResolverService ProductDatailsDataResolverService.
    * @param _router Route to url.
    * @param _categoriyService CategoriyService.
+   * @param _productService ProductService.
    */
   constructor(
-    private _productDatailsDataResolverService: ProductDatailsDataResolverService,
     private _router: Router,
-    private _categoriyService: CategoryService
+    private _categoriyService: CategoryService,
+    private _productService: ProductService
   ) {
     this.urlEnums = urlEnums;
   }
@@ -43,16 +42,8 @@ export class UpdateProductDataResolverService {
     }
 
     return forkJoin({
-      product: this._productDatailsDataResolverService.getProductById(id),
+      product: this._productService.getProductById(id),
       categories: this._categoriyService.getCategories()
     });
-  }
-
-  /**
-   * Get Products.
-   * @returns Products values.
-   */
-  public getCategories(): Observable<CustomResponseDto<CategoryDto[]>> {
-    return this._categoriyService.getCategories();
   }
 }

@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { AddProductService } from './add-product.service';
+import { CategoryService } from './category.service';
 
-describe('Service: AddProduct', () => {
+describe('Service: Categoriy', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AddProductService]
+      providers: [CategoryService]
     });
   });
 
-  it('should ...', inject([AddProductService], (service: AddProductService) => {
+  it('should ...', inject([CategoryService], (service: CategoryService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -5,9 +5,8 @@ import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-
-import { BasketsService } from '../baskets/service/baskets.service';
-import { FavoriteService } from '../favorites/service/favorite.service';
+import { BasketService } from 'src/app/shared/services/basket/basket.service';
+import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 
 @Component({
   selector: 'app-product-details',
@@ -25,14 +24,14 @@ export class ProductDetailsComponent {
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _favoriteService FavoriteService.
-   * @param _basketsService BasketsService.
+   * @param _basketService BasketsService.
    * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _favoriteService: FavoriteService,
-    private _basketsService: BasketsService,
+    private _basketService: BasketService,
     private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
@@ -55,7 +54,7 @@ export class ProductDetailsComponent {
    * AddToBasket.
    */
   public addToBasket(): void {
-    this._basketsService.createBasketProduct(this.product.id).subscribe((res) => {
+    this._basketService.createBasketProduct(this.product.id).subscribe((res) => {
       if (res.errors) {
         this._toastService.show('Product is already in the basket');
       } else {

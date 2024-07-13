@@ -6,8 +6,7 @@ import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-h
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
-
-import { MyAccountService } from './service/my-account.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-my-account',
@@ -23,7 +22,7 @@ export class MyAccountComponent implements OnInit {
    * @param _route ActivatedRoute.
    * @param _fb Fb.
    * @param _modalHelperService ModalHelperService.
-   * @param _myAccountService MyAccountService.
+   * @param _userService MyAccountService.
    * @param _jwtHelperService JwtHelperService.
    * @param _toastService ToastService.
    */
@@ -31,7 +30,7 @@ export class MyAccountComponent implements OnInit {
     private _route: ActivatedRoute,
     private _fb: FormBuilder,
     private _modalHelperService: ModalHelperService,
-    private _myAccountService: MyAccountService,
+    private _userService: UserService,
     private _jwtHelperService: JwtHelperService,
     private _toastService: ToastService
   ) {
@@ -57,7 +56,7 @@ export class MyAccountComponent implements OnInit {
   public updateUser(): void {
     const formValueWithId = { ...this.accountForm.value, id: this._jwtHelperService.decodeToken()?.userId };
 
-    this._myAccountService.updateUser(formValueWithId).subscribe(() => {
+    this._userService.updateUser(formValueWithId).subscribe(() => {
       this._toastService.show('User Updated');
     });
   }

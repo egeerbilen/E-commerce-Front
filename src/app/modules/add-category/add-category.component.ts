@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
-import { CategoriyService } from 'src/app/shared/services/categoriy/categoriy.service';
+import { CategoriyService } from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-add-category',

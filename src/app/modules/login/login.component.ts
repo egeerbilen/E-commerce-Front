@@ -4,11 +4,9 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
-import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
-
-import { LoginService } from './service/login.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +20,7 @@ export class LoginComponent {
   /**
    * Constructor.
    * @param _fb Fb.
-   * @param _loginService LoginService.
+   * @param _userService LoginService.
    * @param _userLocalStorageService LocalStorageService.
    * @param _router Router.
    * @param _jwtHelperService JwtHelperService.
@@ -30,7 +28,7 @@ export class LoginComponent {
    */
   constructor(
     private _fb: FormBuilder,
-    private _loginService: LoginService,
+    private _userService: UserService,
     private _userLocalStorageService: UserLocalStorageService,
     private _router: Router,
     private _jwtHelperService: JwtHelperService,
@@ -48,7 +46,7 @@ export class LoginComponent {
    */
   public onSubmit(): void {
     if (this.loginForm.valid) {
-      this._loginService.userLogin(this.loginForm.value).subscribe((res) => {
+      this._userService.userLogin(this.loginForm.value).subscribe((res) => {
         const token = res.data;
         if (token) {
           this._userLocalStorageService.setToken(token);

@@ -4,8 +4,7 @@ import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-
-import { BasketsService } from './service/baskets.service';
+import { BasketService } from 'src/app/shared/services/basket/basket.service';
 
 @Component({
   selector: 'app-baskets',
@@ -31,7 +30,7 @@ export class BasketsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _basketService: BasketsService,
+    private _basketService: BasketService,
     private _router: Router
   ) {
     this.urlEnums = urlEnums;

@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
-import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
-import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
-import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
+import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +15,16 @@ export class ProductDatailsDataResolverService {
 
   /**
    * Constructor.
-   * @param _http Http Request Service.
    * @param _router Route to url.
    * @param _userLocalStorageService UserLocalStorageService.
+   * @param _favoriteService FavoriteService.
+   * @param _productService ProductService.
    */
   constructor(
-    private _http: ApiHelperService,
     private _router: Router,
-    private _userLocalStorageService: UserLocalStorageService
+    private _userLocalStorageService: UserLocalStorageService,
+    private _favoriteService: FavoriteService,
+    private _productService: ProductService
   ) {
     this.urlEnums = urlEnums;
   }
@@ -43,8 +43,8 @@ export class ProductDatailsDataResolverService {
     // forkJoin, RxJS kütüphanesinde bulunan bir operatördür ve birden fazla observable'ın tamamlanmasını bekleyip,
     // tamamlandıklarında hepsinin son çıktısını tek bir observable olarak birleştiren bir işleve sahiptir.
     const resObject = forkJoin({
-      getProductById: this.getProductById(productId),
-      isFavoriteProduct: this.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId)
+      getProductById: this._productService.getProductById(productId),
+      isFavoriteProduct: this._favoriteService.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId)
     }).pipe(
       catchError((error) => {
         this._router.navigate([this.urlEnums.notFoundPage]);
@@ -55,28 +55,5 @@ export class ProductDatailsDataResolverService {
     // bir observable üzerinde bir dizi operatörü sıralı olarak uygulamanıza olanak tanır. Bu sayede,
     // observable akışını çeşitli operatörlerle (örneğin map, filter, catchError gibi) dönüştürebilir ve işleyebilirsiniz.
     return resObject;
-  }
-
-  /**
-   * Get Products.
-   * @param productId String.
-   * @returns Products values.
-   */
-  public getProductById(productId: string): Observable<CustomResponseDto<ProductDto>> {
-    return this._http.get(apiEndpoint.product + 'GetById/' + productId);
-  }
-
-  /**
-   * IsFavoriteProduct.
-   * @param userId UserId.
-   * @param productId ProductId.
-   * @returns Products favorite status.
-   */
-  public isFavoriteProduct(userId: number, productId: string): Observable<CustomResponseDto<boolean>> {
-    if (userId === 0) {
-      return of({ data: false } as CustomResponseDto<boolean>);
-    } else {
-      return this._http.get(apiEndpoint.favorite + 'IsFavoriteProduct/' + userId.toString() + '/' + productId);
-    }
   }
 }

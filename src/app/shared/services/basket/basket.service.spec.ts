@@ -2,16 +2,16 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
-import { HomeService } from './home.service';
+import { BasketService } from './basket.service';
 
-describe('Service: Home', () => {
+describe('Service: Basket', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HomeService]
+      providers: [BasketService]
     });
   });
 
-  it('should ...', inject([HomeService], (service: HomeService) => {
+  it('should ...', inject([BasketService], (service: BasketService) => {
     expect(service).toBeTruthy();
   }));
 });

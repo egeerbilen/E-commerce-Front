@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
-import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.service';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
 
 @Component({
   selector: 'app-category-list',

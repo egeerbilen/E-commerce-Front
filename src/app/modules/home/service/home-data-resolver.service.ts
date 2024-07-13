@@ -3,9 +3,8 @@ import { forkJoin, Observable } from 'rxjs';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-import { apiEndpoint } from 'src/app/shared/enviroments/api-endpoint';
-import { ApiHelperService } from 'src/app/shared/services/api-helper/api-helper.service';
-import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.service';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +12,12 @@ import { CategoryService } from 'src/app/shared/services/categoriy/categoriy.ser
 export class HomeDataResolverService {
   /**
    * Constructor.
-   * @param http Http Request Service.
-   * @param _categoriyService CategoriyService.
+   * @param _categoryService CategoriyService.
+   * @param _productService ProductService.
    */
   constructor(
-    protected http: ApiHelperService,
-    private _categoriyService: CategoryService
+    private _categoryService: CategoryService,
+    private _productService: ProductService
   ) {}
 
   /**
@@ -27,24 +26,8 @@ export class HomeDataResolverService {
    */
   public resolve(): Observable<{ getProducts: CustomResponseDto<ProductDto[]>; getCategories: CustomResponseDto<CategoryDto[]> }> {
     return forkJoin({
-      getProducts: this.getProducts(),
-      getCategories: this.getCategories()
+      getProducts: this._productService.getProducts(),
+      getCategories: this._categoryService.getCategories()
     });
-  }
-
-  /**
-   * Get Products.
-   * @returns Products values.
-   */
-  public getProducts(): Observable<CustomResponseDto<ProductDto[]>> {
-    return this.http.get(apiEndpoint.product + 'GetProducts');
-  }
-
-  /**
-   * Get Products.
-   * @returns Products values.
-   */
-  public getCategories(): Observable<CustomResponseDto<CategoryDto[]>> {
-    return this._categoriyService.getCategories();
   }
 }

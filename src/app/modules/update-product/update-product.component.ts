@@ -6,8 +6,7 @@ import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { ProductUpdateDto } from 'src/app/shared/dto/product-update-dto';
-
-import { UpdateProductService } from './service/update-product.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Component({
   selector: 'app-update-product',
@@ -25,13 +24,13 @@ export class UpdateProductComponent implements OnInit {
    * Constructor.
    * @param _fb FormBuilder.
    * @param _route ActivatedRoute.
-   * @param _updateServiceService UpdateServiceService.
+   * @param _productService UpdateServiceService.
    * @param _toastService Toast.
    */
   constructor(
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
-    private _updateServiceService: UpdateProductService,
+    private _productService: ProductService,
     private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {
@@ -70,7 +69,7 @@ export class UpdateProductComponent implements OnInit {
         id: this.product.id,
         userId: this.product.userId
       };
-      this._updateServiceService.updateProduct(formDataWithUserId).subscribe(() => {
+      this._productService.updateProduct(formDataWithUserId).subscribe(() => {
         this._toastService.show('Data is updated');
       });
     }

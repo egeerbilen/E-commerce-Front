@@ -4,8 +4,7 @@ import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-
-import { FavoriteService } from './service/favorite.service';
+import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 
 @Component({
   selector: 'app-favorites',

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { urlEnums } from 'src/app/enums/url-enums';
 
-import { RegisterService } from './service/register.service';
+import { RegisterService } from '../../shared/services/register/register.service';
 
 @Component({
   selector: 'app-register',
