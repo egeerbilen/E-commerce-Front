@@ -41,7 +41,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     const canUpdate = tokenStatus?.roles?.includes('Update');
     const canRead = tokenStatus?.roles?.includes('Read');
     const canDelete = tokenStatus?.roles?.includes('Delete');
-    console.log(state.url);
+
     if (state.url === '/' + urlEnums.login && !tokenStatus) {
       return true;
     }
@@ -49,8 +49,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     if (state.url === '/' + urlEnums.myAccount && tokenStatus) {
       return true;
     }
-
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct && (isAdmin || canUpdate)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] && (isAdmin || canUpdate)) {
       return true;
     }
 
