@@ -9,5 +9,5 @@ export const urlEnums = {
   login: 'Login',
   adminPanel: 'AdminPanel',
   register: 'Register',
-  notFoundPage: '404',
+  notFoundPage: '404'
 };
