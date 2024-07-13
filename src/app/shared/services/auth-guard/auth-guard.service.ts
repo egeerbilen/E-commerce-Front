@@ -42,21 +42,27 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     const isAdmin = tokenStatus?.roles?.includes('Admin');
     const canCreate = tokenStatus?.roles?.includes('Create');
     const canUpdate = tokenStatus?.roles?.includes('Update');
-    // ? const canRead = tokenStatus?.roles?.includes('Read');
-    // ? const canDelete = tokenStatus?.roles?.includes('Delete');
-    if (next.url[0].path === urlEnums.login && !tokenStatus) {
+    const canRead = tokenStatus?.roles?.includes('Read');
+    const canDelete = tokenStatus?.roles?.includes('Delete');
+    console.log(state.url);
+    console.log('/' + urlEnums.productManagement + '/' + urlEnums.addProduct);
+    if (state.url === '/' + urlEnums.login && !tokenStatus) {
       return true;
     }
 
-    if (next.url[0].path === urlEnums.myAccount && tokenStatus) {
+    if (state.url === '/' + urlEnums.myAccount && tokenStatus) {
       return true;
     }
 
-    if (next.url[0].path === urlEnums.updateProduct && (isAdmin || canUpdate)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct && (isAdmin || canUpdate)) {
       return true;
     }
 
-    if (next.url[0].path === urlEnums.addProduct && (isAdmin || canCreate)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct && (isAdmin || canCreate)) {
+      return true;
+    }
+
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && (isAdmin || tokenStatus)) {
       return true;
     }
 

@@ -6,7 +6,7 @@ import { AddProductDataResolverService } from './service/add-product-data-resolv
 
 const routes: Routes = [
   {
-    path: 'AddProduct',
+    path: '',
     component: AddProductComponent,
     canActivate: [AuthGuardService],
     resolve: { resolvedData: AddProductDataResolverService },
