@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
@@ -16,6 +17,7 @@ import { LoginService } from './service/login.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  urlEnums;
 
   /**
    * Constructor.
@@ -34,6 +36,7 @@ export class LoginComponent {
     private _jwtHelperService: JwtHelperService,
     private _store: Store
   ) {
+    this.urlEnums = urlEnums;
     this.loginForm = this._fb.group({
       email: ['ege.erbilen@example.com', [Validators.required, Validators.email]],
       password: ['password', [Validators.required, Validators.minLength(3)]]
@@ -61,6 +64,6 @@ export class LoginComponent {
    * OnRegister.
    */
   public onRegister(): void {
-    this._router.navigate(['/Register']);
+    this._router.navigate([this.urlEnums.register]);
   }
 }

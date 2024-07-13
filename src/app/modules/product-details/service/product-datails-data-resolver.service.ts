@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
@@ -12,6 +13,8 @@ import { UserLocalStorageService } from 'src/app/shared/services/local-storage/u
   providedIn: 'root'
 })
 export class ProductDatailsDataResolverService {
+  urlEnums;
+
   /**
    * Constructor.
    * @param _http Http Request Service.
@@ -22,7 +25,9 @@ export class ProductDatailsDataResolverService {
     private _http: ApiHelperService,
     private _router: Router,
     private _userLocalStorageService: UserLocalStorageService
-  ) {}
+  ) {
+    this.urlEnums = urlEnums;
+  }
 
   /**
    * Data to be received when the module is opened.
@@ -32,7 +37,7 @@ export class ProductDatailsDataResolverService {
   public resolve(route: ActivatedRouteSnapshot): Observable<ProductDetailsDto | boolean> {
     const productId = route.paramMap.get('id') ?? '';
     if (!productId) {
-      this._router.navigate(['/404']);
+      this._router.navigate([this.urlEnums.notFoundPage]);
     }
 
     // forkJoin, RxJS kütüphanesinde bulunan bir operatördür ve birden fazla observable'ın tamamlanmasını bekleyip,
@@ -42,7 +47,7 @@ export class ProductDatailsDataResolverService {
       isFavoriteProduct: this.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId)
     }).pipe(
       catchError((error) => {
-        this._router.navigate(['/404']);
+        this._router.navigate([this.urlEnums.notFoundPage]);
         return of(false);
       })
     );

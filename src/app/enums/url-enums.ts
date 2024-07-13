@@ -3,8 +3,11 @@ export const urlEnums = {
   categoryManagement: 'CategoryManagement',
   productDetails: 'ProductDetails/',
   updateProduct: 'UpdateProduct/',
-  favorites: 'Favorites/',
-  basket: 'Basket/',
-  myAccount: 'MyAccount/',
-  login: 'Login/'
+  favorites: 'Favorites',
+  basket: 'Basket',
+  myAccount: 'MyAccount',
+  login: 'Login',
+  adminPanel: 'AdminPanel',
+  register: 'Register',
+  notFoundPage: '404',
 };

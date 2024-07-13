@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
@@ -12,6 +13,7 @@ import { ProductDatailsDataResolverService } from '../../product-details/service
   providedIn: 'root'
 })
 export class UpdateProductDataResolverService {
+  urlEnums;
   /**
    * Constructor.
    * @param _productDatailsDataResolverService ProductDatailsDataResolverService.
@@ -22,7 +24,9 @@ export class UpdateProductDataResolverService {
     private _productDatailsDataResolverService: ProductDatailsDataResolverService,
     private _router: Router,
     private _categoriyService: CategoryService
-  ) {}
+  ) {
+    this.urlEnums = urlEnums;
+  }
 
   /**
    * Data to be received when the module is opened.
@@ -35,7 +39,7 @@ export class UpdateProductDataResolverService {
     const id = route.paramMap.get('id') ?? '';
 
     if (!id) {
-      this._router.navigate(['404']);
+      this._router.navigate([this.urlEnums.notFoundPage]);
     }
 
     return forkJoin({

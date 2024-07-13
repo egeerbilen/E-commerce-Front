@@ -56,6 +56,6 @@ export class FavoritesComponent {
    * @param productId ProductId.
    */
   public navigateToProductDetails(productId: number): void {
-    this._router.navigate(['ProductDetails', productId]);
+    this._router.navigate([this.urlEnums.productDetails, productId]);
   }
 }

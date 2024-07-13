@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { urlEnums } from 'src/app/enums/url-enums';
 
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
-import { urlEnums } from 'src/app/enums/url-enums';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,6 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
-    console.log(next);
     console.log(state.url);
 
     const isAdmin = tokenStatus?.roles?.includes('Admin');
@@ -45,7 +44,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     const canDelete = tokenStatus?.roles?.includes('Delete');
 
     if (state.url === urlEnums.addProduct) {
-      console.log('object');
+      console.log('addProduct');
     }
 
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
@@ -58,7 +57,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
         return true;
       }
       // Özel izni yoksa yetkisiz sayfasına yönlendir
-      return this._router.navigate(['404']);
+      return this._router.navigate([urlEnums.notFoundPage]);
     } else {
       // Özel izne sahipse rotaya erişime izin ver
       return true;

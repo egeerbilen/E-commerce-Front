@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { urlEnums } from 'src/app/enums/url-enums';
 
 import { RegisterService } from './service/register.service';
 
@@ -11,6 +12,7 @@ import { RegisterService } from './service/register.service';
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
+  urlEnums;
 
   /**
    * Constructor.
@@ -23,6 +25,7 @@ export class RegisterComponent {
     private _registerService: RegisterService,
     private _router: Router
   ) {
+    this.urlEnums = urlEnums;
     this.registerForm = this._fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
@@ -39,7 +42,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this._registerService.userCreate(this.registerForm.value).subscribe((res) => {
         if (res) {
-          this._router.navigate(['/Login']);
+          this._router.navigate([this.urlEnums.login]);
         }
       });
     }
