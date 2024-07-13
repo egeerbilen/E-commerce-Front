@@ -1,7 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 
+import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { LoadingPageService } from '../loading-page/loading-page.service';
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
@@ -11,43 +13,52 @@ import { UserLocalStorageService } from '../local-storage/user-local-storage.ser
 export class InterceptorService {
   /**
    * Constructor.
-   * @param _loginService Login service.
+   * @param _userLocalStorageService UserLocalStorageService.
    * @param _loadingPageService LoadingPageService.
+   * @param _store Store.
    */
   constructor(
-    private _loginService: UserLocalStorageService,
-    private _loadingPageService: LoadingPageService
+    private _userLocalStorageService: UserLocalStorageService,
+    private _loadingPageService: LoadingPageService,
+    private _store: Store
   ) {}
-  // Daha sonra bu interceptor'ı AppModule'unuzda veya bir servis modülünde kullanmanız gerekiyor.
-  // Bunun için, Angular'un HTTP_INTERCEPTORS token'ını kullanarak interceptor'ı provide etmeniz gerekiyor:
-  // TODO make Enum for apiUrl
 
   /**
    * Intercept.
    * @param request Request.
    * @param next Next.
-   * @returns Http evnt.
+   * @returns Any.
    */
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this._loadingPageService.show();
-    // ! Burası HTTP isteği yakalandığında çalışacak yer Her istek giderken buraya girecek imp edilsede edilmesede
-    // Request manipülasyonları burada yapılabilir
-
-    const modifiedRequest = request.clone({
-      setHeaders: {
-        authorization: this._loginService.getToken() || '' // Set Authorization header
-        // Cookie başlığını eklemeye gerek yok, tarayıcı bunu zaten ekler json server desteklemediğinden cookileri gönderemeyiz
+    let token = '';
+    this._store.select(getUserData).subscribe((res) => {
+      console.log(res);
+      if (res) {
+        token = res.jwt;
+        console.log(token);
       }
     });
+    let modifiedRequest = request;
 
-    // sadece next.handle(modifiedRequest) diyerek de devam edebilirdik
+    if (token) {
+      modifiedRequest = request.clone({
+        setHeaders: {
+          authorization: `Bearer ${token}`
+        }
+      });
+    }
+
     return next.handle(modifiedRequest).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          // console.log(event);
+          // İsteğin başarılı olması durumunda yapılacak işlemler
         }
       }),
       catchError((error: HttpErrorResponse) => {
+        // Hata durumunda yapılacak işlemler
+        console.error('Server Error:', error);
+
         const errorString = error.error;
 
         const errorsIndex = errorString.indexOf('"Errors":');
@@ -59,11 +70,9 @@ export class InterceptorService {
             errorsPart +
             '\n --------------------------------------------------------------- \n'
         );
-
         return throwError(error);
       }),
       finalize(() => {
-        // İstek tamamlandığında veya hata oluştuğunda yükleme durumunu kapat
         this._loadingPageService.hide();
       })
     );

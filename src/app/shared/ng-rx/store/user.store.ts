@@ -1,7 +1,7 @@
-import { DecodedTokenDto } from '../../dto/decoded-token-dto';
+import { DecodedTokenWithJwtDto } from '../../dto/decoded-token-with-jwt-dto';
 
 export type UserState = {
-  userData: DecodedTokenDto | null;
+  userData: DecodedTokenWithJwtDto | null;
 };
 
 export const userInitialState: UserState = {

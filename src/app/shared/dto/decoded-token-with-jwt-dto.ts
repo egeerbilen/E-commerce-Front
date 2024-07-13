@@ -1,4 +1,4 @@
-export type DecodedTokenDto = {
+export type DecodedTokenWithJwtDto = {
   email: string;
   firstName: string;
   lastName: string;
@@ -7,4 +7,5 @@ export type DecodedTokenDto = {
   exp: number;
   iss: string;
   aud: string;
+  jwt: string;
 };

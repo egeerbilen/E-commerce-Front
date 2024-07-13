@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
-import { DecodedTokenDto } from 'src/app/shared/dto/decoded-token-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
+import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
 import { AddProductService } from './service/add-product.service';
@@ -16,8 +17,7 @@ import { AddProductService } from './service/add-product.service';
 export class AddProductComponent {
   resolvedCategoryData: any;
   productForm: FormGroup;
-  tokenStatus = '';
-  decodedTokenStatus!: DecodedTokenDto | null;
+  tokenStatus = false;
 
   /**
    * Constructor.
@@ -26,19 +26,20 @@ export class AddProductComponent {
    * @param _toastService ToastService.
    * @param _addProductService AddProductService.
    * @param _userLocalStorageService UserLocalStorageService.
+   * @param _store Store.
    */
   constructor(
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
     private _toastService: ToastService,
     private _addProductService: AddProductService,
-    private _userLocalStorageService: UserLocalStorageService
+    private _userLocalStorageService: UserLocalStorageService,
+    private _store: Store
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedCategoryData = data['resolvedData'].data;
     });
 
-    this.tokenStatus = this._userLocalStorageService.getToken(); // res null, undefined, 0, "", false falsy olacak
     this.productForm = this._fb.group({
       name: ['', [Validators.required, Validators.maxLength(200)]],
       price: [0, [Validators.required, Validators.min(0)]],
@@ -55,6 +56,9 @@ export class AddProductComponent {
   public onSubmit(): void {
     if (this.productForm.valid) {
       let product: ProductCreateDto = this.productForm.value;
+      this._store.select(getUserData).subscribe((res) => {
+        this.tokenStatus = !!res;
+      });
 
       if (Number(this._userLocalStorageService.getUserId()) === 0) {
         return;

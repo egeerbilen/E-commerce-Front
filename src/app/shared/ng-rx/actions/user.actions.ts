@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-import { DecodedTokenDto } from '../../dto/decoded-token-dto';
+import { DecodedTokenWithJwtDto } from '../../dto/decoded-token-with-jwt-dto';
 
-export const setUserData = createAction('[Counter Component] setUserData', props<{ userData: DecodedTokenDto | null }>());
+export const setUserData = createAction('[Counter Component] setUserData', props<{ userData: DecodedTokenWithJwtDto | null }>());

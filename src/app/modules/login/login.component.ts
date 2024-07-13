@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 
@@ -48,7 +49,9 @@ export class LoginComponent {
         const token = res.data;
         if (token) {
           this._userLocalStorageService.setToken(token);
-          this._store.dispatch(setUserData({ userData: this._jwtHelperService.decodeToken(token) }));
+          const decodedToken = this._jwtHelperService.decodeToken(token);
+          decodedToken.jwt = token;
+          this._store.dispatch(setUserData({ userData: decodedToken }));
           this._router.navigate(['/']);
         }
       });
