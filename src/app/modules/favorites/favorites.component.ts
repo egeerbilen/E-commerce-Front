@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 
@@ -14,6 +15,7 @@ import { FavoriteService } from './service/favorite.service';
 export class FavoritesComponent {
   resolvedFavoritesData!: ProductDto[];
   tokenStatus = false;
+  urlEnums;
 
   /**
    * Constructor.
@@ -28,6 +30,8 @@ export class FavoritesComponent {
     private _favoriteService: FavoriteService,
     private _router: Router
   ) {
+    this.urlEnums = urlEnums;
+
     this._route.data.subscribe((data) => {
       this.resolvedFavoritesData = data?.['resolvedData']?.data || [];
     });

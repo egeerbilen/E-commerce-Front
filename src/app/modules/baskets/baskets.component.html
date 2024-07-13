@@ -7,7 +7,7 @@
         <mat-card class="col-12">
           <mat-card-content class="alert alert-warning fw-bold" role="alert">
             You need to log in to add favorites.
-            <a routerLink="/Login" class="alert-link text-primary">Go To Login Page</a>
+            <a [routerLink]="urlEnums.login" class="alert-link text-primary">Go To Login Page</a>
           </mat-card-content>
         </mat-card>
       </ng-container>
@@ -27,7 +27,7 @@
                 (click)="removeFromBasket(value)">
                 <mat-icon>close</mat-icon>
               </button>
-              <img [routerLink]="['ProductDetails/' + value.id]" [src]="value.imageData | byteToImage"
+              <img [routerLink]="[urlEnums.productDetails + value.id]" [src]="value.imageData | byteToImage"
                 class="card-img-top" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
               <mat-card-content class="d-flex flex-column justify-content-between">
                 <div>

@@ -1,19 +1,19 @@
 <mat-toolbar color="primary" class="mat-elevation-z4 custom-toolbar">
   <div class="container-fluid">
-    <a mat-button routerLink="/" class="navbar-brand">Home</a>
+    <a mat-button routerLink="" class="navbar-brand">Home</a>
     <span class="spacer"></span>
-    <a mat-button routerLink="/Favorites" class="navbar-brand">
+    <a mat-button [routerLink]="urlEnums.favorites" class="navbar-brand">
       <mat-icon class="text-danger">favorite</mat-icon> Favorites
     </a>
-    <a mat-button routerLink="/Basket" class="navbar-brand">
+    <a mat-button [routerLink]="urlEnums.basket" class="navbar-brand">
       <mat-icon class="text-warning">shopping_cart</mat-icon> Basket
     </a>
-    <a *ngIf="tokenStatus" mat-button routerLink="/MyAccount" class="navbar-brand">
+    <a *ngIf="tokenStatus" mat-button [routerLink]="urlEnums.myAccount" class="navbar-brand">
       <mat-icon class="text-dark">account_circle</mat-icon> My Account
     </a>
     <a *ngIf="tokenStatus else loggedOut" mat-button (click)="logout()" class="navbar-brand">Logout</a>
     <ng-template #loggedOut>
-      <a mat-button routerLink="/Login" class="navbar-brand">Login</a>
+      <a mat-button [routerLink]="urlEnums.login" class="navbar-brand">Login</a>
     </ng-template>
   </div>
 </mat-toolbar>

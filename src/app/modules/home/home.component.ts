@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
@@ -17,6 +18,7 @@ import { HomeService } from './service/home.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  urlEnums;
   resolvedCategoriesData!: CustomResponseDto<CategoryDto[]>;
   resolvedProductsData!: CustomResponseDto<ProductDto[]>;
   tokenStatus = false;
@@ -43,6 +45,8 @@ export class HomeComponent {
     private _homeService: HomeService,
     private _modalHelperService: ModalHelperService
   ) {
+    this.urlEnums = urlEnums;
+
     this._favoriteService.getUserFavoritesProducts().subscribe((res) => {
       if (res?.data) {
         this.favoriteProducts = res.data.map((product) => product.id);
@@ -67,7 +71,8 @@ export class HomeComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
-      this.isSeller = !!res?.roles?.includes('Seller');
+      this.isSeller = !!res?.roles?.includes('Admin');
+      // !!!!!!!!!!!!
     });
   }
 

@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSt
 import { Observable } from 'rxjs';
 
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
+import { urlEnums } from 'src/app/enums/url-enums';
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +35,23 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
+    console.log(next);
+    console.log(state.url);
+
+    const isAdmin = tokenStatus?.roles?.includes('Admin');
+    const canCreate = tokenStatus?.roles?.includes('Create');
+    const canUpdate = tokenStatus?.roles?.includes('Update');
+    const canRead = tokenStatus?.roles?.includes('Read');
+    const canDelete = tokenStatus?.roles?.includes('Delete');
+
+    if (state.url === urlEnums.addProduct) {
+      console.log('object');
+    }
 
     // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
     const isSeller = tokenStatus?.roles?.includes('Admin');
+    console.log(!tokenStatus);
+    console.log(!isSeller);
     if (!tokenStatus && !isSeller) {
       if (state.url === '/Login') {
         // Eğer URL '/Login' ise true döndür

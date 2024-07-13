@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 
@@ -18,6 +19,7 @@ export class BasketsComponent implements OnInit {
   shippingCost = 39.99;
   totalSavings = 4.01;
   grandTotal = 0;
+  urlEnums;
 
   /**
    * Constructor.
@@ -32,6 +34,7 @@ export class BasketsComponent implements OnInit {
     private _basketService: BasketsService,
     private _router: Router
   ) {
+    this.urlEnums = urlEnums;
     this._route.data.subscribe((data) => {
       this.resolvedBasketData = data?.['resolvedData']?.data || [];
     });
