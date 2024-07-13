@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { HighlightModule } from 'ngx-highlightjs';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,16 +23,17 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    // url lerde yanlış yonlendime olursa burada başka bir vurl verisinin daha onceden ilgili veriyi eezmediğiden emin ol
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     jwtModule,
     SharedModule,
+    HomeModule,
     LoginModule,
     NavbarModule,
     AdminPanelModule,
     ProductManagementModule,
-    HomeModule,
     FavoritesModule,
     BasketsModule,
     RegisterModule,
@@ -41,7 +41,6 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     ProductDetailsModule,
     FooterModule,
     StoreModule.forRoot({}),
-    HighlightModule,
     // ! NotFoundPageModule hep bu sonda olmalıdır
     // NotFoundPageModule bu modül içinde NotFoundPageComponent (404) sayfası var. yani RouterModule.forChild(routes) içinden geliyor sona al yoksa diğer child ları ezer ve 404 sayfasını görürsün
     AppRoutingModule
