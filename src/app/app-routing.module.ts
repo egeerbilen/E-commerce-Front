@@ -5,32 +5,32 @@ import { urlEnums } from './enums/url-enums';
 
 const routes: Routes = [
   // Tüm routerlar alt modüllerde ki routing.ts lerden geliyor
-  { path: '', pathMatch: 'full', loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule) },
+  { path: '', loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule) },
   {
     path: urlEnums.productDetails + '/:id',
-    pathMatch: 'full',
+
     loadChildren: () => import('./modules/product-details/product-details.module').then((m) => m.ProductDetailsModule)
   },
-  { path: urlEnums.favorites, pathMatch: 'full', loadChildren: () => import('./modules/favorites/favorites.module').then((m) => m.FavoritesModule) },
-  { path: urlEnums.basket, pathMatch: 'full', loadChildren: () => import('./modules/baskets/baskets.module').then((m) => m.BasketsModule) },
-  { path: urlEnums.register, pathMatch: 'full', loadChildren: () => import('./modules/register/register.module').then((m) => m.RegisterModule) },
+  { path: urlEnums.favorites, loadChildren: () => import('./modules/favorites/favorites.module').then((m) => m.FavoritesModule) },
+  { path: urlEnums.basket, loadChildren: () => import('./modules/baskets/baskets.module').then((m) => m.BasketsModule) },
+  { path: urlEnums.register, loadChildren: () => import('./modules/register/register.module').then((m) => m.RegisterModule) },
   {
     path: urlEnums.myAccount,
-    pathMatch: 'full',
+
     loadChildren: () => import('./modules/my-account/my-account.module').then((m) => m.MyAccountModule)
   },
 
   {
     path: urlEnums.adminPanel,
-    pathMatch: 'full',
+
     loadChildren: () => import('./modules/admin-panel/admin-panel.module').then((m) => m.AdminPanelModule)
   },
   {
     path: urlEnums.productManagement,
     loadChildren: () => import('./modules/product-management/product-management.module').then((m) => m.ProductManagementModule)
   },
-  { path: urlEnums.login, pathMatch: 'full', loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },
-  { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
+  { path: urlEnums.login, loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) }
+  // { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
 ];
 
 @NgModule({
