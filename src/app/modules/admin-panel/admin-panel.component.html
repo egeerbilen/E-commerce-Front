@@ -1,72 +1,72 @@
 <div class="container-fluid py-3">
-  <p class="text-muted">
-      <b>Note:</b> If there is too much data, scroll loading might be necessary, and not all categories may be
-      fetched. Only a few main products will be fetched. When the user selects a category, the value is taken as a
-      query parameter and the backend query is adjusted accordingly.
-  </p>
+    <p class="text-muted">
+        <b>Note:</b> If there is too much data, scroll loading might be necessary, and not all categories may be
+        fetched. Only a few main products will be fetched. When the user selects a category, the value is taken as a
+        query parameter and the backend query is adjusted accordingly.
+    </p>
 
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-      <div class="d-flex flex-column flex-md-row w-100 mt-2 mt-md-0">
-          <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.addProduct]" mat-raised-button
-              class="custom-green-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto">
-              <mat-icon>add</mat-icon> Add Product
-          </button>
-          <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.categoryManagement]" mat-raised-button
-              class="custom-yellow-button w-100 w-md-auto">
-              <mat-icon>add</mat-icon> Category Management
-          </button>
-      </div>
-  </div>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <div class="d-flex flex-column flex-md-row w-100 mt-2 mt-md-0">
+            <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.addProduct]" mat-raised-button
+                class="custom-green-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto">
+                <mat-icon>add</mat-icon> Add Product
+            </button>
+            <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.categoryManagement]" mat-raised-button
+                class="custom-yellow-button w-100 w-md-auto">
+                <mat-icon>add</mat-icon> Category Management
+            </button>
+        </div>
+    </div>
 
-  <div class="row">
-      <div class="col-12 col-md-3 mb-4">
-          <div class="bg-light p-3 rounded">
-              <mat-form-field appearance="fill" class="w-100 mb-3">
-                  <input matInput [(ngModel)]="searchText" placeholder="Search">
-              </mat-form-field>
-              <app-category-filter [categories]="resolvedCategoriesData.data || []"
-                  (categorySelected)="onCategorySelected($event)"></app-category-filter>
-          </div>
-      </div>
+    <div class="row">
+        <div class="col-12 col-md-3 mb-4">
+            <div class="bg-light p-3 rounded">
+                <mat-form-field appearance="fill" class="w-100 mb-3">
+                    <input matInput [(ngModel)]="searchText" placeholder="Search">
+                </mat-form-field>
+                <app-category-filter [categories]="resolvedCategoriesData.data || []"
+                    (categorySelected)="onCategorySelected($event)"></app-category-filter>
+            </div>
+        </div>
 
-      <div class="col-12 col-md-9">
-          <div class="row">
-              <div *ngIf="(filteredData | findProduct : searchText).length === 0"
-                  class="alert alert-warning text-center my-4" role="alert">
-                  Sorry, no products matching your criteria were found.
-              </div>
+        <div class="col-12 col-md-9">
+            <div class="row">
+                <div *ngIf="(filteredData | findProduct : searchText).length === 0"
+                    class="alert alert-warning text-center my-4" role="alert">
+                    Sorry, no products matching your criteria were found.
+                </div>
 
-              <div *ngFor="let value of (filteredData | findProduct : searchText)"
-                  class="col-12 col-md-6 col-lg-4 mb-4">
-                  <mat-card class="example-card h-100">
-                      <mat-card-actions *ngIf="tokenStatus && isSeller" class="d-flex w-100">
-                          <button [routerLink]="[urlEnums.updateProduct + value.id]" mat-raised-button
-                              class="custom-green-button flex-fill">
-                              <mat-icon>edit</mat-icon> Edit
-                          </button>
-                          <button (click)="deleteProduct(value.id)" mat-raised-button color="warn"
-                              class="delete-button flex-fill">
-                              <mat-icon>delete</mat-icon> Delete
-                          </button>
-                      </mat-card-actions>
-                      <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
-                          [routerLink]="[urlEnums.productDetails + value.id]" alt="{{ value.name }}">
-                      <div *ngIf="!value.imageData" class="placeholder-image"></div>
-                      <mat-card-content>
-                          <div class="d-flex justify-content-between w-100 align-items-start">
-                              <div class="text-center w-100 text-truncate">
-                                  <mat-card-title>{{ value.name }}</mat-card-title>
-                                  <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
-                              </div>
-                              <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
-                                  (click)="addToFavorites(value.id)">
-                                  <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
-                              </button>
-                          </div>
-                      </mat-card-content>
-                  </mat-card>
-              </div>
-          </div>
-      </div>
-  </div>
+                <div *ngFor="let value of (filteredData | findProduct : searchText)"
+                    class="col-12 col-md-6 col-lg-4 mb-4">
+                    <mat-card class="example-card h-100">
+                        <mat-card-actions *ngIf="tokenStatus && isSeller" class="d-flex w-100">
+                            <button [routerLink]="[urlEnums.updateProduct + '/' + value.id]" mat-raised-button
+                                class="custom-green-button flex-fill">
+                                <mat-icon>edit</mat-icon> Edit
+                            </button>
+                            <button (click)="deleteProduct(value.id)" mat-raised-button color="warn"
+                                class="delete-button flex-fill">
+                                <mat-icon>delete</mat-icon> Delete
+                            </button>
+                        </mat-card-actions>
+                        <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
+                            [routerLink]="[urlEnums.productDetails + '/' + value.id]" alt="{{ value.name }}">
+                        <div *ngIf="!value.imageData" class="placeholder-image"></div>
+                        <mat-card-content>
+                            <div class="d-flex justify-content-between w-100 align-items-start">
+                                <div class="text-center w-100 text-truncate">
+                                    <mat-card-title>{{ value.name }}</mat-card-title>
+                                    <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
+                                </div>
+                                <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
+                                    (click)="addToFavorites(value.id)">
+                                    <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
+                                </button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

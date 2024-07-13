@@ -8,11 +8,11 @@ const routes: Routes = [
   // Tüm routerlar alt modüllerde ki routing.ts lerden geliyor
   { path: '', loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule) },
   {
-    path: urlEnums.productDetails + ':id',
+    path: urlEnums.productDetails + '/:id',
     loadChildren: () => import('./modules/product-details/product-details.module').then((m) => m.ProductDetailsModule)
   },
   {
-    path: urlEnums.updateProduct + ':id',
+    path: urlEnums.updateProduct + '/:id',
     loadChildren: () => import('./modules/update-product/update-product.module').then((m) => m.UpdateProductModule)
   },
   { path: urlEnums.favorites, loadChildren: () => import('./modules/favorites/favorites.module').then((m) => m.FavoritesModule) },

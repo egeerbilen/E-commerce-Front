@@ -34,34 +34,33 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log(next);
+    console.log(state);
+
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
-    console.log(state.url);
 
     const isAdmin = tokenStatus?.roles?.includes('Admin');
     const canCreate = tokenStatus?.roles?.includes('Create');
     const canUpdate = tokenStatus?.roles?.includes('Update');
-    const canRead = tokenStatus?.roles?.includes('Read');
-    const canDelete = tokenStatus?.roles?.includes('Delete');
-
-    if (state.url === urlEnums.addProduct) {
-      console.log('addProduct');
-    }
-
-    // Örnek bir kontrol: Eğer rotanın verisinde özel bir izin gerekiyorsa
-    const isSeller = tokenStatus?.roles?.includes('Admin');
-    console.log(!tokenStatus);
-    console.log(!isSeller);
-    if (!tokenStatus && !isSeller) {
-      if (state.url === '/Login') {
-        // Eğer URL '/Login' ise true döndür
-        return true;
-      }
-      // Özel izni yoksa yetkisiz sayfasına yönlendir
-      return this._router.navigate([urlEnums.notFoundPage]);
-    } else {
-      // Özel izne sahipse rotaya erişime izin ver
+    // ? const canRead = tokenStatus?.roles?.includes('Read');
+    // ? const canDelete = tokenStatus?.roles?.includes('Delete');
+    if (next.url[0].path === urlEnums.login && !tokenStatus) {
       return true;
     }
+
+    if (next.url[0].path === urlEnums.myAccount && tokenStatus) {
+      return true;
+    }
+
+    if (next.url[0].path === urlEnums.updateProduct && (isAdmin || canUpdate)) {
+      return true;
+    }
+
+    if (next.url[0].path === urlEnums.addProduct && (isAdmin || canCreate)) {
+      return true;
+    }
+
+    return this._router.navigate([urlEnums.notFoundPage]);
   }
 
   /**

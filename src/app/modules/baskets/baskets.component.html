@@ -27,7 +27,7 @@
                 (click)="removeFromBasket(value)">
                 <mat-icon>close</mat-icon>
               </button>
-              <img [routerLink]="[urlEnums.productDetails + value.id]" [src]="value.imageData | byteToImage"
+              <img [src]="value.imageData | byteToImage"
                 class="card-img-top" [alt]="value.name" (click)="navigateToProductDetails(value.id)">
               <mat-card-content class="d-flex flex-column justify-content-between">
                 <div>
