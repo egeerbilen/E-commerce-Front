@@ -34,9 +34,6 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log(next);
-    console.log(state);
-
     const tokenStatus = this._userLocalStorageService.getDecodedToken();
 
     const isAdmin = tokenStatus?.roles?.includes('Admin');
@@ -45,7 +42,6 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     const canRead = tokenStatus?.roles?.includes('Read');
     const canDelete = tokenStatus?.roles?.includes('Delete');
     console.log(state.url);
-    console.log('/' + urlEnums.productManagement + '/' + urlEnums.addProduct);
     if (state.url === '/' + urlEnums.login && !tokenStatus) {
       return true;
     }

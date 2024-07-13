@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+import { urlEnums } from 'src/app/enums/url-enums';
 import { AuthGuardService } from 'src/app/shared/services/auth-guard/auth-guard.service';
 
 import { CategoryManagementComponent } from './category-management.component';
@@ -6,7 +7,7 @@ import { CategoryManagementDataResolverService } from './service/category-manage
 
 const routes: Routes = [
   {
-    path: '',
+    path: urlEnums.categoryManagement,
     component: CategoryManagementComponent,
     title: 'Category Management',
     canActivate: [AuthGuardService],

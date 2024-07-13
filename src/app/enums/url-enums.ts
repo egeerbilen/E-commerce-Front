@@ -1,16 +1,14 @@
-const adminPanelPath = 'AdminPanel';
-
 export const urlEnums = {
-  addProduct: adminPanelPath + 'AddProduct',
-  categoryManagement: adminPanelPath + 'CategoryManagement',
+  addProduct: 'AddProduct',
+  categoryManagement: 'CategoryManagement',
   productDetails: 'ProductDetails',
-  updateProduct: adminPanelPath + 'UpdateProduct',
+  updateProduct: 'UpdateProduct',
   favorites: 'Favorites',
   basket: 'Basket',
   myAccount: 'MyAccount',
   login: 'Login',
-  adminPanel: adminPanelPath,
+  adminPanel: 'AdminPanel',
   register: 'Register',
-  productManagement: adminPanelPath + '/ProductManagement',
+  productManagement: 'ProductManagement',
   notFoundPage: '404'
 };
