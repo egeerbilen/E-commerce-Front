@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { HighlightModule } from 'ngx-highlightjs';
 
@@ -21,6 +24,9 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     jwtModule,
     SharedModule,
     LoginModule,

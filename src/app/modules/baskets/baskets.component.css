@@ -1,0 +1,30 @@
+.product-image {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.basket-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.basket-item {
+  display: flex;
+  align-items: center;
+}
+
+.basket-card {
+  width: 100%;
+}
+
+.custom-primary-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.custom-green-button {
+  background-color: #28a745;
+  color: white;
+}

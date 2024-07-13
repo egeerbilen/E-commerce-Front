@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,8 +14,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
 import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category/highlight-category.directive';
@@ -33,10 +30,8 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     storeModules,
     CommonModule,
     RouterModule,
-    BrowserModule, // ne işe yara bak bir
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatGridListModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -50,8 +45,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatFormFieldModule,
-    BrowserAnimationsModule
+    MatFormFieldModule
   ],
   declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective, FindProductPipe],
   providers: [httpInterceptorProvider, LoadingPageService, ToastService],
@@ -64,9 +58,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatMenuModule,
     MatGridListModule,
     MatOptionModule,
-    BrowserModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatDialogModule,
     ByteToImagePipe,
     MatListModule,
@@ -79,7 +71,6 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatCardModule,
     MatIconModule,
     MatFormFieldModule,
-    BrowserAnimationsModule,
     HighlightCategoryDirective
   ]
 })
