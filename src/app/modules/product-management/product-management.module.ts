@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared-module/shared-module.module';
 
 import { AddProductModule } from './add-product/add-product.module';
@@ -10,7 +11,8 @@ import { productManagement } from './product-management.routing';
 import { UpdateProductModule } from './update-product/update-product.module';
 
 @NgModule({
-  imports: [productManagement, CommonModule, SharedModule, AddProductModule, CategoryManagementModule, UpdateProductModule],
-  declarations: [ProductManagementComponent, CategoryFilterComponent]
+  imports: [productManagement, CategoryManagementModule, AddProductModule, UpdateProductModule, CommonModule, SharedModule],
+  declarations: [ProductManagementComponent, CategoryFilterComponent],
+  exports: [RouterModule]
 })
 export class ProductManagementModule {}
