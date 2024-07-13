@@ -2,10 +2,10 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 
 import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { LoadingPageService } from '../loading-page/loading-page.service';
-import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,12 @@ import { UserLocalStorageService } from '../local-storage/user-local-storage.ser
 export class InterceptorService {
   /**
    * Constructor.
-   * @param _userLocalStorageService UserLocalStorageService.
+   * @param _toastService ToastService.
    * @param _loadingPageService LoadingPageService.
    * @param _store Store.
    */
   constructor(
-    private _userLocalStorageService: UserLocalStorageService,
+    private _toastService: ToastService,
     private _loadingPageService: LoadingPageService,
     private _store: Store
   ) {}
@@ -33,10 +33,8 @@ export class InterceptorService {
     this._loadingPageService.show();
     let token = '';
     this._store.select(getUserData).subscribe((res) => {
-      console.log(res);
       if (res) {
         token = res.jwt;
-        console.log(token);
       }
     });
     let modifiedRequest = request;
@@ -74,6 +72,7 @@ export class InterceptorService {
       }),
       finalize(() => {
         this._loadingPageService.hide();
+        this._toastService.show('Failed !');
       })
     );
   }

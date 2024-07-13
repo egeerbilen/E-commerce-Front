@@ -5,19 +5,6 @@
         query parameter and the backend query is adjusted accordingly.
     </p>
 
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <div class="d-flex flex-column flex-md-row w-100 mt-2 mt-md-0">
-            <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.addProduct]" mat-raised-button
-                class="custom-green-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto">
-                <mat-icon>add</mat-icon> Add Product
-            </button>
-            <button *ngIf="tokenStatus && isSeller" [routerLink]="[urlEnums.categoryManagement]" mat-raised-button
-                class="custom-yellow-button w-100 w-md-auto">
-                <mat-icon>add</mat-icon> Category Management
-            </button>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-12 col-md-3 mb-4">
             <div class="bg-light p-3 rounded">
@@ -39,16 +26,6 @@
                 <div *ngFor="let value of (filteredData | findProduct : searchText)"
                     class="col-12 col-md-6 col-lg-4 mb-4">
                     <mat-card class="example-card h-100">
-                        <mat-card-actions *ngIf="tokenStatus && isSeller" class="d-flex w-100">
-                            <button [routerLink]="[urlEnums.updateProduct + '/' + value.id]" mat-raised-button
-                                class="custom-green-button flex-fill">
-                                <mat-icon>edit</mat-icon> Edit
-                            </button>
-                            <button (click)="deleteProduct(value.id)" mat-raised-button color="warn"
-                                class="delete-button flex-fill">
-                                <mat-icon>delete</mat-icon> Delete
-                            </button>
-                        </mat-card-actions>
                         <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
                             [routerLink]="[urlEnums.productDetails+ '/' + value.id]" alt="{{ value.name }}">
                         <div *ngIf="!value.imageData" class="placeholder-image"></div>

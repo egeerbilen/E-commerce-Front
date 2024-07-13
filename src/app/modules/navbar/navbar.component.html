@@ -8,10 +8,16 @@
     <a mat-button [routerLink]="urlEnums.basket" class="navbar-brand">
       <mat-icon class="text-warning">shopping_cart</mat-icon> Basket
     </a>
-    <a *ngIf="tokenStatus" mat-button [routerLink]="urlEnums.myAccount" class="navbar-brand">
-      <mat-icon class="text-dark">account_circle</mat-icon> My Account
-    </a>
-    <a *ngIf="tokenStatus else loggedOut" mat-button (click)="logout()" class="navbar-brand">Logout</a>
+    <ng-container *ngIf="tokenStatus; else loggedOut">
+      <button mat-button [matMenuTriggerFor]="accountMenu" class="navbar-brand">
+        <mat-icon class="text-dark">account_circle</mat-icon> My Account
+      </button>
+      <mat-menu #accountMenu="matMenu">
+        <button mat-menu-item [routerLink]="urlEnums.myAccount">My Account</button>
+        <button mat-menu-item [routerLink]="urlEnums.adminPanel">Admin Panel</button>
+      </mat-menu>
+      <a mat-button (click)="logout()" class="navbar-brand">Logout</a>
+    </ng-container>
     <ng-template #loggedOut>
       <a mat-button [routerLink]="urlEnums.login" class="navbar-brand">Login</a>
     </ng-template>

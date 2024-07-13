@@ -72,6 +72,7 @@ export class AdminPanelComponent {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
       this.isSeller = !!res?.roles?.includes('Admin');
       // !!!!!!!!!!!!
+      // !!!!!!!!!!!!
     });
   }
 

@@ -11,6 +11,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -39,8 +40,10 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatSnackBarModule,
     MatButtonModule,
     MatInputModule,
+    MatInputModule,
     MatListModule,
     MatSelectModule,
+    MatMenuModule,
     MatOptionModule,
     MatDialogModule,
     MatCardModule,
@@ -57,6 +60,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     FormsModule,
     MatSelectModule,
     FindProductPipe,
+    MatMenuModule,
     MatGridListModule,
     MatOptionModule,
     ReactiveFormsModule,

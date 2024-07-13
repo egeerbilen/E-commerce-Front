@@ -64,10 +64,7 @@ export class AddProductComponent {
       }
 
       product = { ...product, userId: Number(this._userLocalStorageService.getUserId()) };
-      this._productService.addProduct(product).subscribe({
-        next: () => this._toastService.show('Product added successfully'),
-        error: () => this._toastService.show('Failed to add product')
-      });
+      this._productService.addProduct(product).subscribe();
     } else {
       this._toastService.show('Form is invalid');
     }
