@@ -33,7 +33,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     storeModules,
     CommonModule,
     RouterModule,
-    BrowserModule,
+    BrowserModule, // ne işe yara bak bir
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

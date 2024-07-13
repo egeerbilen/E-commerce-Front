@@ -24,8 +24,8 @@
                 <mat-form-field appearance="fill" class="w-100 mb-3">
                     <input matInput [(ngModel)]="searchText" placeholder="Search">
                 </mat-form-field>
-                <app-category-filter [categories]="resolvedCategoriesData.data || []"
-                    (categorySelected)="onCategorySelected($event)"></app-category-filter>
+                <app-product-management-category-filter [categories]="resolvedCategoriesData.data || []"
+                    (categorySelected)="onCategorySelected($event)"></app-product-management-category-filter>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
                     class="col-12 col-md-6 col-lg-4 mb-4">
                     <mat-card class="example-card h-100">
                         <mat-card-actions *ngIf="tokenStatus && isSeller" class="d-flex w-100">
-                            <button [routerLink]="[urlEnums.updateProduct + '/' + value.id]" mat-raised-button
+                            <button [routerLink]="[urlEnums.updateProduct, value.id]" mat-raised-button
                                 class="custom-green-button flex-fill">
                                 <mat-icon>edit</mat-icon> Edit
                             </button>
@@ -50,7 +50,7 @@
                             </button>
                         </mat-card-actions>
                         <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
-                            [routerLink]="[urlEnums.productDetails + '/' + value.id]" alt="{{ value.name }}">
+                            [routerLink]="[urlEnums.productDetails , value.id]" alt="{{ value.name }}">
                         <div *ngIf="!value.imageData" class="placeholder-image"></div>
                         <mat-card-content>
                             <div class="d-flex justify-content-between w-100 align-items-start">
@@ -58,10 +58,6 @@
                                     <mat-card-title>{{ value.name }}</mat-card-title>
                                     <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
                                 </div>
-                                <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
-                                    (click)="addToFavorites(value.id)">
-                                    <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
-                                </button>
                             </div>
                         </mat-card-content>
                     </mat-card>

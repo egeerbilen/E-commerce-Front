@@ -1,10 +1,10 @@
 const adminPanelPath = 'AdminPanel';
 
 export const urlEnums = {
-  addProduct: 'AddProduct',
-  categoryManagement: 'CategoryManagement',
+  addProduct: adminPanelPath + 'AddProduct',
+  categoryManagement: adminPanelPath + 'CategoryManagement',
   productDetails: 'ProductDetails',
-  updateProduct: 'UpdateProduct',
+  updateProduct: adminPanelPath + 'UpdateProduct',
   favorites: 'Favorites',
   basket: 'Basket',
   myAccount: 'MyAccount',

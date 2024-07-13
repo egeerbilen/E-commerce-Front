@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 
 @Component({
-  selector: 'app-category-filter',
+  selector: 'app-home-category-filter',
   templateUrl: './category-filter.component.html',
   styleUrls: ['./category-filter.component.css']
 })

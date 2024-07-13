@@ -11,8 +11,8 @@
                 <mat-form-field appearance="fill" class="w-100 mb-3">
                     <input matInput [(ngModel)]="searchText" placeholder="Search">
                 </mat-form-field>
-                <app-category-filter [categories]="resolvedCategoriesData.data || []"
-                    (categorySelected)="onCategorySelected($event)"></app-category-filter>
+                <app-home-category-filter [categories]="resolvedCategoriesData.data || []"
+                    (categorySelected)="onCategorySelected($event)"></app-home-category-filter>
             </div>
         </div>
 
@@ -27,7 +27,7 @@
                     class="col-12 col-md-6 col-lg-4 mb-4">
                     <mat-card class="example-card h-100">
                         <img *ngIf="value.imageData" mat-card-image [src]="value.imageData | byteToImage"
-                            [routerLink]="[urlEnums.productDetails+ '/' + value.id]" alt="{{ value.name }}">
+                            [routerLink]="[urlEnums.productDetails, value.id]" alt="{{ value.name }}">
                         <div *ngIf="!value.imageData" class="placeholder-image"></div>
                         <mat-card-content>
                             <div class="d-flex justify-content-between w-100 align-items-start">
