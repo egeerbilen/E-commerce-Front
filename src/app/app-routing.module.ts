@@ -24,6 +24,7 @@ const routes: Routes = [
     path: urlEnums.categoryManagement,
     loadChildren: () => import('./modules/category-management/category-management.module').then((m) => m.CategoryManagementModule)
   },
+  { path: urlEnums.adminPanel, loadChildren: () => import('./modules/admin-panel/admin-panel.module').then((m) => m.AdminPanelModule) },
   { path: urlEnums.login, loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },
   { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
 ];

@@ -6,6 +6,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AddProductModule } from './modules/add-product/add-product.module';
+import { AdminPanelModule } from './modules/admin-panel/admin-panel.module';
 import { BasketsModule } from './modules/baskets/baskets.module';
 import { CategoryManagementModule } from './modules/category-management/category-management.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
@@ -27,6 +28,7 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     LoginModule,
     CategoryManagementModule,
     NavbarModule,
+    AdminPanelModule,
     HomeModule,
     FavoritesModule,
     BasketsModule,

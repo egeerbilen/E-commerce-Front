@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
 import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category/highlight-category.directive';
 import { ByteToImagePipe } from 'src/app/helpers/img-helper/byte-to-image.pipe';
 import { ModalHelperComponent } from 'src/app/helpers/modal-helper/modal-helper.component';
@@ -48,13 +49,14 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatFormFieldModule,
     BrowserAnimationsModule
   ],
-  declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective],
+  declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective, FindProductPipe],
   providers: [httpInterceptorProvider, LoadingPageService, ToastService],
   exports: [
     CommonModule,
     RouterModule,
     FormsModule,
     MatSelectModule,
+    FindProductPipe,
     MatGridListModule,
     MatOptionModule,
     ReactiveFormsModule,

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
 import { SharedModule } from 'src/app/shared/shared-module/shared-module.module';
 
 import { CategoryFilterComponent } from './category-filter/category-filter.component';
@@ -10,7 +9,7 @@ import { homeRoutes } from './home.routing';
 
 @NgModule({
   imports: [homeRoutes, CommonModule, SharedModule],
-  declarations: [HomeComponent, CategoryFilterComponent, FindProductPipe],
+  declarations: [HomeComponent, CategoryFilterComponent],
   exports: [RouterModule]
 })
 export class HomeModule {}

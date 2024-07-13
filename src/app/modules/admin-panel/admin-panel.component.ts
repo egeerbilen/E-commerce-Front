@@ -7,9 +7,9 @@ import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
-
-import { FavoriteService } from '../favorites/service/favorite.service';
-import { HomeService } from '../home/service/home.service';
+import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
+import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
+import { ProductService } from 'src/app/shared/services/product/product.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -33,7 +33,7 @@ export class AdminPanelComponent {
    * @param _store Store.
    * @param _toastService ToastService.
    * @param _favoriteService FavoriteService.
-   * @param _homeService HomeService.
+   * @param _productService HomeService.
    * @param _modalHelperService ModalHelperService.
    */
   constructor(
@@ -41,7 +41,7 @@ export class AdminPanelComponent {
     private _store: Store,
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
-    private _homeService: HomeService,
+    private _productService: ProductService,
     private _modalHelperService: ModalHelperService
   ) {
     this.urlEnums = urlEnums;
@@ -106,7 +106,7 @@ export class AdminPanelComponent {
 
     this.resolvedProductsData.data = this.resolvedProductsData.data!.filter((product) => product.id !== productId);
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
-    this._homeService.deleteProduct(productId).subscribe();
+    this._productService.deleteProduct(productId).subscribe();
   }
 
   /**
