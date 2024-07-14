@@ -35,7 +35,7 @@ export class AddProductComponent {
     private _toastService: ToastService,
     private _productService: ProductService,
     private _userLocalStorageService: UserLocalStorageService,
-    private _store: Store,
+    private _store: Store
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedCategoryData = data['resolvedData'].data;

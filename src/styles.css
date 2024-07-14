@@ -58,3 +58,38 @@ body {
   background-color: rgb(48, 135, 235) !important;
   color: white !important;
 }
+
+.placeholder-image {
+  min-height: 300px;
+  min-width: 100%;
+  background-color: #f0f0f0;
+}
+
+.favorite-button {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+}
+
+.favorite-button mat-icon {
+  vertical-align: middle;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

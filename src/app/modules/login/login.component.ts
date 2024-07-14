@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
@@ -15,6 +16,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  userInformationResponseError: string[] | null = null;
   urlEnums;
 
   /**
@@ -47,17 +49,20 @@ export class LoginComponent {
   public onSubmit(): void {
     if (this.loginForm.valid) {
       this._userService.userLogin(this.loginForm.value).subscribe((res) => {
-        const token = res.data;
-        if (token) {
-          this._userLocalStorageService.setToken(token);
-          const decodedToken = this._jwtHelperService.decodeToken(token);
-          decodedToken.jwt = token;
+        console.log(res);
+        if (res.data) {
+          this._userLocalStorageService.setToken(res.data);
+          const decodedToken = this._jwtHelperService.decodeToken(res.data);
+          decodedToken.jwt = res.data;
           this._store.dispatch(setUserData({ userData: decodedToken }));
           this._router.navigate(['/']);
+        } else {
+          this.userInformationResponseError = res.errors;
         }
       });
     }
   }
+
   /**
    * OnRegister.
    */

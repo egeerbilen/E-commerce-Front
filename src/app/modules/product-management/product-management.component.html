@@ -38,7 +38,7 @@
 
                 <div *ngFor="let value of (filteredData | findProduct : searchText)"
                     class="col-12 col-md-6 col-lg-4 mb-4">
-                    <mat-card class="example-card h-100">
+                    <mat-card class="product-card h-100">
                         <mat-card-actions *ngIf="tokenStatus && isSeller" class="d-flex w-100">
                             <button [routerLink]="[urlEnums.updateProduct, value.id]" mat-raised-button
                                 class="custom-green-button flex-fill">
