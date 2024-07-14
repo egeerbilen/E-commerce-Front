@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
 import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category/highlight-category.directive';
@@ -34,6 +36,8 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     ReactiveFormsModule,
     MatGridListModule,
     MatSnackBarModule,
+    BrowserAnimationsModule,
+    MatExpansionModule,
     MatButtonModule,
     MatInputModule,
     MatInputModule,
@@ -63,6 +67,8 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     ByteToImagePipe,
     MatListModule,
     LoadingPageComponent,
+    BrowserAnimationsModule,
+    MatExpansionModule,
     ModalHelperComponent,
     MatSnackBarModule,
     MatButtonModule,

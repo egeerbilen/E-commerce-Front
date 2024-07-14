@@ -1,13 +1,22 @@
+<!-- orders.component.html -->
 <mat-card class="container my-3 p-4">
   <h1 class="text-center">Orders</h1>
-  <div *ngFor="let order of resolvedOrderData">
-    <mat-form-field appearance="fill">
-      <mat-label>Customer ID: {{order.customerId}}</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let product of order.orderProducts" [value]="product.productId">
-          Product ID: {{product.productId}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let order of resolvedOrderData; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{i + 1}}. Customer ID: {{order.customerId}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Total Orders: {{order.totalOrders}}
+        </mat-panel-description>
+        <mat-panel-description>
+          Total Price: {{order.totalPrice}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngFor="let product of order.orderProducts">
+        <p>Order ID: {{product.orderId}} - Product ID: {{product.productId}}</p>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </mat-card>

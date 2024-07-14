@@ -1,0 +1,28 @@
+/* orders.component.css */
+.container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.mat-accordion {
+  width: 100%;
+}
+
+.mat-expansion-panel {
+  margin-bottom: 15px;
+}
+
+.mat-panel-title {
+  font-weight: bold;
+}
+
+.mat-panel-description {
+  font-style: italic;
+}
