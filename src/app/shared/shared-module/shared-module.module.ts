@@ -16,10 +16,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { FindProductPipe } from 'src/app/helpers/find-product/find-product.pipe';
-import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category/highlight-category.directive';
-import { ByteToImagePipe } from 'src/app/helpers/img-helper/byte-to-image.pipe';
+import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category-directive/highlight-category.directive';
 import { ModalHelperComponent } from 'src/app/helpers/modal-helper/modal-helper.component';
+import { FindProductPipe } from 'src/app/helpers/pipe/find-product/find-product.pipe';
+import { ByteToImagePipe } from 'src/app/helpers/pipe/img-helper/byte-to-image.pipe';
+import { NumberFormatPipe } from 'src/app/helpers/pipe/number-format/number-format.pipe';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 
 import { httpInterceptorProvider } from '../jwt/jwt-token-module-settings';
@@ -49,7 +50,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatIconModule,
     MatFormFieldModule
   ],
-  declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective, FindProductPipe],
+  declarations: [LoadingPageComponent, ByteToImagePipe, ModalHelperComponent, HighlightCategoryDirective, FindProductPipe, NumberFormatPipe],
   providers: [httpInterceptorProvider, LoadingPageService, ToastService],
   exports: [
     CommonModule,
@@ -62,6 +63,7 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatOptionModule,
     ReactiveFormsModule,
     MatDialogModule,
+    NumberFormatPipe,
     ByteToImagePipe,
     MatListModule,
     LoadingPageComponent,
