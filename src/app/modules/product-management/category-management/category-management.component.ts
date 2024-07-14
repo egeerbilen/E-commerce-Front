@@ -55,11 +55,15 @@ export class CategoryManagementComponent {
     if (this.categoryForm.valid) {
       const category: CategoryDto = this.categoryForm.value;
       this._categoryService.addCategory(category).subscribe(
-        () => {
-          // Add the new category to the local list
-          this.categories.push(category);
-          this._toastService.show('Category added successfully', 'Close', 2000);
-          this.categoryForm.reset();
+        (res) => {
+          if (res.data) {
+            // Add the new category to the local list
+            this.categories.push(res.data);
+            this._toastService.show('Category added successfully', 'Close', 2000);
+            this.categoryForm.reset();
+          } else {
+            this._toastService.show('Failed to add category: No data received', 'Close', 2000);
+          }
         },
         () => this._toastService.show('Failed to add category', 'Close', 2000)
       );

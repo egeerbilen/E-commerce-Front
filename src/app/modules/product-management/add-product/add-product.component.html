@@ -27,12 +27,15 @@
       <input matInput id="stock" type="number" formControlName="stock">
     </mat-form-field>
 
+    
     <mat-form-field class="mb-3 full-width">
       <mat-label>Category</mat-label>
-      <input matInput id="categoryId" type="number" formControlName="categoryId">
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
       <mat-error
         *ngIf="productForm.get('categoryId')?.invalid && (productForm.get('categoryId')?.dirty || productForm.get('categoryId')?.touched)">
-        <div *ngIf="productForm.get('categoryId')?.errors?.['required']" class="text-danger">Category is required.</div>
+        Category ID is required.
       </mat-error>
     </mat-form-field>
 

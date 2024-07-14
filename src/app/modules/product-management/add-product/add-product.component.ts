@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
@@ -16,6 +17,7 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
 export class AddProductComponent {
   resolvedCategoryData: any;
   productForm: FormGroup;
+  categories: CategoryDto[] = [];
   tokenStatus = false;
 
   /**
@@ -33,10 +35,11 @@ export class AddProductComponent {
     private _toastService: ToastService,
     private _productService: ProductService,
     private _userLocalStorageService: UserLocalStorageService,
-    private _store: Store
+    private _store: Store,
   ) {
     this._route.data.subscribe((data) => {
       this.resolvedCategoryData = data['resolvedData'].data;
+      this.categories = this.resolvedCategoryData;
     });
 
     this.productForm = this._fb.group({
@@ -65,6 +68,7 @@ export class AddProductComponent {
 
       product = { ...product, userId: Number(this._userLocalStorageService.getUserId()) };
       this._productService.addProduct(product).subscribe();
+      this._toastService.show('Product added');
     } else {
       this._toastService.show('Form is invalid');
     }
