@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: urlEnums.addProduct,
         loadChildren: () => import('./add-product/add-product.module').then((m) => m.AddProductModule)
+      },
+      {
+        path: urlEnums.orderProduct + '/:id',
+        loadChildren: () => import('./orders/orders.module').then((m) => m.OrdersModule)
       }
     ]
   }

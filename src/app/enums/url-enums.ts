@@ -10,5 +10,6 @@ export const urlEnums = {
   adminPanel: 'AdminPanel',
   register: 'Register',
   productManagement: 'ProductManagement',
+  orderProduct: 'OrderProduct',
   notFoundPage: '404'
 };
