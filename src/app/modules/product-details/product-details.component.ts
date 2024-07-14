@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { BasketProductDto } from 'src/app/shared/dto/basket-product-dto';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
@@ -16,7 +18,7 @@ import { FavoriteService } from 'src/app/shared/services/favorite/favorite.servi
 export class ProductDetailsComponent {
   resolvedData!: ProductDetailsDto;
   product!: ProductDto;
-  tokenStatus = false;
+  tokenStatus: DecodedTokenWithJwtDto | null = null;
   isFavorite = false;
 
   /**
@@ -46,7 +48,8 @@ export class ProductDetailsComponent {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
+      this.tokenStatus = res;
+      console.log(this.tokenStatus);
     });
   }
 
@@ -54,13 +57,18 @@ export class ProductDetailsComponent {
    * AddToBasket.
    */
   public addToBasket(): void {
-    this._basketService.createBasketProduct(this.product.id).subscribe((res) => {
-      if (res.errors) {
-        this._toastService.show('Product is already in the basket');
-      } else {
-        this._toastService.show('Product added to basket');
-      }
-    });
+    //   let bas: BasketProductDto={
+    // basketId: number;
+    // productId: number;
+    // numberOfProducts: number;
+    //   }
+    //   this._basketService.updateBasketProduct(this.product.id).subscribe((res) => {
+    //     if (res.errors) {
+    //       this._toastService.show('Product is already in the basket');
+    //     } else {
+    //       this._toastService.show('Product added to basket');
+    //     }
+    //   });
   }
 
   /**

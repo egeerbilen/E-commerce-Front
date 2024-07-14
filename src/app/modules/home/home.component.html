@@ -37,7 +37,7 @@
                                     <mat-card-subtitle [routerLink]="[urlEnums.productDetails, value.id]">{{ value.price
                                         }} $</mat-card-subtitle>
                                 </div>
-                                <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
+                                <button *ngIf="decodedToken" mat-icon-button color="warn" class="favorite-button"
                                     (click)="addToFavorites(value.id)">
                                     <mat-icon>{{ favoriteStatus[value.id] ? 'favorite' : 'favorite_border' }}</mat-icon>
                                 </button>

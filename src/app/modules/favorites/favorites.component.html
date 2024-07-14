@@ -3,7 +3,7 @@
     <div class="col-12">
       <h1 class="mb-4">Favorites</h1>
       <ng-container
-        *ngIf="(!resolvedFavoritesData || resolvedFavoritesData.length === 0) && !tokenStatus; else favoritesAlert">
+        *ngIf="(!resolvedFavoritesData || resolvedFavoritesData.length === 0) && !decodedToken; else favoritesAlert">
         <mat-card class="col-12 text-center">
           <mat-card-content class="alert alert-warning fw-bold" role="alert">
             You need to log in to add favorites.

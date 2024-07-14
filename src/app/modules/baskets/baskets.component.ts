@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { BasketService } from 'src/app/shared/services/basket/basket.service';
@@ -13,7 +14,7 @@ import { BasketService } from 'src/app/shared/services/basket/basket.service';
 })
 export class BasketsComponent implements OnInit {
   resolvedBasketData!: ProductDto[];
-  tokenStatus = false;
+  tokenStatus: DecodedTokenWithJwtDto | null = null;
   totalPrice = 0;
   shippingCost = 39.99;
   totalSavings = 4.01;
@@ -40,7 +41,8 @@ export class BasketsComponent implements OnInit {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
+      this.tokenStatus = res;
+      console.log(res);
     });
   }
 
@@ -56,10 +58,10 @@ export class BasketsComponent implements OnInit {
    * @param item Item.
    */
   public removeFromBasket(item: ProductDto): void {
-    this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
-      this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
-      this._calculateTotals(); // Totals'ı yeniden hesapla
-    });
+    // this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
+    //   this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
+    //   this._calculateTotals(); // Totals'ı yeniden hesapla
+    // });
   }
 
   /**

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductCreateDto } from 'src/app/shared/dto/product-create-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
@@ -18,7 +19,7 @@ export class AddProductComponent {
   resolvedCategoryData: any;
   productForm: FormGroup;
   categories: CategoryDto[] = [];
-  tokenStatus = false;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
 
   /**
    * Constructor.
@@ -59,7 +60,7 @@ export class AddProductComponent {
     if (this.productForm.valid) {
       let product: ProductCreateDto = this.productForm.value;
       this._store.select(getUserData).subscribe((res) => {
-        this.tokenStatus = !!res;
+        this.decodedToken = res;
       });
 
       if (Number(this._userLocalStorageService.getUserId()) === 0) {

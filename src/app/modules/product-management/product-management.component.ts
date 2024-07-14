@@ -6,6 +6,7 @@ import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-h
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
@@ -20,7 +21,7 @@ export class ProductManagementComponent {
   urlEnums;
   resolvedCategoriesData!: CustomResponseDto<CategoryDto[]>;
   resolvedProductsData!: CustomResponseDto<ProductDto[]>;
-  tokenStatus = false;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   searchText = '';
   filteredData: ProductDto[] = [];
   favoriteProducts: number[] = [];
@@ -69,8 +70,8 @@ export class ProductManagementComponent {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
-      this.isSeller = !!res?.roles?.includes('Admin');
+      this.decodedToken = res;
+      this.isSeller = this.decodedToken!.roles.includes('Admin');
       // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
       // autguarda dan çekebiliyor4 muyum bakacapım
       // !!!!!!!!!!!!

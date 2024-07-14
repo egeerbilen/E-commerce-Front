@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
@@ -13,7 +14,7 @@ import { FavoriteService } from 'src/app/shared/services/favorite/favorite.servi
 })
 export class FavoritesComponent {
   resolvedFavoritesData!: ProductDto[];
-  tokenStatus = false;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   urlEnums;
 
   /**
@@ -36,7 +37,7 @@ export class FavoritesComponent {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
+      this.decodedToken;
     });
   }
 

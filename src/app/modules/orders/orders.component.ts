@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { OrderDto } from 'src/app/shared/dto/order-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
@@ -16,7 +17,7 @@ import { OrdersService } from 'src/app/shared/services/orders/orders.service'; /
 export class OrdersComponent {
   resolvedOrderData!: OrderDto[];
   resolvedOrderDetailsData: { [key: number]: ProductDto[] } = {};
-  tokenStatus = false;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   urlEnums;
 
   /**
@@ -39,7 +40,7 @@ export class OrdersComponent {
     console.log(this.resolvedOrderData);
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
+      this.decodedToken = res;
     });
   }
 
