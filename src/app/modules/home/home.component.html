@@ -32,8 +32,10 @@
                         <mat-card-content>
                             <div class="d-flex justify-content-between w-100 align-items-start">
                                 <div class="text-center w-100 text-truncate">
-                                    <mat-card-title>{{ value.name }}</mat-card-title>
-                                    <mat-card-subtitle>{{ value.price }} $</mat-card-subtitle>
+                                    <mat-card-title [routerLink]="[urlEnums.productDetails, value.id]">{{ value.name
+                                        }}</mat-card-title>
+                                    <mat-card-subtitle [routerLink]="[urlEnums.productDetails, value.id]">{{ value.price
+                                        }} $</mat-card-subtitle>
                                 </div>
                                 <button *ngIf="tokenStatus" mat-icon-button color="warn" class="favorite-button"
                                     (click)="addToFavorites(value.id)">
@@ -42,6 +44,7 @@
                             </div>
                         </mat-card-content>
                     </mat-card>
+
                 </div>
             </div>
         </div>
