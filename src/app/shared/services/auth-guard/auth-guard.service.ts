@@ -60,6 +60,11 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && (isAdmin || tokenStatus)) {
       return true;
     }
+    console.log(state.url);
+    console.log('/' + urlEnums.orderProduct + '/');
+    if (state.url === '/' + urlEnums.orderProduct && (isAdmin || canRead)) {
+      return true;
+    }
 
     return this._router.navigate([urlEnums.notFoundPage]);
   }

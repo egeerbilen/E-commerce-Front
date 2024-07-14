@@ -25,7 +25,7 @@ export class OrdersService extends BaseService {
    * @returns Return.
    */
   public getUserOrders(userId: string): Observable<CustomResponseDto<OrderProductDto>> {
-    return this.http.get(this.apiEndpoint.orderProduct + 'User/' + userId);
+    return this.http.get(this.apiEndpoint.orderProduct + 'GetUserOrders/User/' + userId);
   }
 
   /**
@@ -34,6 +34,6 @@ export class OrdersService extends BaseService {
    * @returns Return.
    */
   public getOrderProducts(orderId: string): Observable<CustomResponseDto<ProductDto[]>> {
-    return this.http.get(this.apiEndpoint.orderProduct + 'Order/' + orderId);
+    return this.http.get(this.apiEndpoint.orderProduct + 'GetOrderProducts/Order/' + orderId);
   }
 }

@@ -32,11 +32,6 @@ export class OrdersDataResolverService {
    * @returns Get products.
    */
   public resolve(route: ActivatedRouteSnapshot): Observable<CustomResponseDto<OrderProductDto>> {
-    const id = route.paramMap.get('id') ?? '';
-
-    if (!id) {
-      this._router.navigate([this.urlEnums.notFoundPage]);
-    }
     return this._ordersService.getUserOrders(this._userLocalStorageService.getUserId().toString());
   }
 }

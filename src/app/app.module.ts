@@ -14,6 +14,7 @@ import { HomeModule } from './modules/home/home.module';
 import { LoginModule } from './modules/login/login.module';
 import { MyAccountModule } from './modules/my-account/my-account.module';
 import { NavbarModule } from './modules/navbar/navbar.module';
+import { OrdersModule } from './modules/orders/orders.module';
 import { ProductDetailsModule } from './modules/product-details/product-details.module';
 import { ProductManagementModule } from './modules/product-management/product-management.module';
 import { RegisterModule } from './modules/register/register.module';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared-module/shared-module.module';
     HttpClientModule,
     jwtModule,
     SharedModule,
+    OrdersModule,
     HomeModule,
     LoginModule,
     NavbarModule,
