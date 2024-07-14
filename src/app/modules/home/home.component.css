@@ -6,8 +6,8 @@
 
 .favorite-button {
   position: absolute;
-  top: 14%; /* Adjusted to move the icon down */
-  right: 16px; 
+  top: 2%;
+  right: 2%; 
 }
 
 .favorite-button mat-icon {
