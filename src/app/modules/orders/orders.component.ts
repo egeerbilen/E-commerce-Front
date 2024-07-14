@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { OrderDto } from 'src/app/shared/dto/order-dto';
+import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
+import { OrdersService } from 'src/app/shared/services/orders/orders.service'; // Servis yolunuza göre değiştirin
 
 @Component({
   selector: 'app-orders',
@@ -13,6 +15,7 @@ import { FavoriteService } from 'src/app/shared/services/favorite/favorite.servi
 })
 export class OrdersComponent {
   resolvedOrderData!: OrderDto[];
+  resolvedOrderDetailsData: { [key: number]: ProductDto[] } = {};
   tokenStatus = false;
   urlEnums;
 
@@ -20,14 +23,12 @@ export class OrdersComponent {
    * Constructor.
    * @param _route ActivatedRoute.
    * @param _store Store.
-   * @param _favoriteService FavoriteService.
-   * @param _router Router.
+   * @param _ordersService OrdersService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _favoriteService: FavoriteService,
-    private _router: Router
+    private _ordersService: OrdersService
   ) {
     this.urlEnums = urlEnums;
 
@@ -40,5 +41,22 @@ export class OrdersComponent {
     this._store.select(getUserData).subscribe((res) => {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
     });
+  }
+
+  /**
+   * LoadOrderProducts.
+   * @param orderId OrderId.
+   */
+  public loadOrderProducts(orderId: number): void {
+    if (!this.resolvedOrderDetailsData[orderId]) {
+      this._ordersService.getOrderProducts(orderId.toString()).subscribe((response: CustomResponseDto<ProductDto[]>) => {
+        if (response.data) {
+          this.resolvedOrderDetailsData[orderId] = response.data;
+        } else {
+          this.resolvedOrderDetailsData[orderId] = []; // response.data null ise boş array ata
+        }
+        console.log(response);
+      });
+    }
   }
 }

@@ -1,21 +1,24 @@
-<!-- orders.component.html -->
 <mat-card class="container my-3 p-4">
-  <h1 class="text-center">Orders</h1>
+  <h1 class="text-center mb-4">Orders</h1>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let order of resolvedOrderData; let i = index">
+    <mat-expansion-panel *ngFor="let order of resolvedOrderData; let i = index" (opened)="loadOrderProducts(order.id)" class="order-panel">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{i + 1}}. Customer ID: {{order.customerId}}
         </mat-panel-title>
-        <mat-panel-description>
-          Total Orders: {{order.totalOrders}}
-        </mat-panel-description>
-        <mat-panel-description>
-          Total Price: {{order.totalPrice}}
+        <mat-panel-description class="order-description">
+          <div>Total Orders: {{order.totalOrders}}</div>
+          <div>Total Price: {{order.totalPrice}}</div>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div *ngFor="let product of order.orderProducts">
-        <p>Order ID: {{product.orderId}} - Product ID: {{product.productId}}</p>
+      <div *ngIf="resolvedOrderDetailsData[order.id]">
+        <div *ngFor="let product of resolvedOrderDetailsData[order.id]" class="product-item">
+          <img [src]="product.imageData | byteToImage" alt="{{product.name}}" class="product-image">
+          <div class="product-details">
+            <p>Product Name: {{product.name}}</p>
+            <p>Product Price: {{product.price}}</p>
+          </div>
+        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
