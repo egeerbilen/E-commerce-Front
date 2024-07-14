@@ -20,13 +20,14 @@ export class ProductDetailsComponent {
   product!: ProductDto;
   decodedToken: DecodedTokenWithJwtDto | null = null;
   isFavorite = false;
+  numberOfProducts = 1; // Kullanıcıdan alınacak ürün miktarı için değişken.
 
   /**
    * Constructor.
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _favoriteService FavoriteService.
-   * @param _basketService BasketsService.
+   * @param _basketService BasketService.
    * @param _toastService ToastService.
    */
   constructor(
@@ -57,12 +58,12 @@ export class ProductDetailsComponent {
    * AddToBasket.
    */
   public addToBasket(): void {
-    const basketProduc: BasketProductDto = {
+    const basketProduct: BasketProductDto = {
       basketId: this.decodedToken!.basketId,
       productId: this.product.id.toString(),
-      numberOfProducts: 2
+      numberOfProducts: this.numberOfProducts // Kullanıcıdan alınan ürün miktarı.
     };
-    this._basketService.updateBasketProduct(basketProduc).subscribe((res) => {
+    this._basketService.updateBasketProduct(basketProduct).subscribe((res) => {
       if (res.errors) {
         this._toastService.show('Product is already in the basket');
       } else {
