@@ -8,13 +8,13 @@
       <p><b>Açıklama:</b> {{ product.description }}</p>
       <p><b>Fiyat:</b> {{ product.price }} $</p>
       <p><b>Stok Durumu:</b> {{ product.stock }}</p>
-      <button *ngIf="tokenStatus" (click)="addToBasket()" class="btn btn-success mt-2">
+      <button *ngIf="decodedToken" (click)="addToBasket()" class="btn btn-success mt-2">
         <i class="fa fa-shopping-cart text-warning"></i> Add To Basket
       </button>
-      <button *ngIf="tokenStatus && !isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+      <button *ngIf="decodedToken && !isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
         <i class="fas fa-heart "></i> Favorite
       </button>
-      <button *ngIf="tokenStatus && isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+      <button *ngIf="decodedToken && isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
         <i class="fas fa-heart text-danger"></i> Favorite
       </button>
       <!-- butonları boyle yapmamın sebei fav ikon içinde i olarak ngclass ile bunu değiştiremiyor olmam -->

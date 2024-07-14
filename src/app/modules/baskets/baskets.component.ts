@@ -14,7 +14,7 @@ import { BasketService } from 'src/app/shared/services/basket/basket.service';
 })
 export class BasketsComponent implements OnInit {
   resolvedBasketData!: ProductDto[];
-  tokenStatus: DecodedTokenWithJwtDto | null = null;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   totalPrice = 0;
   shippingCost = 39.99;
   totalSavings = 4.01;
@@ -41,7 +41,7 @@ export class BasketsComponent implements OnInit {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = res;
+      this.decodedToken = res;
       console.log(res);
     });
   }

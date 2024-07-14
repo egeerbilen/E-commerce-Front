@@ -13,7 +13,7 @@ import { UserLocalStorageService } from 'src/app/shared/services/local-storage/u
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  tokenStatus = false;
+  decodedToken = false;
   urlEnums;
 
   /**
@@ -33,7 +33,7 @@ export class NavbarComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       if (res) {
-        this.tokenStatus = true;
+        this.decodedToken = true;
       }
     });
   }
@@ -47,7 +47,7 @@ export class NavbarComponent {
     if (logoutStatus) {
       this._localStorageService.removeToken();
       this._store.dispatch(setUserData({ userData: null }));
-      this.tokenStatus = false;
+      this.decodedToken = false;
       this._router.navigate(['/']);
     }
   }

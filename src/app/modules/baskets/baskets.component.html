@@ -3,7 +3,7 @@
     <div class="col-12">
       <h1 class="mb-4">Basket</h1>
       <ng-container
-        *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !tokenStatus; else basketContent">
+        *ngIf="(!resolvedBasketData || resolvedBasketData.length === 0) && !decodedToken; else basketContent">
         <mat-card class="col-12 text-center">
           <mat-card-content class="alert alert-warning fw-bold" role="alert">
             You need to log in to view your basket.

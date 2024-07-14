@@ -34,19 +34,19 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const tokenStatus = this._userLocalStorageService.getDecodedToken();
+    const decodedToken = this._userLocalStorageService.getDecodedToken();
 
-    const isAdmin = tokenStatus?.roles?.includes('Admin');
-    const canCreate = tokenStatus?.roles?.includes('Create');
-    const canUpdate = tokenStatus?.roles?.includes('Update');
-    const canRead = tokenStatus?.roles?.includes('Read');
-    const canDelete = tokenStatus?.roles?.includes('Delete');
+    const isAdmin = decodedToken?.roles?.includes('Admin');
+    const canCreate = decodedToken?.roles?.includes('Create');
+    const canUpdate = decodedToken?.roles?.includes('Update');
+    const canRead = decodedToken?.roles?.includes('Read');
+    const canDelete = decodedToken?.roles?.includes('Delete');
 
-    if (state.url === '/' + urlEnums.login && !tokenStatus) {
+    if (state.url === '/' + urlEnums.login && !decodedToken) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.myAccount && tokenStatus) {
+    if (state.url === '/' + urlEnums.myAccount && decodedToken) {
       return true;
     }
     if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] && (isAdmin || canUpdate)) {
@@ -57,7 +57,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && (isAdmin || tokenStatus)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && (isAdmin || decodedToken)) {
       return true;
     }
     console.log(state.url);

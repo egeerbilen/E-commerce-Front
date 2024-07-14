@@ -1,5 +1,5 @@
 export type BasketProductDto = {
-  basketId: number;
-  productId: number;
+  basketId: string;
+  productId: string;
   numberOfProducts: number;
 };

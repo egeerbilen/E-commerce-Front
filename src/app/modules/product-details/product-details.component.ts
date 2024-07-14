@@ -18,7 +18,7 @@ import { FavoriteService } from 'src/app/shared/services/favorite/favorite.servi
 export class ProductDetailsComponent {
   resolvedData!: ProductDetailsDto;
   product!: ProductDto;
-  tokenStatus: DecodedTokenWithJwtDto | null = null;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   isFavorite = false;
 
   /**
@@ -48,8 +48,8 @@ export class ProductDetailsComponent {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.tokenStatus = res;
-      console.log(this.tokenStatus);
+      this.decodedToken = res;
+      console.log(this.decodedToken);
     });
   }
 
@@ -57,18 +57,18 @@ export class ProductDetailsComponent {
    * AddToBasket.
    */
   public addToBasket(): void {
-    //   let bas: BasketProductDto={
-    // basketId: number;
-    // productId: number;
-    // numberOfProducts: number;
-    //   }
-    //   this._basketService.updateBasketProduct(this.product.id).subscribe((res) => {
-    //     if (res.errors) {
-    //       this._toastService.show('Product is already in the basket');
-    //     } else {
-    //       this._toastService.show('Product added to basket');
-    //     }
-    //   });
+    const basketProduc: BasketProductDto = {
+      basketId: this.decodedToken!.basketId,
+      productId: this.product.id.toString(),
+      numberOfProducts: 2
+    };
+    this._basketService.updateBasketProduct(basketProduc).subscribe((res) => {
+      if (res.errors) {
+        this._toastService.show('Product is already in the basket');
+      } else {
+        this._toastService.show('Product added to basket');
+      }
+    });
   }
 
   /**

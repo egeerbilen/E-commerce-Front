@@ -8,4 +8,5 @@ export type DecodedTokenWithJwtDto = {
   iss: string;
   aud: string;
   jwt: string;
+  basketId: string;
 };
