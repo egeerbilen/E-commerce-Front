@@ -36,6 +36,7 @@ export class BasketsComponent implements OnInit {
     this.urlEnums = urlEnums;
     this._route.data.subscribe((data) => {
       this.resolvedBasketData = data?.['resolvedData']?.data || [];
+      console.log(this.resolvedBasketData);
     });
 
     this._store.select(getUserData).subscribe((res) => {

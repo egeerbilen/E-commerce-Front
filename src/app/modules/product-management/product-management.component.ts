@@ -72,6 +72,7 @@ export class ProductManagementComponent {
       this.tokenStatus = !!res; // res null, undefined, 0, "", false falsy olacak
       this.isSeller = !!res?.roles?.includes('Admin');
       // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
+      // autguarda dan çekebiliyor4 muyum bakacapım
       // !!!!!!!!!!!!
       // !!!!!!!!!!!!
     });

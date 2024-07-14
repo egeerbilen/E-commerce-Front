@@ -4,7 +4,7 @@
       <h1 class="mb-4">Favorites</h1>
       <ng-container
         *ngIf="(!resolvedFavoritesData || resolvedFavoritesData.length === 0) && !tokenStatus; else favoritesAlert">
-        <mat-card class="col-12">
+        <mat-card class="col-12 text-center">
           <mat-card-content class="alert alert-warning fw-bold" role="alert">
             You need to log in to add favorites.
             <a routerLink="/Login" class="alert-link text-primary">Go To Login Page</a>
@@ -13,7 +13,7 @@
       </ng-container>
       <ng-template #favoritesAlert>
         <ng-container *ngIf="resolvedFavoritesData.length === 0">
-          <mat-card class="col-12">
+          <mat-card class="col-12 text-center">
             <mat-card-content class="alert alert-warning fw-bold" role="alert">
               You don't have any favorites right now.
               <a routerLink="/" class="alert-link text-primary">Go to the Home Page</a> and add some favorites.
