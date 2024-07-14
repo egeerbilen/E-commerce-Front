@@ -33,7 +33,7 @@ export class OrdersComponent {
 
     this._route.data.subscribe((data) => {
       console.log(data);
-      this.resolvedOrderData = data?.['resolvedData'] || [];
+      this.resolvedOrderData = data?.['resolvedData'].data || [];
     });
     console.log(this.resolvedOrderData);
 
