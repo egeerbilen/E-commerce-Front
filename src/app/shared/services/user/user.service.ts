@@ -22,10 +22,10 @@ export class UserService extends BaseService {
 
   /**
    * Delete user by id.
-   * @param userId User id.
+   * @returns Return.
    */
-  public deleteUserById(userId: string): void {
-    this.http.delete(this.apiEndpoint.user + 'Remove/' + userId);
+  public deleteUserById(): Observable<CustomResponseDto<null>> {
+    return this.http.delete(this.apiEndpoint.user + 'Remove/' + this.userLocalStorageService.getUserId().toString());
   }
 
   /**
