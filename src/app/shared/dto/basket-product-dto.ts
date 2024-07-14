@@ -1,4 +1,4 @@
-export type BasketProduct = {
+export type BasketProductDto = {
   basketId: number;
   productId: number;
   numberOfProducts: number;
