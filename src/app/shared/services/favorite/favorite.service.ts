@@ -34,6 +34,7 @@ export class FavoriteService extends BaseService {
 
     return this.http.delete(url);
   }
+
   /**
    * CreateUserFavoriteProduct.
    * @param productId ProductId.

@@ -30,4 +30,16 @@ export class BasketService extends BaseService {
     }
     return this.http.get(this.apiEndpoint.basketProduct + 'GetUserBasketsById/' + this.userLocalStorageService.getUserId().toString());
   }
+
+  /**
+   * Check if a product is in the basket.
+   * @param basketId Basket ID.
+   * @param productId Product ID.
+   * @returns Response.
+   */
+  public isProductInBasket(basketId: number, productId: string): Observable<CustomResponseDto<BasketProductDto>> {
+    const url = this.apiEndpoint.basketProduct + 'IsProductInBasket/' + basketId.toString() + '/products/' + productId;
+
+    return this.http.get(url);
+  }
 }

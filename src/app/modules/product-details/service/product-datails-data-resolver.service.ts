@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
+import { BasketService } from 'src/app/shared/services/basket/basket.service';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
@@ -19,12 +20,14 @@ export class ProductDatailsDataResolverService {
    * @param _userLocalStorageService UserLocalStorageService.
    * @param _favoriteService FavoriteService.
    * @param _productService ProductService.
+   * @param _basketService BasketService.
    */
   constructor(
     private _router: Router,
     private _userLocalStorageService: UserLocalStorageService,
     private _favoriteService: FavoriteService,
-    private _productService: ProductService
+    private _productService: ProductService,
+    private _basketService: BasketService
   ) {
     this.urlEnums = urlEnums;
   }
@@ -44,7 +47,8 @@ export class ProductDatailsDataResolverService {
     // tamamlandıklarında hepsinin son çıktısını tek bir observable olarak birleştiren bir işleve sahiptir.
     const resObject = forkJoin({
       getProductById: this._productService.getProductById(productId),
-      isFavoriteProduct: this._favoriteService.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId)
+      isFavoriteProduct: this._favoriteService.isFavoriteProduct(this._userLocalStorageService.getUserId(), productId),
+      isBasketProduct: this._basketService.isProductInBasket(this._userLocalStorageService.getUserId(), productId)
     }).pipe(
       catchError((error) => {
         this._router.navigate([this.urlEnums.notFoundPage]);

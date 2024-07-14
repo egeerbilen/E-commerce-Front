@@ -5,22 +5,19 @@
     </div>
     <div class="col-md-6">
       <h2>{{ product.name }}</h2>
-      <p><b>Açıklama:</b> {{ product.description }}</p>
-      <p><b>Fiyat:</b> {{ product.price }} $</p>
-      <p><b>Stok Durumu:</b> {{ product.stock }}</p>
+      <p><b>Description:</b> {{ product.description }}</p>
+      <p><b>Price:</b> {{ product.price }} $</p>
+      <p><b>Stock Status:</b> {{ product.stock }}</p>
       <div *ngIf="decodedToken" class="form-group">
-        <label for="numberOfProducts">Ürün Miktarı:</label>
+        <label for="numberOfProducts">Product Quantity:</label>
         <input type="number" [(ngModel)]="numberOfProducts" class="form-control" id="numberOfProducts" min="1"
           value="1">
       </div>
       <button *ngIf="decodedToken" (click)="addToBasket()" class="btn btn-success mt-2">
         <i class="fa fa-shopping-cart text-warning"></i> Add To Basket
       </button>
-      <button *ngIf="decodedToken && !isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
-        <i class="fas fa-heart "></i> Favorite
-      </button>
-      <button *ngIf="decodedToken && isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
-        <i class="fas fa-heart text-danger"></i> Favorite
+      <button *ngIf="decodedToken" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+        <i class="fas fa-heart" [ngClass]="{'text-danger': isFavorite}"></i> Favorite
       </button>
     </div>
   </div>

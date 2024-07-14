@@ -58,7 +58,7 @@ export class BasketsComponent implements OnInit {
    * @param item Item.
    */
   public removeFromBasket(item: ProductDto): void {
-    // this._basketService.deleteUserBasketProduct(item.id).subscribe(() => {
+    // this._basketService.updateBasketProduct().subscribe(() => {
     //   this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
     //   this._calculateTotals(); // Totals'ı yeniden hesapla
     // });
@@ -82,7 +82,12 @@ export class BasketsComponent implements OnInit {
    * CalculateTotals.
    */
   private _calculateTotals(): void {
-    this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price, 0);
-    this.grandTotal = this.totalPrice + this.shippingCost - this.totalSavings;
+    if (this.resolvedBasketData.length === 0) {
+      this.totalPrice = 0;
+      this.grandTotal = 0;
+    } else {
+      this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price, 0);
+      this.grandTotal = this.totalPrice + this.shippingCost - this.totalSavings;
+    }
   }
 }

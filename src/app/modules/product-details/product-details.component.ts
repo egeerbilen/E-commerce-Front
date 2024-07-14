@@ -46,11 +46,14 @@ export class ProductDetailsComponent {
       if (this.resolvedData.isFavoriteProduct.data) {
         this.isFavorite = this.resolvedData.isFavoriteProduct.data;
       }
+
+      if (this.resolvedData.isBasketProduct.data) {
+        this.numberOfProducts = this.resolvedData.isBasketProduct.data.numberOfProducts;
+      }
     });
 
     this._store.select(getUserData).subscribe((res) => {
       this.decodedToken = res;
-      console.log(this.decodedToken);
     });
   }
 
