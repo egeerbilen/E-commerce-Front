@@ -9,7 +9,7 @@ import { BaseService } from '../base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService extends BaseService {
+export class OrderProducService extends BaseService {
   /**
    * CreateOrderProduct.
    * @param orderProductDtos OrderProductDtos.

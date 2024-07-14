@@ -48,7 +48,11 @@ export class ProductDetailsComponent {
       }
 
       if (this.resolvedData.isBasketProduct.data) {
-        this.numberOfProducts = this.resolvedData.isBasketProduct.data.numberOfProducts;
+        if (this.resolvedData.isBasketProduct.data.numberOfProducts) {
+          this.numberOfProducts = this.resolvedData.isBasketProduct.data.numberOfProducts;
+        } else {
+          this.numberOfProducts = 1;
+        }
       }
     });
 

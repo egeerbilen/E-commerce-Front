@@ -1,9 +1,8 @@
 import { BaseDto } from './base-dto';
-import { OrderProductDto } from './order-product-dto';
 
 export type OrderDto = BaseDto & {
+  userId: number;
   totalOrders: number;
   customerId: number;
   totalPrice: number;
-  orderProducts: OrderProductDto[];
 };

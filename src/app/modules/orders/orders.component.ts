@@ -7,7 +7,7 @@ import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jw
 import { OrderDto } from 'src/app/shared/dto/order-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { OrdersService } from 'src/app/shared/services/orders/orders.service'; // Servis yolunuza göre değiştirin
+import { OrderProducService } from 'src/app/shared/services/orders-product/orders-product.service';
 
 @Component({
   selector: 'app-orders',
@@ -29,7 +29,7 @@ export class OrdersComponent {
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _ordersService: OrdersService
+    private _ordersService: OrderProducService
   ) {
     this.urlEnums = urlEnums;
 

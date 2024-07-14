@@ -5,10 +5,13 @@ import { urlEnums } from 'src/app/enums/url-enums';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { BasketProductDto } from 'src/app/shared/dto/basket-product-dto';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
-import { ProductDto } from 'src/app/shared/dto/product-dto';
+import { OrderDto } from 'src/app/shared/dto/order-dto';
+import { OrderProductDto } from 'src/app/shared/dto/order-product-dto';
 import { ProductWithQuantityDto } from 'src/app/shared/dto/product-with-quantity-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { BasketService } from 'src/app/shared/services/basket/basket.service';
+import { OrderProducService } from 'src/app/shared/services/orders-product/orders-product.service';
+import { OrderService } from 'src/app/shared/services/oreder/oreder.service';
 
 @Component({
   selector: 'app-baskets',
@@ -31,18 +34,21 @@ export class BasketsComponent implements OnInit {
    * @param _basketService FavoriteService.
    * @param _router Router.
    * @param _toastService ToastService.
+   * @param _orderProducService OrderProducService.
+   * @param _orderService OrderService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _basketService: BasketService,
     private _router: Router,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _orderProducService: OrderProducService,
+    private _orderService: OrderService
   ) {
     this.urlEnums = urlEnums;
     this._route.data.subscribe((data) => {
       this.resolvedBasketData = data?.['resolvedData']?.data || [];
-      console.log(this.resolvedBasketData);
     });
 
     this._store.select(getUserData).subscribe((res) => {
@@ -78,7 +84,33 @@ export class BasketsComponent implements OnInit {
    * ConfirmBasket.
    */
   public confirmBasket(): void {
-    console.log('Basket confirmed.');
+    console.log(this.resolvedBasketData);
+    if (!this.resolvedBasketData || this.resolvedBasketData.length === 0) {
+      this._toastService.show('Basket is empty. No request will be made.');
+      return;
+    }
+    console.log(this.resolvedBasketData);
+    console.log(this.resolvedBasketData.length);
+
+    const order: OrderDto[] = [];
+    console.log(this.decodedToken);
+    this.resolvedBasketData.forEach((item) => {
+      order.push({
+        id: 0,
+        userId: item.userId,
+        customerId: this.decodedToken!.userId,
+        totalOrders: this.resolvedBasketData.length,
+        totalPrice: this.totalPrice // hesaplanacak
+      });
+    });
+
+    console.log(order);
+    const orderProductDtos = this._mapToOrderProductDto(this.resolvedBasketData);
+
+    this._orderProducService.createOrderProduct(orderProductDtos).subscribe((res) => {
+      console.log(res);
+    });
+    this._orderService.createList(order).subscribe();
   }
 
   /**
@@ -90,7 +122,6 @@ export class BasketsComponent implements OnInit {
     this._updateBasketProduct(item);
     this._calculateTotals();
   }
-
   /**
    * DecreaseQuantity.
    * @param item Item.
@@ -101,6 +132,18 @@ export class BasketsComponent implements OnInit {
       this._updateBasketProduct(item);
       this._calculateTotals();
     }
+  }
+  /**
+   * MapToOrderProductDto.
+   * @param basketData BasketData.
+   * @returns Return.
+   */
+  private _mapToOrderProductDto(basketData: ProductWithQuantityDto[]): OrderProductDto[] {
+    return basketData.map((item) => ({
+      orderId: 1, // Burada orderId'nin ne olması gerektiğini belirlemeniz gerekebilir.
+      productId: item.id,
+      numberOfProducts: item.numberOfProducts
+    }));
   }
 
   /**
