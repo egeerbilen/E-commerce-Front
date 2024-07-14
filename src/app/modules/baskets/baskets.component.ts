@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { BasketProductDto } from 'src/app/shared/dto/basket-product-dto';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { ProductWithQuantityDto } from 'src/app/shared/dto/product-with-quantity-dto';
@@ -28,12 +30,14 @@ export class BasketsComponent implements OnInit {
    * @param _store Store.
    * @param _basketService FavoriteService.
    * @param _router Router.
+   * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
     private _basketService: BasketService,
-    private _router: Router
+    private _router: Router,
+    private _toastService: ToastService
   ) {
     this.urlEnums = urlEnums;
     this._route.data.subscribe((data) => {
@@ -57,11 +61,9 @@ export class BasketsComponent implements OnInit {
    * RemoveFromBasket.
    * @param item Item.
    */
-  public removeFromBasket(item: ProductDto): void {
-    // this._basketService.updateBasketProduct().subscribe(() => {
-    //   this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
-    //   this._calculateTotals(); // Totals'ı yeniden hesapla
-    // });
+  public removeFromBasket(item: ProductWithQuantityDto): void {
+    item.numberOfProducts = 0;
+    this._updateBasketProduct(item, true);
   }
 
   /**
@@ -85,6 +87,7 @@ export class BasketsComponent implements OnInit {
    */
   public increaseQuantity(item: ProductWithQuantityDto): void {
     item.numberOfProducts++;
+    this._updateBasketProduct(item);
     this._calculateTotals();
   }
 
@@ -95,8 +98,35 @@ export class BasketsComponent implements OnInit {
   public decreaseQuantity(item: ProductWithQuantityDto): void {
     if (item.numberOfProducts > 1) {
       item.numberOfProducts--;
+      this._updateBasketProduct(item);
       this._calculateTotals();
     }
+  }
+
+  /**
+   * UpdateBasketProduct.
+   * @param item Item.
+   * @param remove Whether to remove the item from the basket list.
+   */
+  private _updateBasketProduct(item: ProductWithQuantityDto, remove = false): void {
+    const basketProduct: BasketProductDto = {
+      basketId: this.decodedToken!.basketId,
+      productId: item.id.toString(),
+      numberOfProducts: item.numberOfProducts // Kullanıcıdan alınan ürün miktarı.
+    };
+    this._basketService.updateBasketProduct(basketProduct).subscribe((res) => {
+      if (res.errors) {
+        this._toastService.show('Product is already in the basket');
+      } else {
+        if (remove) {
+          this.resolvedBasketData = this.resolvedBasketData.filter((fav) => fav !== item);
+          this._calculateTotals();
+          this._toastService.show('Product removed from basket');
+        } else {
+          this._toastService.show('Product quantity has been changed');
+        }
+      }
+    });
   }
 
   /**
