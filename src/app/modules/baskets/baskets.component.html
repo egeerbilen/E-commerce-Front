@@ -24,7 +24,7 @@
           <div class="col-12 col-md-8">
             <div class="basket-list">
               <div *ngFor="let item of resolvedBasketData" class="basket-item mb-3">
-                <mat-card class="basket-card h-100 shadow-sm border-0 position-relative">
+                <mat-card class="basket-card shadow-sm border-0 position-relative">
                   <button mat-icon-button color="warn" class="position-absolute top-0 end-0 m-2"
                     (click)="removeFromBasket(item)">
                     <mat-icon>close</mat-icon>
@@ -34,10 +34,10 @@
                       [alt]="item.name" (click)="navigateToProductDetails(item.id)">
                     <mat-card-content class="d-flex flex-column justify-content-between">
                       <div>
-                        <h5 class="card-title">{{item.name}}</h5>
+                        <h3 class="card-title">{{item.name}}</h3>
                         <p class="card-text fw-bold">{{item.price}} $</p>
                       </div>
-                      <button mat-raised-button class="custom-primary-button mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+                      <button mat-raised-button class="custom-primary-button view-details-button"
                         (click)="navigateToProductDetails(item.id)">
                         View Details
                       </button>
