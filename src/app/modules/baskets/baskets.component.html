@@ -36,6 +36,15 @@
                       <div>
                         <h3 class="card-title">{{item.name}}</h3>
                         <p class="card-text fw-bold">{{item.price}} $</p>
+                        <div class="d-flex align-items-center">
+                          <button mat-icon-button color="primary" (click)="decreaseQuantity(item)">
+                            <mat-icon>remove</mat-icon>
+                          </button>
+                          <span>{{item.numberOfProducts}}</span>
+                          <button mat-icon-button color="primary" (click)="increaseQuantity(item)">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                        </div>
                       </div>
                       <button mat-raised-button class="custom-primary-button view-details-button"
                         (click)="navigateToProductDetails(item.id)">

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
+import { ProductWithQuantityDto } from 'src/app/shared/dto/product-with-quantity-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { BasketService } from 'src/app/shared/services/basket/basket.service';
 
@@ -13,7 +14,7 @@ import { BasketService } from 'src/app/shared/services/basket/basket.service';
   styleUrls: ['./baskets.component.css']
 })
 export class BasketsComponent implements OnInit {
-  resolvedBasketData!: ProductDto[];
+  resolvedBasketData!: ProductWithQuantityDto[];
   decodedToken: DecodedTokenWithJwtDto | null = null;
   totalPrice = 0;
   shippingCost = 39.99;
@@ -42,7 +43,6 @@ export class BasketsComponent implements OnInit {
 
     this._store.select(getUserData).subscribe((res) => {
       this.decodedToken = res;
-      console.log(res);
     });
   }
 
@@ -78,6 +78,27 @@ export class BasketsComponent implements OnInit {
   public confirmBasket(): void {
     console.log('Basket confirmed.');
   }
+
+  /**
+   * IncreaseQuantity.
+   * @param item Item.
+   */
+  public increaseQuantity(item: ProductWithQuantityDto): void {
+    item.numberOfProducts++;
+    this._calculateTotals();
+  }
+
+  /**
+   * DecreaseQuantity.
+   * @param item Item.
+   */
+  public decreaseQuantity(item: ProductWithQuantityDto): void {
+    if (item.numberOfProducts > 1) {
+      item.numberOfProducts--;
+      this._calculateTotals();
+    }
+  }
+
   /**
    * CalculateTotals.
    */
@@ -86,7 +107,7 @@ export class BasketsComponent implements OnInit {
       this.totalPrice = 0;
       this.grandTotal = 0;
     } else {
-      this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price, 0);
+      this.totalPrice = this.resolvedBasketData.reduce((total, item) => total + item.price * item.numberOfProducts, 0);
       this.grandTotal = this.totalPrice + this.shippingCost - this.totalSavings;
     }
   }
