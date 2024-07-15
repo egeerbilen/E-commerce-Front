@@ -77,17 +77,13 @@ export class ProductManagementComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.decodedToken = res;
-      this.isSuperUser = this.decodedToken!.roles.includes('SuperUser');
-      this.isAdmin = this.decodedToken?.roles?.includes('Admin') || false;
-      this.canCreate = this.decodedToken?.roles?.includes('Create') || false;
-      this.canUpdate = this.decodedToken?.roles?.includes('Update') || false;
-      this.canRead = this.decodedToken?.roles?.includes('Read') || false;
-      this.canDelete = this.decodedToken?.roles?.includes('Delete') || false;
-      this.isUser = this.decodedToken?.roles?.includes('User') || false;
-      // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
-      // autguarda dan çekebiliyor4 muyum bakacapım
-      // !!!!!!!!!!!!
-      // !!!!!!!!!!!!
+      this.isSuperUser = this._hasRole('SuperUser');
+      this.isAdmin = this._hasRole('Admin');
+      this.canCreate = this._hasRole('Create');
+      this.canUpdate = this._hasRole('Update');
+      this.canRead = this._hasRole('Read');
+      this.canDelete = this._hasRole('Delete');
+      this.isUser = this._hasRole('User');
     });
   }
 
@@ -103,7 +99,6 @@ export class ProductManagementComponent {
     }
     this._initializeFavoriteStatus();
   }
-
   /**
    * DeleteProduct.
    * @param productId ProductId.
@@ -124,7 +119,6 @@ export class ProductManagementComponent {
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
     this._productService.deleteProduct(productId).subscribe();
   }
-
   /**
    * AddToFavorites.
    * @param productId ProductId.
@@ -148,6 +142,15 @@ export class ProductManagementComponent {
       });
     }
   }
+  /**
+   * HasRole.
+   * @param role Role.
+   * @returns Boolean.
+   */
+  private _hasRole(role: string): boolean {
+    return this.decodedToken?.roles?.includes(role) || false;
+  }
+
   /**
    * InitializeFavoriteStatus.
    */

@@ -10,6 +10,8 @@ import { UserLocalStorageService } from '../local-storage/user-local-storage.ser
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
+  private decodedToken: any;
+
   /**
    * Constructor.
    * @param _router Router.
@@ -20,7 +22,9 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     private _router: Router,
     private _userLocalStorageService: UserLocalStorageService,
     private _toastService: ToastService
-  ) {}
+  ) {
+    this.decodedToken = this._userLocalStorageService.getDecodedToken();
+  }
 
   /**
    * The canActivate function checks if the user has the required authorization to access a specific
@@ -33,58 +37,48 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
    * or Promise that resolves to a boolean value or UrlTree object.
    */
   public canActivate(
-    // Örneğin, next parametresi, rotanın bir sonraki durumunu temsil eder. state ise rotanın anlık durumunu yansıtır.
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     console.log('🚀 ~ AuthGuardService ~ canActivate:', 'canActivate');
-    const decodedToken = this._userLocalStorageService.getDecodedToken();
-    console.log(decodedToken);
-    const isAdmin = decodedToken?.roles?.includes('Admin');
-    const isSuperUser = decodedToken?.roles?.includes('SuperUser');
-    const canCreate = decodedToken?.roles?.includes('Create');
-    const canUpdate = decodedToken?.roles?.includes('Update');
-    const canRead = decodedToken?.roles?.includes('Read');
-    const canDelete = decodedToken?.roles?.includes('Delete');
-    const isUser = decodedToken?.roles?.includes('User');
 
-    console.log(state.url);
-    if (state.url === '/' + urlEnums.login && !decodedToken) {
+    if (state.url === '/' + urlEnums.login && !this.decodedToken) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.myAccount && decodedToken) {
+    if (state.url === '/' + urlEnums.myAccount && this.decodedToken) {
       return true;
     }
 
     if (
       state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] &&
-      (isSuperUser || (isAdmin && canUpdate))
+      (this._hasRole('SuperUser') || (this._hasRole('Admin') && this._hasRole('Update')))
     ) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct && (isSuperUser || (isAdmin && canCreate))) {
+    if (
+      state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct &&
+      (this._hasRole('SuperUser') || (this._hasRole('Admin') && this._hasRole('Create')))
+    ) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && isSuperUser) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && this._hasRole('SuperUser')) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.orderProduct && (isSuperUser || isAdmin)) {
+    if (state.url === '/' + urlEnums.orderProduct && (this._hasRole('SuperUser') || this._hasRole('Admin'))) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement && (isSuperUser || isAdmin)) {
+    if (state.url === '/' + urlEnums.productManagement && (this._hasRole('SuperUser') || this._hasRole('Admin'))) {
       return true;
     }
 
     this._toastService.show('Related url access denied.');
     return false;
-    // return this._router.navigate([urlEnums.notFoundPage]);
   }
-
   /**
    * The `canActivateChild` function returns the result of the `canActivate` function.
    * @param childRoute - The childRoute parameter is an ActivatedRouteSnapshot
@@ -100,5 +94,14 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.canActivate(childRoute, state);
+  }
+
+  /**
+   * HasRole.
+   * @param role Role.
+   * @returns Boolean.
+   */
+  private _hasRole(role: string): boolean {
+    return this.decodedToken?.roles?.includes(role) || false;
   }
 }
