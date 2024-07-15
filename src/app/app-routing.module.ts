@@ -26,8 +26,8 @@ const routes: Routes = [
     loadChildren: () => import('./modules/product-management/product-management.module').then((m) => m.ProductManagementModule)
   },
   { path: urlEnums.orderProduct, loadChildren: () => import('./modules/orders/orders.module').then((m) => m.OrdersModule) },
-  { path: urlEnums.login, loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) }
-  // { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
+  { path: urlEnums.login, loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule) },
+  { path: '**', loadChildren: () => import('./modules/not-found-page/not-found-page.module').then((m) => m.NotFoundPageModule) }
 ];
 
 @NgModule({
