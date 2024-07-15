@@ -56,7 +56,7 @@ export class MyAccountComponent implements OnInit {
   public updateUser(): void {
     const formValueWithId = { ...this.accountForm.value, id: this._jwtHelperService.decodeToken()?.userId };
 
-    this._userService.updateUser(formValueWithId).subscribe(() => {
+    this._userService.updateYourOwnUser(formValueWithId).subscribe(() => {
       this._toastService.show('User Updated');
     });
   }
