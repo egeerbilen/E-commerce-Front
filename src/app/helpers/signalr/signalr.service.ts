@@ -6,7 +6,7 @@ import * as signalR from '@microsoft/signalr';
 })
 export class SignalrService {
   private _hubConnection: signalR.HubConnection;
-  private listeners: { [key: string]: (user: string, message: string) => void } = {};
+  private _listeners: { [key: string]: (user: string, message: string) => void } = {};
 
   /**
    * Constructor.
@@ -28,7 +28,7 @@ export class SignalrService {
    */
   public addReceiveMessageListener(callback: (user: string, message: string) => void): void {
     const listenerId = this._generateListenerId(callback);
-    this.listeners[listenerId] = callback;
+    this._listeners[listenerId] = callback;
     this._hubConnection.on('ReceiveMessage', callback);
   }
 
@@ -38,9 +38,9 @@ export class SignalrService {
    */
   public removeReceiveMessageListener(callback: (user: string, message: string) => void): void {
     const listenerId = this._generateListenerId(callback);
-    if (this.listeners[listenerId]) {
-      this._hubConnection.off('ReceiveMessage', this.listeners[listenerId]);
-      delete this.listeners[listenerId];
+    if (this._listeners[listenerId]) {
+      this._hubConnection.off('ReceiveMessage', this._listeners[listenerId]);
+      delete this._listeners[listenerId];
     }
   }
 

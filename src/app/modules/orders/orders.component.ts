@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
@@ -48,7 +48,6 @@ export class OrdersComponent implements OnDestroy {
 
     this._subscriptions.add(
       this._route.data.subscribe((data) => {
-        console.log(data);
         this.resolvedOrderData = data?.['resolvedData'].data || [];
       })
     );
@@ -70,6 +69,8 @@ export class OrdersComponent implements OnDestroy {
    */
   public loadOrderProducts(orderId: number): void {
     if (!this.resolvedOrderDetailsData[orderId]) {
+      console.log(this.resolvedOrderDetailsData[orderId]);
+      console.log(orderId.toString());
       this._ordersService.getOrderProducts(orderId.toString()).subscribe((response: CustomResponseDto<ProductDto[]>) => {
         if (response.data) {
           this.resolvedOrderDetailsData[orderId] = response.data;
