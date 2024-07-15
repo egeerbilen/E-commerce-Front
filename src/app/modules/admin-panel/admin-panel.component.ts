@@ -4,9 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserRolesDto } from 'src/app/shared/dto/user-roles-dto';
-import { UserUpdateDto } from 'src/app/shared/dto/user-update-dto';
 import { UserWithRolesDto } from 'src/app/shared/dto/user-with-roles-dto';
 import { UserService } from 'src/app/shared/services/user/user.service';
+import { UserRoleService } from 'src/app/shared/services/user-role/user-role.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -26,10 +26,12 @@ export class AdminPanelComponent implements OnInit {
    * Constructor.
    * @param _route ActivatedRoute.
    * @param _userService UserService.
+   * @param _userRoleService UserRoleService.
    */
   constructor(
     private _route: ActivatedRoute,
-    private _userService: UserService
+    private _userService: UserService,
+    private _userRoleService: UserRoleService
   ) {}
 
   /**
@@ -40,7 +42,6 @@ export class AdminPanelComponent implements OnInit {
       this.resolvedUserData = data['resolvedData'];
       this.users = this.resolvedUserData.data || [];
       this.dataSource = new MatTableDataSource(this.users);
-      console.log(this.resolvedUserData);
     });
   }
 
@@ -48,26 +49,7 @@ export class AdminPanelComponent implements OnInit {
    * NgAfterViewInit.
    */
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort; // Sort işlemi burada atanır
-  }
-
-  /**
-   * UpdateUserRoles.
-   * @param user User.
-   */
-  public updateUserRoles(user: UserWithRolesDto): void {
-    console.log('Updating roles for user: ', user);
-    const updateUser: UserUpdateDto = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      password: '',
-      roles: user.roles.map((role) => role.roleName)
-    };
-    this._userService.updateUser(updateUser).subscribe((response: any) => {
-      console.log('Roles updated: ', response);
-    });
+    this.dataSource.sort = this.sort;
   }
 
   /**
@@ -88,8 +70,11 @@ export class AdminPanelComponent implements OnInit {
    * @param role Role.
    */
   public removeRoleFromUser(user: UserWithRolesDto, role: UserRolesDto): void {
-    user.roles = user.roles.filter((r) => r.roleId !== role.roleId);
-    this.updateUserRoles(user);
+    this._userRoleService.removeUserRole(user.id, role.roleId).subscribe((response: any) => {
+      console.log('Role removed: ', role);
+      user.roles = user.roles.filter((r) => r.roleId !== role.roleId);
+      this.dataSource.data = this.users;
+    });
   }
 
   /**
@@ -98,11 +83,36 @@ export class AdminPanelComponent implements OnInit {
    * @param roleName RoleName.
    */
   public addRoleToUser(user: UserWithRolesDto, roleName: string): void {
+    console.log('Button clicked to add role:', roleName); // Button click kontrolü
     if (roleName && !user.roles.some((r) => r.roleName === roleName)) {
+      console.log('Adding role:', roleName, 'to user:', user); // Metodun çağrıldığını kontrol edelim
       const roleId = this.roles.indexOf(roleName) + 1;
-      user.roles.push({ roleId, roleName });
-      user.newRole = undefined;
-      this.updateUserRoles(user);
+      this._userRoleService.addUserRole(user.id, roleId).subscribe(
+        () => {
+          console.log('Role added: ', roleName);
+          user.roles.push({ roleId, roleName });
+          user.newRole = undefined;
+          this.dataSource.data = this.users;
+        },
+        (error: any) => {
+          console.error('Error adding role:', error);
+        }
+      );
+    } else {
+      console.log('Role already exists or invalid:', roleName);
+    }
+  }
+
+  /**
+   * OnAddRoleButtonClick.
+   * @param user User.
+   */
+  public onAddRoleButtonClick(user: UserWithRolesDto): void {
+    console.log('Add Role button clicked for user:', user);
+    if (user.newRole) {
+      this.addRoleToUser(user, user.newRole);
+    } else {
+      console.log('No role selected.');
     }
   }
 }
