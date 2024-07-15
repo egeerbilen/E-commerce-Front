@@ -6,4 +6,5 @@ export type UserUpdateDto = BaseDto & {
   email: string;
   password: string;
   address?: string;
+  roles?: string[];
 };

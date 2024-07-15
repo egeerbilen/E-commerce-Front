@@ -14,6 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { HighlightCategoryDirective } from 'src/app/helpers/highlight-category-directive/highlight-category.directive';
@@ -41,6 +43,8 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatInputModule,
     MatInputModule,
     MatListModule,
+    MatSortModule,
+    MatTableModule,
     MatSelectModule,
     MatMenuModule,
     MatOptionModule,
@@ -65,6 +69,8 @@ import { LoadingPageService } from '../services/loading-page/loading-page.servic
     MatDialogModule,
     NumberFormatPipe,
     ByteToImagePipe,
+    MatSortModule,
+    MatTableModule,
     MatListModule,
     LoadingPageComponent,
     MatExpansionModule,

@@ -25,8 +25,17 @@ export class UserService extends BaseService {
    * Delete user by id.
    * @returns Return.
    */
-  public deleteUserById(): Observable<CustomResponseDto<null>> {
+  public deleteYourOwnUserById(): Observable<CustomResponseDto<null>> {
     return this.http.delete(this.apiEndpoint.user + 'Remove/' + this.userLocalStorageService.getUserId().toString());
+  }
+
+  /**
+   * Delete user by id.
+   * @param userId Number.
+   * @returns Return.
+   */
+  public deleteUserById(userId: number): Observable<CustomResponseDto<null>> {
+    return this.http.delete(this.apiEndpoint.user + 'Remove/' + userId);
   }
 
   /**

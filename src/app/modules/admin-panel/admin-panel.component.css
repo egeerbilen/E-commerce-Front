@@ -1,0 +1,39 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+.roles-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.role-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.role-name {
+  display: inline-block;
+  width: 100px;
+}
+
+.add-role-item {
+  display: flex;
+  align-items: center;
+}
+
+.mat-form-field {
+  width: 150px;
+  margin-right: 10px;
+}
+
+button {
+  margin-right: 5px;
+}

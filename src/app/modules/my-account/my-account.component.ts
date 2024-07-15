@@ -76,7 +76,7 @@ export class MyAccountComponent implements OnInit {
   public async deleteUser(): Promise<void> {
     const deleteUserStatus = await this._modalHelperService.openModal('Delete User', 'Are you sure you want to delete the user?');
     if (deleteUserStatus) {
-      this._userService.deleteUserById().subscribe(() => {
+      this._userService.deleteYourOwnUserById().subscribe(() => {
         this._toastService.show('User Deleted');
       });
     }
