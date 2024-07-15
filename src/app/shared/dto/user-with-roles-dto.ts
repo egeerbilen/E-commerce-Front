@@ -6,4 +6,5 @@ export type UserWithRolesDto = BaseDto & {
   lastName: string;
   email: string;
   roles: UserRolesDto[];
+  newRole?: string;
 };

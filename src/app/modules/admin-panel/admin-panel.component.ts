@@ -17,7 +17,6 @@ export class AdminPanelComponent implements OnInit {
   resolvedUserData!: CustomResponseDto<UserWithRolesDto[]>;
   users: UserWithRolesDto[] = [];
   roles: string[] = ['SuperUser', 'Admin', 'User', 'Create', 'Update'];
-  newRole: string | null = null;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource!: MatTableDataSource<UserWithRolesDto>;
 
@@ -102,7 +101,7 @@ export class AdminPanelComponent implements OnInit {
     if (roleName && !user.roles.some((r) => r.roleName === roleName)) {
       const roleId = this.roles.indexOf(roleName) + 1;
       user.roles.push({ roleId, roleName });
-      this.newRole = null;
+      user.newRole = undefined;
       this.updateUserRoles(user);
     }
   }

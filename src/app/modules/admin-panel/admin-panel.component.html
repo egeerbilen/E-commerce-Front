@@ -31,11 +31,11 @@
           </div>
           <div class="add-role-item">
             <mat-form-field>
-              <mat-select [(ngModel)]="newRole" placeholder="Add Role">
+              <mat-select [(ngModel)]="user.newRole" placeholder="Add Role">
                 <mat-option *ngFor="let roleOption of roles" [value]="roleOption">{{ roleOption }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button color="primary" (click)="newRole && addRoleToUser(user, newRole)">Add</button>
+            <button mat-button color="primary" (click)="user.newRole && addRoleToUser(user, user.newRole)">Add</button>
           </div>
         </div>
       </mat-cell>
