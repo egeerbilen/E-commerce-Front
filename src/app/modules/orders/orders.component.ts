@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { SignalrService } from 'src/app/helpers/signalr/signalr.service';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { OrderDto } from 'src/app/shared/dto/order-dto';
@@ -25,11 +27,15 @@ export class OrdersComponent {
    * @param _route ActivatedRoute.
    * @param _store Store.
    * @param _ordersService OrdersService.
+   * @param _signalrService SignalrService.
+   * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _ordersService: OrderProducService
+    private _ordersService: OrderProducService,
+    private _signalrService: SignalrService,
+    private _toastService: ToastService
   ) {
     this.urlEnums = urlEnums;
 
@@ -41,6 +47,11 @@ export class OrdersComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.decodedToken = res;
+    });
+
+    this._signalrService.addReceiveMessageListener((user, message) => {
+      const mes = user + ': ' + message;
+      this._toastService.show(mes);
     });
   }
 
