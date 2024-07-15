@@ -25,6 +25,8 @@ export class ProductManagementDataResolveService {
    * @returns Get products.
    */
   public resolve(): Observable<{ getProducts: CustomResponseDto<ProductDto[]>; getCategories: CustomResponseDto<CategoryDto[]> }> {
+    console.log('🚀 ~ ProductManagementDataResolveService ~ resolve ~ resolve:', 'resolve');
+    // TODOeğer kullanıcı süper user değilse sadece kendi ürünlerini görecek
     return forkJoin({
       getProducts: this._productService.getProducts(),
       getCategories: this._categoryService.getCategories()

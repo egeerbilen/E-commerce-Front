@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { ToastService } from 'src/app/helpers/toast/toast.service';
 
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
@@ -13,10 +14,12 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
    * Constructor.
    * @param _router Router.
    * @param _userLocalStorageService UserLocalStorageService.
+   * @param _toastService ToastService.
    */
   constructor(
     private _router: Router,
-    private _userLocalStorageService: UserLocalStorageService
+    private _userLocalStorageService: UserLocalStorageService,
+    private _toastService: ToastService
   ) {}
 
   /**
@@ -34,14 +37,18 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log('🚀 ~ AuthGuardService ~ canActivate:', 'canActivate');
     const decodedToken = this._userLocalStorageService.getDecodedToken();
-
+    console.log(decodedToken);
     const isAdmin = decodedToken?.roles?.includes('Admin');
+    const isSuperUser = decodedToken?.roles?.includes('SuperUser');
     const canCreate = decodedToken?.roles?.includes('Create');
     const canUpdate = decodedToken?.roles?.includes('Update');
     const canRead = decodedToken?.roles?.includes('Read');
     const canDelete = decodedToken?.roles?.includes('Delete');
+    const isUser = decodedToken?.roles?.includes('User');
 
+    console.log(state.url);
     if (state.url === '/' + urlEnums.login && !decodedToken) {
       return true;
     }
@@ -49,24 +56,33 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     if (state.url === '/' + urlEnums.myAccount && decodedToken) {
       return true;
     }
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] && (isAdmin || canUpdate)) {
+
+    if (
+      state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] &&
+      (isSuperUser || (isAdmin && canUpdate))
+    ) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct && (isAdmin || canCreate)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct && (isSuperUser || (isAdmin && canCreate))) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && (isAdmin || decodedToken)) {
-      return true;
-    }
-    console.log(state.url);
-    console.log('/' + urlEnums.orderProduct + '/');
-    if (state.url === '/' + urlEnums.orderProduct && (isAdmin || canRead)) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && isSuperUser) {
       return true;
     }
 
-    return this._router.navigate([urlEnums.notFoundPage]);
+    if (state.url === '/' + urlEnums.orderProduct && (isSuperUser || isAdmin)) {
+      return true;
+    }
+
+    if (state.url === '/' + urlEnums.productManagement && (isSuperUser || isAdmin)) {
+      return true;
+    }
+
+    this._toastService.show('Related url access denied.');
+    return false;
+    // return this._router.navigate([urlEnums.notFoundPage]);
   }
 
   /**

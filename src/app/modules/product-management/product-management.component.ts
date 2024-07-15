@@ -26,7 +26,13 @@ export class ProductManagementComponent {
   filteredData: ProductDto[] = [];
   favoriteProducts: number[] = [];
   favoriteStatus: { [key: number]: boolean } = {};
-  isSeller = false;
+  isSuperUser = false;
+  isAdmin = false;
+  canCreate = false;
+  canUpdate = false;
+  canRead = false;
+  canDelete = false;
+  isUser = false;
 
   /**
    * Constructor.
@@ -71,7 +77,13 @@ export class ProductManagementComponent {
 
     this._store.select(getUserData).subscribe((res) => {
       this.decodedToken = res;
-      this.isSeller = this.decodedToken!.roles.includes('Admin');
+      this.isSuperUser = this.decodedToken!.roles.includes('SuperUser');
+      this.isAdmin = this.decodedToken?.roles?.includes('Admin') || false;
+      this.canCreate = this.decodedToken?.roles?.includes('Create') || false;
+      this.canUpdate = this.decodedToken?.roles?.includes('Update') || false;
+      this.canRead = this.decodedToken?.roles?.includes('Read') || false;
+      this.canDelete = this.decodedToken?.roles?.includes('Delete') || false;
+      this.isUser = this.decodedToken?.roles?.includes('User') || false;
       // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
       // autguarda dan çekebiliyor4 muyum bakacapım
       // !!!!!!!!!!!!
