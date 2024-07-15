@@ -5,6 +5,7 @@ import { CustomResponseDto } from '../../dto/custom-response-dto';
 import { UserLoginRequestDto } from '../../dto/login-dto';
 import { UserDto } from '../../dto/user-dto';
 import { UserUpdateDto } from '../../dto/user-update-dto';
+import { UserWithRolesDto } from '../../dto/user-with-roles-dto';
 import { BaseService } from '../base.service';
 
 @Injectable({
@@ -34,6 +35,14 @@ export class UserService extends BaseService {
    */
   public getUserById(): Observable<CustomResponseDto<UserDto[]>> {
     return this.http.get(this.apiEndpoint.user + 'GetById/' + this.userLocalStorageService.getUserId().toString());
+  }
+
+  /**
+   * Get all users with roles.
+   * @returns Users with roles.
+   */
+  public getAllUsersWithRoles(): Observable<CustomResponseDto<UserWithRolesDto[]>> {
+    return this.http.get(this.apiEndpoint.user + 'GetAllUsersWithRoles');
   }
 
   /**

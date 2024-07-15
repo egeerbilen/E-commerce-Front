@@ -81,6 +81,10 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
       return true;
     }
 
+    if (state.url === '/' + urlEnums.adminPanel && this._hasRole('SuperUser')) {
+      return true;
+    }
+
     this._toastService.show('Related url access denied.');
     return false;
   }
