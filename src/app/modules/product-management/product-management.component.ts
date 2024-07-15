@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { AuthorizationService } from 'src/app/helpers/service/authorization/authorization.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
-import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
@@ -17,11 +17,10 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
   templateUrl: './product-management.component.html',
   styleUrls: ['./product-management.component.html']
 })
-export class ProductManagementComponent {
+export class ProductManagementComponent implements OnInit {
   urlEnums;
   resolvedCategoriesData!: CustomResponseDto<CategoryDto[]>;
   resolvedProductsData!: CustomResponseDto<ProductDto[]>;
-  decodedToken: DecodedTokenWithJwtDto | null = null;
   searchText = '';
   filteredData: ProductDto[] = [];
   favoriteProducts: number[] = [];
@@ -42,6 +41,7 @@ export class ProductManagementComponent {
    * @param _favoriteService FavoriteService.
    * @param _productService HomeService.
    * @param _modalHelperService ModalHelperService.
+   * @param _authorizationService AuthorizationService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -49,10 +49,16 @@ export class ProductManagementComponent {
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
     private _productService: ProductService,
-    private _modalHelperService: ModalHelperService
+    private _modalHelperService: ModalHelperService,
+    private _authorizationService: AuthorizationService
   ) {
     this.urlEnums = urlEnums;
+  }
 
+  /**
+   * NgOnInit.
+   */
+  public ngOnInit(): void {
     this._favoriteService.getUserFavoritesProducts().subscribe((res) => {
       if (res?.data) {
         this.favoriteProducts = res.data.map((product) => product.id);
@@ -76,14 +82,17 @@ export class ProductManagementComponent {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.decodedToken = res;
-      this.isSuperUser = this._hasRole('SuperUser');
-      this.isAdmin = this._hasRole('Admin');
-      this.canCreate = this._hasRole('Create');
-      this.canUpdate = this._hasRole('Update');
-      this.canRead = this._hasRole('Read');
-      this.canDelete = this._hasRole('Delete');
-      this.isUser = this._hasRole('User');
+      this.isSuperUser = this._authorizationService.hasRole('SuperUser');
+      this.isAdmin = this._authorizationService.hasRole('Admin');
+      this.canCreate = this._authorizationService.hasRole('Create');
+      this.canUpdate = this._authorizationService.hasRole('Update');
+      this.canRead = this._authorizationService.hasRole('Read');
+      this.canDelete = this._authorizationService.hasRole('Delete');
+      this.isUser = this._authorizationService.hasRole('User');
+      // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
+      // autguarda dan çekebiliyor4 muyum bakacapım
+      // !!!!!!!!!!!!
+      // !!!!!!!!!!!!
     });
   }
 
@@ -99,6 +108,7 @@ export class ProductManagementComponent {
     }
     this._initializeFavoriteStatus();
   }
+
   /**
    * DeleteProduct.
    * @param productId ProductId.
@@ -119,6 +129,7 @@ export class ProductManagementComponent {
     this.filteredData = this.filteredData.filter((product) => product.id !== productId);
     this._productService.deleteProduct(productId).subscribe();
   }
+
   /**
    * AddToFavorites.
    * @param productId ProductId.
@@ -141,14 +152,6 @@ export class ProductManagementComponent {
         this._toastService.show('Product added to favorites');
       });
     }
-  }
-  /**
-   * HasRole.
-   * @param role Role.
-   * @returns Boolean.
-   */
-  private _hasRole(role: string): boolean {
-    return this.decodedToken?.roles?.includes(role) || false;
   }
 
   /**

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { BasketProductDto } from 'src/app/shared/dto/basket-product-dto';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';

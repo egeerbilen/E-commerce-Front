@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { CategoryService } from 'src/app/shared/services/category/category.service';

@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 
 import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { LoadingPageService } from '../loading-page/loading-page.service';

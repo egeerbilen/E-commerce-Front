@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserDto } from 'src/app/shared/dto/user-dto';
 import { UserService } from 'src/app/shared/services/user/user.service';

@@ -21,7 +21,7 @@ import { ModalHelperComponent } from 'src/app/helpers/modal-helper/modal-helper.
 import { FindProductPipe } from 'src/app/helpers/pipe/find-product/find-product.pipe';
 import { ByteToImagePipe } from 'src/app/helpers/pipe/img-helper/byte-to-image.pipe';
 import { NumberFormatPipe } from 'src/app/helpers/pipe/number-format/number-format.pipe';
-import { ToastService } from 'src/app/helpers/toast/toast.service';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 
 import { httpInterceptorProvider } from '../jwt/jwt-token-module-settings';
 import { storeModules } from '../ng-rx/reducers';
