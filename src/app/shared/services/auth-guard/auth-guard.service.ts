@@ -45,8 +45,6 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('🚀 ~ AuthGuardService ~ canActivate:', 'canActivate');
-
     if (state.url === '/' + urlEnums.login && !this._decodedToken) {
       return true;
     }

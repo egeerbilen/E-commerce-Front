@@ -53,8 +53,6 @@ export class OrdersComponent implements OnDestroy {
       })
     );
 
-    console.log(this.resolvedOrderData);
-
     this._subscriptions.add(
       this._store.select(getUserData).subscribe((res) => {
         this.decodedToken = res;
@@ -76,7 +74,6 @@ export class OrdersComponent implements OnDestroy {
         } else {
           this.resolvedOrderDetailsData[orderId] = [];
         }
-        console.log(response);
       });
     }
   }

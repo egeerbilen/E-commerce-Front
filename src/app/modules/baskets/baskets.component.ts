@@ -93,7 +93,6 @@ export class BasketsComponent implements OnInit {
     }
 
     const order: OrderDto[] = [];
-    console.log(this.resolvedBasketData);
     this.resolvedBasketData.forEach((item) => {
       order.push({
         id: 0,

@@ -26,7 +26,7 @@ export class HomeDataResolverService {
    */
   public resolve(): Observable<{ getProducts: CustomResponseDto<ProductDto[]>; getCategories: CustomResponseDto<CategoryDto[]> }> {
     return forkJoin({
-      getProducts: this._productService.getProducts(),
+      getProducts: this._productService.getAllProducts(),
       getCategories: this._categoryService.getCategories()
     });
   }

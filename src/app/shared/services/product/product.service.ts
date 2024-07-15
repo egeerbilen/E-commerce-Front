@@ -41,8 +41,15 @@ export class ProductService extends BaseService {
    * Get Products.
    * @returns Products values.
    */
-  public getProducts(): Observable<CustomResponseDto<ProductDto[]>> {
+  public getAllProducts(): Observable<CustomResponseDto<ProductDto[]>> {
     return this.http.get(this.apiEndpoint.product + 'GetProducts');
+  }
+  /**
+   * Get Products.
+   * @returns Products values.
+   */
+  public getUserProducts(): Observable<CustomResponseDto<ProductDto[]>> {
+    return this.http.get(this.apiEndpoint.product + 'GetUserProducts/' + this.userLocalStorageService.getUserId());
   }
 
   /**

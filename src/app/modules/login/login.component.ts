@@ -48,7 +48,6 @@ export class LoginComponent {
   public onSubmit(): void {
     if (this.loginForm.valid) {
       this._userService.userLogin(this.loginForm.value).subscribe((res) => {
-        console.log(res);
         if (res.data) {
           this._userLocalStorageService.setToken(res.data);
           const decodedToken = this._jwtHelperService.decodeToken(res.data);

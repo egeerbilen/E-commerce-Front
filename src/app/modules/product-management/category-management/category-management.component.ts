@@ -108,10 +108,8 @@ export class CategoryManagementComponent {
       () => {
         this.categories = this.categories.filter((category) => category.id !== id);
         this._toastService.show('Category deleted successfully', 'Close', 2000);
-        console.log(this.categories);
       },
       (error) => {
-        console.error('Failed to delete category', error);
         this._toastService.show('Failed to delete category', 'Close', 2000);
       }
     );

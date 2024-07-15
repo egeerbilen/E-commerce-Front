@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { UserRoleService } from 'src/app/shared/services/user-role/user-role.ser
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css']
 })
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelComponent implements OnInit, AfterViewInit {
   resolvedUserData!: CustomResponseDto<UserWithRolesDto[]>;
   users: UserWithRolesDto[] = [];
   roles: string[] = ['SuperUser', 'Admin', 'User', 'Create', 'Update'];
@@ -60,8 +60,8 @@ export class AdminPanelComponent implements OnInit {
    * @param userId UserId.
    */
   public deleteUser(userId: number): void {
-    this._userService.deleteUserById(userId).subscribe((response: any) => {
-      console.log('User deleted: ', userId);
+    this._userService.deleteUserById(userId).subscribe(() => {
+      this._toastService.show('User deleted: ' + userId);
       this.users = this.users.filter((user) => user.id !== userId);
       this.dataSource.data = this.users;
     });
@@ -74,7 +74,7 @@ export class AdminPanelComponent implements OnInit {
    */
   public removeRoleFromUser(user: UserWithRolesDto, role: UserRolesDto): void {
     this._userRoleService.removeUserRole(user.id, role.roleId).subscribe(() => {
-      this._toastService.show('Role removed: ' + role);
+      this._toastService.show('Role removed: ' + role.roleName);
       user.roles = user.roles.filter((r) => r.roleId !== role.roleId);
       this.dataSource.data = this.users;
     });
@@ -87,17 +87,17 @@ export class AdminPanelComponent implements OnInit {
    */
   public addRoleToUser(user: UserWithRolesDto, roleName: string): void {
     if (roleName && !user.roles.some((r) => r.roleName === roleName)) {
-      this._toastService.show('Role removed: ' + roleName + ' to user:' + user);
+      this._toastService.show('Role removed: ' + roleName + ' to user:' + user.email);
       const roleId = this.roles.indexOf(roleName) + 1;
       this._userRoleService.addUserRole(user.id, roleId).subscribe(
         () => {
-          console.log('Role added: ', roleName);
+          this._toastService.show('Role added: ' + roleName + ' to user:' + user.email);
           user.roles.push({ roleId, roleName });
           user.newRole = undefined;
           this.dataSource.data = this.users;
         },
-        (error: any) => {
-          console.error('Error adding role:', error);
+        (error) => {
+          this._toastService.show('Error adding role: ' + error);
         }
       );
     } else {
