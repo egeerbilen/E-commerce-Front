@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
-import { AuthorizationService } from 'src/app/helpers/service/authorization/authorization.service';
 import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 
+import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
+  private _decodedToken: any;
+
   /**
    * Constructor.
-   * @param _router Router.
    * @param _userLocalStorageService UserLocalStorageService.
-   * @param _authorizationService AuthorizationService.
    * @param _toastService ToastService.
+   * @param _store Store.
    */
   constructor(
-    private _router: Router,
     private _userLocalStorageService: UserLocalStorageService,
-    private _authorizationService: AuthorizationService,
-    private _toastService: ToastService
-  ) {}
+    private _toastService: ToastService,
+    private _store: Store
+  ) {
+    this._decodedToken = this._userLocalStorageService.getDecodedToken();
+    this._store.select(getUserData).subscribe((res) => {
+      this._decodedToken = res;
+    });
+  }
 
   /**
    * The canActivate function checks if the user has the required authorization to access a specific
@@ -39,54 +45,45 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const decodedToken = this._authorizationService.getDecodedToken();
+    console.log('🚀 ~ AuthGuardService ~ canActivate:', 'canActivate');
 
-    if (state.url === '/' + urlEnums.login && !decodedToken) {
+    if (state.url === '/' + urlEnums.login && !this._decodedToken) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.myAccount && decodedToken) {
+    if (state.url === '/' + urlEnums.myAccount && this._decodedToken) {
       return true;
     }
 
     if (
       state.url === '/' + urlEnums.productManagement + '/' + urlEnums.updateProduct + '/' + next.params['id'] &&
-      (this._authorizationService.hasRole('SuperUser') ||
-        (this._authorizationService.hasRole('Admin') && this._authorizationService.hasRole('Update')))
+      (this._hasRole('SuperUser') || (this._hasRole('Admin') && this._hasRole('Update')))
     ) {
       return true;
     }
 
     if (
       state.url === '/' + urlEnums.productManagement + '/' + urlEnums.addProduct &&
-      (this._authorizationService.hasRole('SuperUser') ||
-        (this._authorizationService.hasRole('Admin') && this._authorizationService.hasRole('Create')))
+      (this._hasRole('SuperUser') || (this._hasRole('Admin') && this._hasRole('Create')))
     ) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && this._authorizationService.hasRole('SuperUser')) {
+    if (state.url === '/' + urlEnums.productManagement + '/' + urlEnums.categoryManagement && this._hasRole('SuperUser')) {
       return true;
     }
 
-    if (
-      state.url === '/' + urlEnums.orderProduct &&
-      (this._authorizationService.hasRole('SuperUser') || this._authorizationService.hasRole('Admin'))
-    ) {
+    if (state.url === '/' + urlEnums.orderProduct && (this._hasRole('SuperUser') || this._hasRole('Admin'))) {
       return true;
     }
 
-    if (
-      state.url === '/' + urlEnums.productManagement &&
-      (this._authorizationService.hasRole('SuperUser') || this._authorizationService.hasRole('Admin'))
-    ) {
+    if (state.url === '/' + urlEnums.productManagement && (this._hasRole('SuperUser') || this._hasRole('Admin'))) {
       return true;
     }
 
     this._toastService.show('Related url access denied.');
     return false;
   }
-
   /**
    * The `canActivateChild` function returns the result of the `canActivate` function.
    * @param childRoute - The childRoute parameter is an ActivatedRouteSnapshot
@@ -102,5 +99,14 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.canActivate(childRoute, state);
+  }
+
+  /**
+   * HasRole.
+   * @param role Role.
+   * @returns Boolean.
+   */
+  private _hasRole(role: string): boolean {
+    return this._decodedToken?.roles?.includes(role) || false;
   }
 }
