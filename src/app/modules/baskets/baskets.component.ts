@@ -97,10 +97,10 @@ export class BasketsComponent implements OnInit {
     this.resolvedBasketData.forEach((item) => {
       order.push({
         id: 0,
-        userId: item.userId, // sipariş oluşturulacak kişi
+        userId: item.userId,
         customerId: this.decodedToken!.userId,
         totalOrders: item.numberOfProducts,
-        totalPrice: this.totalPrice // hesaplanacak
+        totalPrice: this.totalPrice
       });
     });
 
@@ -113,7 +113,16 @@ export class BasketsComponent implements OnInit {
           });
         });
         this._orderProducService.createOrderProduct(orderProductDtos).subscribe();
+
+        this.resolvedBasketData.forEach((item) => {
+          item.numberOfProducts = 0;
+          this._updateBasketProduct(item, true);
+        });
+        this.resolvedBasketData = [];
+        this._calculateTotals();
+
         this._signalrService.sendMessage(this.decodedToken!.email.toString(), 'A new order has been created.');
+        this._toastService.show('A new order has been created.');
       }
     });
   }
