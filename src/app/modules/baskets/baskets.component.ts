@@ -93,12 +93,13 @@ export class BasketsComponent implements OnInit {
     }
 
     const order: OrderDto[] = [];
+    console.log(this.resolvedBasketData);
     this.resolvedBasketData.forEach((item) => {
       order.push({
         id: 0,
         userId: item.userId, // sipariş oluşturulacak kişi
         customerId: this.decodedToken!.userId,
-        totalOrders: this.resolvedBasketData.length,
+        totalOrders: item.numberOfProducts,
         totalPrice: this.totalPrice // hesaplanacak
       });
     });

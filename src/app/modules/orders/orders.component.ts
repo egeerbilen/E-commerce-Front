@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { SignalrService } from 'src/app/helpers/signalr/signalr.service';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
@@ -16,12 +17,18 @@ import { OrderProducService } from 'src/app/shared/services/orders-product/order
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnDestroy {
   resolvedOrderData!: OrderDto[];
   resolvedOrderDetailsData: { [key: number]: ProductDto[] } = {};
   decodedToken: DecodedTokenWithJwtDto | null = null;
   urlEnums;
+  private _subscriptions: Subscription = new Subscription();
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  private _receiveMessage = (user: string, message: string) => {
+    const mes = user + ': ' + message;
+    this._toastService.show(mes);
+  };
   /**
    * Constructor.
    * @param _route ActivatedRoute.
@@ -39,20 +46,22 @@ export class OrdersComponent {
   ) {
     this.urlEnums = urlEnums;
 
-    this._route.data.subscribe((data) => {
-      console.log(data);
-      this.resolvedOrderData = data?.['resolvedData'].data || [];
-    });
+    this._subscriptions.add(
+      this._route.data.subscribe((data) => {
+        console.log(data);
+        this.resolvedOrderData = data?.['resolvedData'].data || [];
+      })
+    );
+
     console.log(this.resolvedOrderData);
 
-    this._store.select(getUserData).subscribe((res) => {
-      this.decodedToken = res;
-    });
+    this._subscriptions.add(
+      this._store.select(getUserData).subscribe((res) => {
+        this.decodedToken = res;
+      })
+    );
 
-    this._signalrService.addReceiveMessageListener((user, message) => {
-      const mes = user + ': ' + message;
-      this._toastService.show(mes);
-    });
+    this._signalrService.addReceiveMessageListener(this._receiveMessage);
   }
 
   /**
@@ -70,5 +79,13 @@ export class OrdersComponent {
         console.log(response);
       });
     }
+  }
+
+  /**
+   * NgOnDestroy.
+   */
+  public ngOnDestroy(): void {
+    this._signalrService.removeReceiveMessageListener(this._receiveMessage);
+    this._subscriptions.unsubscribe();
   }
 }

@@ -1,4 +1,3 @@
-// src/app/services/signalr.service.ts
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 
@@ -7,6 +6,7 @@ import * as signalR from '@microsoft/signalr';
 })
 export class SignalrService {
   private _hubConnection: signalR.HubConnection;
+  private listeners: { [key: string]: (user: string, message: string) => void } = {};
 
   /**
    * Constructor.
@@ -27,8 +27,23 @@ export class SignalrService {
    * @param callback Callback.
    */
   public addReceiveMessageListener(callback: (user: string, message: string) => void): void {
+    const listenerId = this._generateListenerId(callback);
+    this.listeners[listenerId] = callback;
     this._hubConnection.on('ReceiveMessage', callback);
   }
+
+  /**
+   * RemoveReceiveMessageListener.
+   * @param callback Callback.
+   */
+  public removeReceiveMessageListener(callback: (user: string, message: string) => void): void {
+    const listenerId = this._generateListenerId(callback);
+    if (this.listeners[listenerId]) {
+      this._hubConnection.off('ReceiveMessage', this.listeners[listenerId]);
+      delete this.listeners[listenerId];
+    }
+  }
+
   /**
    * SendMessage.
    * @param user User.
@@ -37,6 +52,7 @@ export class SignalrService {
   public sendMessage(user: string, message: string): void {
     this._hubConnection.invoke('SendMessage', user, message).catch((err) => console.error(err));
   }
+
   /**
    * StartConnection.
    */
@@ -45,5 +61,14 @@ export class SignalrService {
       .start()
       .then(() => console.log('SignalR connection started'))
       .catch((err) => console.log('Error while starting SignalR connection: ' + err));
+  }
+
+  /**
+   * GenerateListenerId.
+   * @param callback Callback.
+   * @returns ListenerId.
+   */
+  private _generateListenerId(callback: (user: string, message: string) => void): string {
+    return callback.toString();
   }
 }
