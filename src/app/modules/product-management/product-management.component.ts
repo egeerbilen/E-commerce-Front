@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
-import { AuthorizationService } from 'src/app/helpers/service/authorization/authorization.service';
 import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { CategoryDto } from 'src/app/shared/dto/category-dto';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
@@ -41,7 +40,6 @@ export class ProductManagementComponent implements OnInit {
    * @param _favoriteService FavoriteService.
    * @param _productService HomeService.
    * @param _modalHelperService ModalHelperService.
-   * @param _authorizationService AuthorizationService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -49,8 +47,7 @@ export class ProductManagementComponent implements OnInit {
     private _toastService: ToastService,
     private _favoriteService: FavoriteService,
     private _productService: ProductService,
-    private _modalHelperService: ModalHelperService,
-    private _authorizationService: AuthorizationService
+    private _modalHelperService: ModalHelperService
   ) {
     this.urlEnums = urlEnums;
   }
@@ -82,17 +79,15 @@ export class ProductManagementComponent implements OnInit {
     });
 
     this._store.select(getUserData).subscribe((res) => {
-      this.isSuperUser = this._authorizationService.hasRole('SuperUser');
-      this.isAdmin = this._authorizationService.hasRole('Admin');
-      this.canCreate = this._authorizationService.hasRole('Create');
-      this.canUpdate = this._authorizationService.hasRole('Update');
-      this.canRead = this._authorizationService.hasRole('Read');
-      this.canDelete = this._authorizationService.hasRole('Delete');
-      this.isUser = this._authorizationService.hasRole('User');
-      // TODO create tekisi olan ürün ekleme butonunu görecek silme yetkisi olan silme butonunu vs görecek
-      // autguarda dan çekebiliyor4 muyum bakacapım
-      // !!!!!!!!!!!!
-      // !!!!!!!!!!!!
+      if (res) {
+        this.isSuperUser = res.roles.includes('SuperUser');
+        this.isAdmin = res.roles.includes('Admin');
+        this.canCreate = res.roles.includes('Create');
+        this.canUpdate = res.roles.includes('Update');
+        this.canRead = res.roles.includes('Read');
+        this.canDelete = res.roles.includes('Delete');
+        this.isUser = res.roles.includes('User');
+      }
     });
   }
 

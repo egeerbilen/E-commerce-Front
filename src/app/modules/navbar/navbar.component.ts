@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ModalHelperService } from 'src/app/helpers/modal-helper/service/modal-helper-service.service';
+import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
@@ -13,8 +14,15 @@ import { UserLocalStorageService } from 'src/app/shared/services/local-storage/u
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  decodedToken = false;
+  decodedToken: DecodedTokenWithJwtDto | null = null;
   urlEnums;
+  isSuperUser = false;
+  isAdmin = false;
+  canCreate = false;
+  canUpdate = false;
+  canRead = false;
+  canDelete = false;
+  isUser = false;
 
   /**
    * Constructor.
@@ -31,9 +39,17 @@ export class NavbarComponent {
   ) {
     this.urlEnums = urlEnums;
 
+    // Kullanıcı verilerini kontrol et ve yetkileri ayarla
     this._store.select(getUserData).subscribe((res) => {
       if (res) {
-        this.decodedToken = true;
+        this.decodedToken = res;
+        this.isSuperUser = res.roles.includes('SuperUser');
+        this.isAdmin = res.roles.includes('Admin');
+        this.canCreate = res.roles.includes('Create');
+        this.canUpdate = res.roles.includes('Update');
+        this.canRead = res.roles.includes('Read');
+        this.canDelete = res.roles.includes('Delete');
+        this.isUser = res.roles.includes('User');
       }
     });
   }
@@ -47,7 +63,7 @@ export class NavbarComponent {
     if (logoutStatus) {
       this._localStorageService.removeToken();
       this._store.dispatch(setUserData({ userData: null }));
-      this.decodedToken = false;
+      this.decodedToken = null;
       this._router.navigate(['/']);
     }
   }
