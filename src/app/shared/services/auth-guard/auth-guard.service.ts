@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 
+import { DecodedTokenWithJwtDto } from '../../dto/decoded-token-with-jwt-dto';
 import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
@@ -12,7 +13,7 @@ import { UserLocalStorageService } from '../local-storage/user-local-storage.ser
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
-  private _decodedToken: any;
+  private _decodedToken: DecodedTokenWithJwtDto | null;
 
   /**
    * Constructor.

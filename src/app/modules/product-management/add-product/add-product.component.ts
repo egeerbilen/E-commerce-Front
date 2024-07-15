@@ -16,7 +16,7 @@ import { ProductService } from 'src/app/shared/services/product/product.service'
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
-  resolvedCategoryData: any;
+  resolvedCategoryData: CategoryDto[] = [];
   productForm: FormGroup;
   categories: CategoryDto[] = [];
   decodedToken: DecodedTokenWithJwtDto | null = null;

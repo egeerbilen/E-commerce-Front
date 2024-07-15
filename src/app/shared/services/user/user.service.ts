@@ -17,7 +17,7 @@ export class UserService extends BaseService {
    * @param userObject UserObject.
    * @returns Return.
    */
-  public updateYourOwnUser(userObject: UserUpdateDto): any {
+  public updateYourOwnUser(userObject: UserUpdateDto): Observable<CustomResponseDto<null>> {
     return this.http.put(this.apiEndpoint.user + 'Update/', userObject);
   }
 

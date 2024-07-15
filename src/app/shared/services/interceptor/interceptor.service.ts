@@ -27,7 +27,7 @@ export class InterceptorService {
    * Intercept.
    * @param request Request.
    * @param next Next.
-   * @returns Any.
+   * @returns Returns.
    */
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this._loadingPageService.show();

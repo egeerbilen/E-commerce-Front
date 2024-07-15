@@ -12,9 +12,9 @@ export class UserRoleService extends BaseService {
    * Add a role to a user.
    * @param userId Number.
    * @param roleId Number.
-   * @returns Observable<CustomResponseDto<any>>.
+   * @returns Observable<CustomResponseDto>.
    */
-  public addUserRole(userId: number, roleId: number): Observable<CustomResponseDto<any>> {
+  public addUserRole(userId: number, roleId: number): Observable<CustomResponseDto<null>> {
     return this.http.post(this.apiEndpoint.userRoles + 'AddUserRole/userId/' + userId + '/roleId/' + roleId, {});
   }
 
@@ -22,9 +22,9 @@ export class UserRoleService extends BaseService {
    * Remove a role from a user.
    * @param userId Number.
    * @param roleId Number.
-   * @returns Observable<CustomResponseDto<any>>.
+   * @returns Observable<CustomResponseDto>.
    */
-  public removeUserRole(userId: number, roleId: number): Observable<CustomResponseDto<any>> {
+  public removeUserRole(userId: number, roleId: number): Observable<CustomResponseDto<null>> {
     return this.http.delete(this.apiEndpoint.userRoles + 'RemoveUserRole/userId/' + userId + '/roleId/' + roleId);
   }
 }
