@@ -16,7 +16,7 @@ export class OrderProducService extends BaseService {
    * @returns Return.
    */
   public createOrderProduct(orderProductDtos: OrderProductDto[]): Observable<CustomResponseDto<null>> {
-    return this.http.post(this.apiEndpoint.orderProduct, orderProductDtos);
+    return this.http.post(this.apiEndpoint.orderProduct + 'CreateOrderProduct', orderProductDtos);
   }
 
   /**

@@ -58,7 +58,7 @@ export class OrderService extends BaseService {
    * @param orderDtos List of order data transfer objects.
    * @returns Observable with the result of the creation.
    */
-  public createList(orderDtos: OrderDto[]): Observable<CustomResponseDto<OrderDto[]>> {
-    return this.http.post(`${this.apiEndpoint.order}/createList`, orderDtos);
+  public createList(orderDtos: OrderDto[]): Observable<CustomResponseDto<number[]>> {
+    return this.http.post(`${this.apiEndpoint.order}CreateAndReturnIds`, orderDtos);
   }
 }

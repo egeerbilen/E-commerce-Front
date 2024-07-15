@@ -89,28 +89,29 @@ export class BasketsComponent implements OnInit {
       this._toastService.show('Basket is empty. No request will be made.');
       return;
     }
-    console.log(this.resolvedBasketData);
-    console.log(this.resolvedBasketData.length);
 
     const order: OrderDto[] = [];
-    console.log(this.decodedToken);
     this.resolvedBasketData.forEach((item) => {
       order.push({
         id: 0,
-        userId: item.userId,
+        userId: item.userId, // sipariş oluşturulacak kişi
         customerId: this.decodedToken!.userId,
         totalOrders: this.resolvedBasketData.length,
         totalPrice: this.totalPrice // hesaplanacak
       });
     });
 
-    console.log(order);
-    const orderProductDtos = this._mapToOrderProductDto(this.resolvedBasketData);
-
-    this._orderProducService.createOrderProduct(orderProductDtos).subscribe((res) => {
-      console.log(res);
+    this._orderService.createList(order).subscribe((res) => {
+      if (res) {
+        res.data?.forEach((item) => {
+          orderProductDtos.forEach((x) => {
+            x.orderId = item;
+          });
+        });
+        const orderProductDtos = this._mapToOrderProductDto(this.resolvedBasketData);
+        this._orderProducService.createOrderProduct(orderProductDtos).subscribe();
+      }
     });
-    this._orderService.createList(order).subscribe();
   }
 
   /**
@@ -140,7 +141,7 @@ export class BasketsComponent implements OnInit {
    */
   private _mapToOrderProductDto(basketData: ProductWithQuantityDto[]): OrderProductDto[] {
     return basketData.map((item) => ({
-      orderId: 1, // Burada orderId'nin ne olması gerektiğini belirlemeniz gerekebilir.
+      orderId: 0,
       productId: item.id,
       numberOfProducts: item.numberOfProducts
     }));
