@@ -7,7 +7,7 @@ import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jw
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
 import { ProductDto } from 'src/app/shared/dto/product-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { BasketService } from 'src/app/shared/services/basket/basket.service';
+import { BasketProdcutService } from 'src/app/shared/services/basket/basket-product.service';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class ProductDetailsComponent {
     private _route: ActivatedRoute,
     private _store: Store,
     private _favoriteService: FavoriteService,
-    private _basketService: BasketService,
+    private _basketService: BasketProdcutService,
     private _toastService: ToastService
   ) {
     this._route.data.subscribe((data) => {

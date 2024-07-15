@@ -9,7 +9,7 @@ import { BaseService } from '../base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BasketService extends BaseService {
+export class BasketProdcutService extends BaseService {
   /**
    * Update Basket Product.
    * @param basketProduct BasketProductDto.

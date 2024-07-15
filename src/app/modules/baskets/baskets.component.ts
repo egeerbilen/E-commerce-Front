@@ -10,7 +10,7 @@ import { OrderDto } from 'src/app/shared/dto/order-dto';
 import { OrderProductDto } from 'src/app/shared/dto/order-product-dto';
 import { ProductWithQuantityDto } from 'src/app/shared/dto/product-with-quantity-dto';
 import { getUserData } from 'src/app/shared/ng-rx/selectors/user.selectors';
-import { BasketService } from 'src/app/shared/services/basket/basket.service';
+import { BasketProdcutService } from 'src/app/shared/services/basket/basket-product.service';
 import { OrderProducService } from 'src/app/shared/services/orders-product/orders-product.service';
 import { OrderService } from 'src/app/shared/services/oreder/oreder.service';
 
@@ -42,7 +42,7 @@ export class BasketsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _store: Store,
-    private _basketService: BasketService,
+    private _basketService: BasketProdcutService,
     private _router: Router,
     private _toastService: ToastService,
     private _orderProducService: OrderProducService,

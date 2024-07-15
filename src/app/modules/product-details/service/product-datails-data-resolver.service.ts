@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ProductDetailsDto } from 'src/app/shared/dto/product-details-dto';
-import { BasketService } from 'src/app/shared/services/basket/basket.service';
+import { BasketProdcutService } from 'src/app/shared/services/basket/basket-product.service';
 import { FavoriteService } from 'src/app/shared/services/favorite/favorite.service';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 import { ProductService } from 'src/app/shared/services/product/product.service';
@@ -27,7 +27,7 @@ export class ProductDatailsDataResolverService {
     private _userLocalStorageService: UserLocalStorageService,
     private _favoriteService: FavoriteService,
     private _productService: ProductService,
-    private _basketService: BasketService
+    private _basketService: BasketProdcutService
   ) {
     this.urlEnums = urlEnums;
   }
