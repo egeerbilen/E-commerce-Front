@@ -103,12 +103,12 @@ export class BasketsComponent implements OnInit {
 
     this._orderService.createList(order).subscribe((res) => {
       if (res) {
+        const orderProductDtos = this._mapToOrderProductDto(this.resolvedBasketData);
         res.data?.forEach((item) => {
           orderProductDtos.forEach((x) => {
             x.orderId = item;
           });
         });
-        const orderProductDtos = this._mapToOrderProductDto(this.resolvedBasketData);
         this._orderProducService.createOrderProduct(orderProductDtos).subscribe();
       }
     });
