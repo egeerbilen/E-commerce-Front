@@ -1,29 +1,34 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { urlEnums } from 'src/app/enums/url-enums';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 
+import { getUserData } from '../../ng-rx/selectors/user.selectors';
 import { UserLocalStorageService } from '../local-storage/user-local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
-  private decodedToken: any;
+  private _decodedToken: any;
 
   /**
    * Constructor.
-   * @param _router Router.
    * @param _userLocalStorageService UserLocalStorageService.
    * @param _toastService ToastService.
+   * @param _store Store.
    */
   constructor(
-    private _router: Router,
     private _userLocalStorageService: UserLocalStorageService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private _store: Store
   ) {
-    this.decodedToken = this._userLocalStorageService.getDecodedToken();
+    this._decodedToken = this._userLocalStorageService.getDecodedToken();
+    this._store.select(getUserData).subscribe((res) => {
+      this._decodedToken = res;
+    });
   }
 
   /**
@@ -42,11 +47,11 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     console.log('🚀 ~ AuthGuardService ~ canActivate:', 'canActivate');
 
-    if (state.url === '/' + urlEnums.login && !this.decodedToken) {
+    if (state.url === '/' + urlEnums.login && !this._decodedToken) {
       return true;
     }
 
-    if (state.url === '/' + urlEnums.myAccount && this.decodedToken) {
+    if (state.url === '/' + urlEnums.myAccount && this._decodedToken) {
       return true;
     }
 
@@ -102,6 +107,6 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
    * @returns Boolean.
    */
   private _hasRole(role: string): boolean {
-    return this.decodedToken?.roles?.includes(role) || false;
+    return this._decodedToken?.roles?.includes(role) || false;
   }
 }
