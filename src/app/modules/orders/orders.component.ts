@@ -29,6 +29,7 @@ export class OrdersComponent implements OnDestroy {
     const mes = user + ': ' + message;
     this._toastService.show(mes);
   };
+
   /**
    * Constructor.
    * @param _route ActivatedRoute.
@@ -69,13 +70,11 @@ export class OrdersComponent implements OnDestroy {
    */
   public loadOrderProducts(orderId: number): void {
     if (!this.resolvedOrderDetailsData[orderId]) {
-      console.log(this.resolvedOrderDetailsData[orderId]);
-      console.log(orderId.toString());
       this._ordersService.getOrderProducts(orderId.toString()).subscribe((response: CustomResponseDto<ProductDto[]>) => {
         if (response.data) {
           this.resolvedOrderDetailsData[orderId] = response.data;
         } else {
-          this.resolvedOrderDetailsData[orderId] = []; // response.data null ise boş array ata
+          this.resolvedOrderDetailsData[orderId] = [];
         }
         console.log(response);
       });

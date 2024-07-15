@@ -57,7 +57,6 @@ export class CategoryManagementComponent {
       this._categoryService.addCategory(category).subscribe(
         (res) => {
           if (res.data) {
-            // Add the new category to the local list
             this.categories.push(res.data);
             this._toastService.show('Category added successfully', 'Close', 2000);
             this.categoryForm.reset();
@@ -88,7 +87,6 @@ export class CategoryManagementComponent {
       const category: CategoryDto = { ...this.selectedCategory, ...this.categoryForm.value };
       this._categoryService.updateCategory(category).subscribe(
         () => {
-          // Update the category in the local list
           const index = this.categories.findIndex((cat) => cat.id === this.selectedCategory!.id);
           if (index !== -1) {
             this.categories[index] = category;

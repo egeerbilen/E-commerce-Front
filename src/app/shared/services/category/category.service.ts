@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { apiEndpoint } from '../../../enums/api-endpoint';
 import { CategoryDto } from '../../dto/category-dto';
 import { CreateCategoryDto } from '../../dto/create-category-dto';
 import { CustomResponseDto } from '../../dto/custom-response-dto';
-import { apiEndpoint } from '../../enviroments/api-endpoint';
 import { ApiHelperService } from '../api-helper/api-helper.service';
 
 @Injectable({

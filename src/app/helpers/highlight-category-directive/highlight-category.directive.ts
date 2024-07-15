@@ -30,13 +30,11 @@ export class HighlightCategoryDirective implements AfterViewInit {
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   @HostListener('click') public onClick() {
-    // Tüm öğelerdeki 'active' sınıfını kaldır
     const siblings = this._el.nativeElement.parentNode.children;
     for (const element of siblings) {
       this._renderer.removeClass(element, 'active');
     }
 
-    // Tıklanan öğeye 'active' sınıfını ekle
     this._renderer.addClass(this._el.nativeElement, 'active');
   }
 }

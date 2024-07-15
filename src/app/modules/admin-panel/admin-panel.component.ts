@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { ToastService } from 'src/app/helpers/service/toast/toast.service';
 import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { UserRolesDto } from 'src/app/shared/dto/user-roles-dto';
 import { UserWithRolesDto } from 'src/app/shared/dto/user-with-roles-dto';
@@ -27,11 +28,13 @@ export class AdminPanelComponent implements OnInit {
    * @param _route ActivatedRoute.
    * @param _userService UserService.
    * @param _userRoleService UserRoleService.
+   * @param _toastService ToastService.
    */
   constructor(
     private _route: ActivatedRoute,
     private _userService: UserService,
-    private _userRoleService: UserRoleService
+    private _userRoleService: UserRoleService,
+    private _toastService: ToastService
   ) {}
 
   /**
@@ -70,8 +73,8 @@ export class AdminPanelComponent implements OnInit {
    * @param role Role.
    */
   public removeRoleFromUser(user: UserWithRolesDto, role: UserRolesDto): void {
-    this._userRoleService.removeUserRole(user.id, role.roleId).subscribe((response: any) => {
-      console.log('Role removed: ', role);
+    this._userRoleService.removeUserRole(user.id, role.roleId).subscribe(() => {
+      this._toastService.show('Role removed: ' + role);
       user.roles = user.roles.filter((r) => r.roleId !== role.roleId);
       this.dataSource.data = this.users;
     });
@@ -83,9 +86,8 @@ export class AdminPanelComponent implements OnInit {
    * @param roleName RoleName.
    */
   public addRoleToUser(user: UserWithRolesDto, roleName: string): void {
-    console.log('Button clicked to add role:', roleName); // Button click kontrolü
     if (roleName && !user.roles.some((r) => r.roleName === roleName)) {
-      console.log('Adding role:', roleName, 'to user:', user); // Metodun çağrıldığını kontrol edelim
+      this._toastService.show('Role removed: ' + roleName + ' to user:' + user);
       const roleId = this.roles.indexOf(roleName) + 1;
       this._userRoleService.addUserRole(user.id, roleId).subscribe(
         () => {
@@ -99,7 +101,7 @@ export class AdminPanelComponent implements OnInit {
         }
       );
     } else {
-      console.log('Role already exists or invalid:', roleName);
+      this._toastService.show('Role already exists or invalid: ' + roleName);
     }
   }
 
@@ -108,11 +110,8 @@ export class AdminPanelComponent implements OnInit {
    * @param user User.
    */
   public onAddRoleButtonClick(user: UserWithRolesDto): void {
-    console.log('Add Role button clicked for user:', user);
     if (user.newRole) {
       this.addRoleToUser(user, user.newRole);
-    } else {
-      console.log('No role selected.');
     }
   }
 }

@@ -66,8 +66,8 @@ export class ProductManagementComponent implements OnInit {
     });
 
     this._route.data.subscribe((data) => {
-      this.resolvedProductsData = data['resolvedData'].getProducts; // Access resolved data here
-      this.resolvedCategoriesData = data['resolvedData'].getCategories; // Access resolved data here
+      this.resolvedProductsData = data['resolvedData'].getProducts;
+      this.resolvedCategoriesData = data['resolvedData'].getCategories;
 
       if (this.resolvedProductsData.data) {
         const allProductsCategory: CategoryDto = { id: 0, name: 'All Category' };

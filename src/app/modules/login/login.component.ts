@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
-import { CustomResponseDto } from 'src/app/shared/dto/custom-response-dto';
 import { setUserData } from 'src/app/shared/ng-rx/actions/user.actions';
 import { UserLocalStorageService } from 'src/app/shared/services/local-storage/user-local-storage.service';
 import { UserService } from 'src/app/shared/services/user/user.service';

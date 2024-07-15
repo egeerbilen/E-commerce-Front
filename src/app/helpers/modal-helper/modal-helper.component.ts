@@ -7,7 +7,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./modal-helper.component.css']
 })
 export class ModalHelperComponent {
-  // eslint-disable-next-line jsdoc/require-jsdoc
+  /**
+   * Constructor.
+   * @param dialogRef DialogRef.
+   * @param data Data.
+   * @param data.title Title.
+   * @param data.content Content.
+   */
   constructor(
     public dialogRef: MatDialogRef<ModalHelperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string; content: string }
