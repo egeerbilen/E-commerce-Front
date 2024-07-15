@@ -13,7 +13,10 @@ export class SignalrService {
    */
   constructor() {
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7095/chatHub') // API URL'nizi buraya ekleyin
+      .withUrl('https://localhost:7095/chatHub', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      })
       .build();
 
     this._startConnection();

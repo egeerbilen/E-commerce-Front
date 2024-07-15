@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { urlEnums } from 'src/app/enums/url-enums';
+import { SignalrService } from 'src/app/helpers/signalr/signalr.service';
 import { ToastService } from 'src/app/helpers/toast/toast.service';
 import { BasketProductDto } from 'src/app/shared/dto/basket-product-dto';
 import { DecodedTokenWithJwtDto } from 'src/app/shared/dto/decoded-token-with-jwt-dto';
@@ -31,11 +32,12 @@ export class BasketsComponent implements OnInit {
    * Constructor.
    * @param _route ActivatedRoute.
    * @param _store Store.
-   * @param _basketService FavoriteService.
+   * @param _basketService BasketService.
    * @param _router Router.
    * @param _toastService ToastService.
    * @param _orderProducService OrderProducService.
    * @param _orderService OrderService.
+   * @param _signalrService SignalrService.
    */
   constructor(
     private _route: ActivatedRoute,
@@ -44,7 +46,8 @@ export class BasketsComponent implements OnInit {
     private _router: Router,
     private _toastService: ToastService,
     private _orderProducService: OrderProducService,
-    private _orderService: OrderService
+    private _orderService: OrderService,
+    private _signalrService: SignalrService
   ) {
     this.urlEnums = urlEnums;
     this._route.data.subscribe((data) => {
@@ -84,7 +87,6 @@ export class BasketsComponent implements OnInit {
    * ConfirmBasket.
    */
   public confirmBasket(): void {
-    console.log(this.resolvedBasketData);
     if (!this.resolvedBasketData || this.resolvedBasketData.length === 0) {
       this._toastService.show('Basket is empty. No request will be made.');
       return;
@@ -110,6 +112,7 @@ export class BasketsComponent implements OnInit {
           });
         });
         this._orderProducService.createOrderProduct(orderProductDtos).subscribe();
+        this._signalrService.sendMessage(this.decodedToken!.email.toString(), 'A new order has been created.');
       }
     });
   }
