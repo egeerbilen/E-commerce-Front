@@ -16,8 +16,11 @@
       <button *ngIf="decodedToken" (click)="addToBasket()" class="btn btn-success mt-2">
         <i class="fa fa-shopping-cart text-warning"></i> Add To Basket
       </button>
-      <button *ngIf="decodedToken" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
-        <i class="fas fa-heart" [ngClass]="{'text-danger': isFavorite}"></i> Favorite
+      <button *ngIf="decodedToken && !isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+        <i class="fas fa-heart "></i> Favorite
+      </button>
+      <button *ngIf="decodedToken && isFavorite" (click)="addToFavorites()" class="btn btn-primary mt-2 ms-2">
+        <i class="fas fa-heart text-danger"></i> Favorite
       </button>
     </div>
   </div>

@@ -5,5 +5,5 @@ import { ProductDto } from './product-dto';
 export type ProductDetailsDto = {
   getProductById: CustomResponseDto<ProductDto>;
   isFavoriteProduct: CustomResponseDto<boolean>;
-  isBasketProduct: CustomResponseDto<BasketProductDto>;
+  isBasketProduct: CustomResponseDto<BasketProductDto | null>;
 };

@@ -37,7 +37,7 @@ export class ProductDatailsDataResolverService {
    * @param route Route.
    * @returns Get products.
    */
-  public resolve(route: ActivatedRouteSnapshot): Observable<ProductDetailsDto | boolean> {
+  public resolve(route: ActivatedRouteSnapshot): Observable<ProductDetailsDto | boolean | any> {
     const productId = route.paramMap.get('id');
     if (!productId) {
       this._router.navigate([this.urlEnums.notFoundPage]);
@@ -45,12 +45,14 @@ export class ProductDatailsDataResolverService {
     }
 
     const userId = this._userLocalStorageService.getUserId();
-    if (!userId) {
-      return of(false);
-    }
 
-    // forkJoin, RxJS kütüphanesinde bulunan bir operatördür ve birden fazla observable'ın tamamlanmasını bekleyip,
-    // tamamlandıklarında hepsinin son çıktısını tek bir observable olarak birleştiren bir işleve sahiptir.
+    if (!userId) {
+      return forkJoin({
+        getProductById: this._productService.getProductById(productId),
+        isFavoriteProduct: of(null),
+        isBasketProduct: of(null)
+      });
+    }
 
     const resObject = forkJoin({
       getProductById: this._productService.getProductById(productId),

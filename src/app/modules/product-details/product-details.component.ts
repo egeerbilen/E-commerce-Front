@@ -43,11 +43,11 @@ export class ProductDetailsComponent {
         this.product = this.resolvedData.getProductById.data;
       }
 
-      if (this.resolvedData.isFavoriteProduct.data) {
+      if (this.resolvedData.isFavoriteProduct?.data) {
         this.isFavorite = this.resolvedData.isFavoriteProduct.data;
       }
 
-      if (this.resolvedData.isBasketProduct.data) {
+      if (this.resolvedData.isBasketProduct?.data) {
         if (this.resolvedData.isBasketProduct.data.numberOfProducts) {
           this.numberOfProducts = this.resolvedData.isBasketProduct.data.numberOfProducts;
         } else {
