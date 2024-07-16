@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
-      <img [src]="product.imageData | byteToImage" class="img-fluid" [alt]="product.name">
+      <img *ngIf="product.imageData" [src]="product.imageData | byteToImage" class="img-fluid" [alt]="product.name">
     </div>
     <div class="col-md-6">
       <h2>{{ product.name }}</h2>
